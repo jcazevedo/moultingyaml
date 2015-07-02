@@ -1,11 +1,11 @@
 package net.jcazevedo.moultingyaml
 
-sealed trait YAMLValue
+sealed trait YamlValue
 
-case class YAMLObject(fields: Map[String, YAMLValue]) extends YAMLValue
+case class YamlObject(fields: Map[String, YamlValue]) extends YamlValue
 
-case class YAMLArray(elements: Vector[YAMLValue]) extends YAMLValue
+case class YamlArray(elements: Vector[YamlValue]) extends YamlValue
 
-case class YAMLString(value: String) extends YAMLValue
+case class YamlString(value: String) extends YamlValue
 
-case class YAMLNumber(value: BigDecimal) extends YAMLValue
+case class YamlNumber(value: BigDecimal) extends YamlValue
