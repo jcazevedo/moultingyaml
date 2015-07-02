@@ -35,21 +35,21 @@ class YamlParserSpec extends Specification {
     withYaml("/ex2.yaml") { yaml =>
       yaml mustEqual YamlObject(
         Map(
-          "hr" -> YamlNumber(65),
-          "avg" -> YamlNumber(0.278),
-          "rbi" -> YamlNumber(147)))
+          YamlString("hr") -> YamlNumber(65),
+          YamlString("avg") -> YamlNumber(0.278),
+          YamlString("rbi") -> YamlNumber(147)))
     }
 
     "correctly parse mappings of scalars to sequences" !
     withYaml("/ex3.yaml") { yaml =>
       yaml mustEqual YamlObject(
         Map(
-          "american" -> YamlArray(
+          YamlString("american") -> YamlArray(
             Vector(
               YamlString("Boston Red Sox"),
               YamlString("Detroit Tigers"),
               YamlString("New York Yankees"))),
-          "national" -> YamlArray(
+          YamlString("national") -> YamlArray(
             Vector(
               YamlString("New York Mets"),
               YamlString("Chicago Cubs"),
@@ -62,14 +62,14 @@ class YamlParserSpec extends Specification {
         Vector(
           YamlObject(
             Map(
-              "name" -> YamlString("Mark McGwire"),
-              "hr" -> YamlNumber(65),
-              "avg" -> YamlNumber(0.278))),
+              YamlString("name") -> YamlString("Mark McGwire"),
+              YamlString("hr") -> YamlNumber(65),
+              YamlString("avg") -> YamlNumber(0.278))),
           YamlObject(
             Map(
-              "name" -> YamlString("Sammy Sosa"),
-              "hr" -> YamlNumber(63),
-              "avg" -> YamlNumber(0.288)))))
+              YamlString("name") -> YamlString("Sammy Sosa"),
+              YamlString("hr") -> YamlNumber(63),
+              YamlString("avg") -> YamlNumber(0.288)))))
     }
 
     "correctly parse sequences of sequences" !
@@ -97,26 +97,26 @@ class YamlParserSpec extends Specification {
     withYaml("/ex6.yaml") { yaml =>
       yaml mustEqual YamlObject(
         Map(
-          "Mark McGwire" -> YamlObject(
+          YamlString("Mark McGwire") -> YamlObject(
             Map(
-              "hr" -> YamlNumber(65),
-              "avg" -> YamlNumber(0.278))),
-          "Sammy Sosa" -> YamlObject(
+              YamlString("hr") -> YamlNumber(65),
+              YamlString("avg") -> YamlNumber(0.278))),
+          YamlString("Sammy Sosa") -> YamlObject(
             Map(
-              "hr" -> YamlNumber(63),
-              "avg" -> YamlNumber(0.288)))))
+              YamlString("hr") -> YamlNumber(63),
+              YamlString("avg") -> YamlNumber(0.288)))))
     }
 
     "correctly parse aliased nodes" !
     withYaml("/ex7.yaml") { yaml =>
       yaml mustEqual YamlObject(
         Map(
-          "hr" ->
+          YamlString("hr") ->
             YamlArray(
               Vector(
                 YamlString("Mark McGwire"),
                 YamlString("Sammy Sosa"))),
-          "rbi" ->
+          YamlString("rbi") ->
             YamlArray(
               Vector(
                 YamlString("Sammy Sosa"),

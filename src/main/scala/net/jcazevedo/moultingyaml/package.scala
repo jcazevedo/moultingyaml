@@ -7,8 +7,10 @@ import scala.collection.JavaConverters._
 package object moultingyaml {
   private[moultingyaml] def convertToYamlValue(obj: Object): YamlValue = {
     obj match {
-      case m: java.util.Map[String @unchecked, Object @unchecked] =>
-        YamlObject(m.asScala.mapValues(convertToYamlValue).toMap)
+      case m: java.util.Map[Object @unchecked, Object @unchecked] =>
+        YamlObject(m.asScala.map { case (k, v) =>
+          convertToYamlValue(k) -> convertToYamlValue(v)
+        }.toMap)
       case l: java.util.List[Object @unchecked] =>
         YamlArray(l.asScala.map(convertToYamlValue).toVector)
       case i: java.lang.Integer =>
