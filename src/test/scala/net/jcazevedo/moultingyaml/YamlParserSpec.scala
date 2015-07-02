@@ -198,5 +198,23 @@ What a year!
           YamlString("stats") ->
             YamlString("65 Home Runs\n0.278 Batting Average\n")))
     }
+
+    "correctly parse quoted scalars" !
+    withYaml("/ex14.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("unicode") ->
+            YamlString("Sosa did fine.\u263A"),
+          YamlString("control") ->
+            YamlString("\b1998\t1999\t2000\n"),
+          YamlString("hexesc") ->
+            YamlString("\u0013\u0010 is \r\n"),
+          YamlString("single") ->
+            YamlString(""""Howdy!" he cried."""),
+          YamlString("quoted") ->
+            YamlString(" # not a 'comment'."),
+          YamlString("tie-fighter") ->
+            YamlString("""|\-*-/|""")))
+    }
   }
 }
