@@ -145,5 +145,23 @@ class YamlParserSpec extends Specification {
                   YamlDate("2001-08-12".toLocalDate),
                   YamlDate("2001-08-14".toLocalDate)))))
     }
+
+    "correctly parse in-line nested mapping" !
+    withYaml("/ex9.yaml") { yaml =>
+      yaml mustEqual YamlArray(
+        Vector(
+          YamlObject(
+            Map(
+              YamlString("item") -> YamlString("Super Hoop"),
+              YamlString("quantity") -> YamlNumber(1))),
+          YamlObject(
+            Map(
+              YamlString("item") -> YamlString("Basketball"),
+              YamlString("quantity") -> YamlNumber(4))),
+          YamlObject(
+            Map(
+              YamlString("item") -> YamlString("Big Shoes"),
+              YamlString("quantity") -> YamlNumber(1)))))
+    }
   }
 }
