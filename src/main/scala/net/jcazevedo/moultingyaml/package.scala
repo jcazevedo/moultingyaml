@@ -1,5 +1,6 @@
 package net.jcazevedo
 
+import com.github.nscala_time.time.Imports._
 import org.yaml.snakeyaml.Yaml
 import scala.collection.JavaConverters._
 
@@ -16,6 +17,8 @@ package object moultingyaml {
         YamlNumber(BigDecimal(d))
       case s: java.lang.String =>
         YamlString(s)
+      case d: java.util.Date =>
+        YamlDate(new DateTime(d))
     }
   }
 
