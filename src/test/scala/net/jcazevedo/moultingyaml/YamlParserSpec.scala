@@ -186,5 +186,17 @@ class YamlParserSpec extends Specification {
 What a year!
 """)
     }
+
+    "correctly determine scope by indentation" !
+    withYaml("/ex13.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("name") ->
+            YamlString("Mark McGwire"),
+          YamlString("accomplishment") ->
+            YamlString("Mark set a major league home run record in 1998.\n"),
+          YamlString("stats") ->
+            YamlString("65 Home Runs\n0.278 Batting Average\n")))
+    }
   }
 }
