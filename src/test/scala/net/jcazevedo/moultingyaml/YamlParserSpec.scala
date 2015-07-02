@@ -7,6 +7,7 @@ import org.specs2.matcher.MatchResult
 import org.specs2.mutable._
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
+import com.github.nscala_time.time.Imports._
 
 class YamlParserSpec extends Specification {
   def getResourceURL(resource: String): String =
@@ -121,6 +122,28 @@ class YamlParserSpec extends Specification {
               Vector(
                 YamlString("Sammy Sosa"),
                 YamlString("Ken Griffey")))))
+    }
+
+    "correctly parse mappings between sequences" !
+    withYaml("/ex8.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlArray(
+            Vector(
+              YamlString("Detroit Tigers"),
+              YamlString("Chicago cubs"))) ->
+            YamlArray(
+              Vector(
+                YamlDate("2001-07-23".toLocalDate))),
+          YamlArray(
+            Vector(
+              YamlString("New York Yankees"),
+              YamlString("Atlanta Braves"))) ->
+              YamlArray(
+                Vector(
+                  YamlDate("2001-07-02".toLocalDate),
+                  YamlDate("2001-08-12".toLocalDate),
+                  YamlDate("2001-08-14".toLocalDate)))))
     }
   }
 }
