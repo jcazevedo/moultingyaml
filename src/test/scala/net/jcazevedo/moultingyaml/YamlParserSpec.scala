@@ -175,5 +175,16 @@ class YamlParserSpec extends Specification {
     withYaml("/ex11.yaml") { yaml =>
       yaml mustEqual YamlString("Mark McGwire's year was crippled by a knee injury.")
     }
+
+    "correctly parse folded new lines" !
+    withYaml("/ex12.yaml") { yaml =>
+      yaml mustEqual YamlString("""Sammy Sosa completed another fine season with great stats.
+
+  63 Home Runs
+  0.288 Batting Average
+
+What a year!
+""")
+    }
   }
 }
