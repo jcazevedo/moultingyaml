@@ -170,5 +170,10 @@ class YamlParserSpec extends Specification {
 // ||  ||__
 """)
     }
+
+    "correctly replace newlines by spaces in plain scalar" !
+    withYaml("/ex11.yaml") { yaml =>
+      yaml mustEqual YamlString("Mark McGwire's year was crippled by a knee injury.")
+    }
   }
 }
