@@ -163,5 +163,12 @@ class YamlParserSpec extends Specification {
               YamlString("item") -> YamlString("Big Shoes"),
               YamlString("quantity") -> YamlNumber(1)))))
     }
+
+    "correctly preserve new lines in literals" !
+    withYaml("/ex10.yaml") { yaml =>
+      yaml mustEqual YamlString("""\//||\/||
+// ||  ||__
+""")
+    }
   }
 }
