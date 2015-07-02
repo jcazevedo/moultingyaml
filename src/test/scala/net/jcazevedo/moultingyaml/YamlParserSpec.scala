@@ -53,5 +53,56 @@ class YamlParserSpec extends Specification {
               YamlString("Chicago Cubs"),
               YamlString("Atlanta Braves")))))
     }
+
+    "correctly parse sequences of mappings" !
+    withYaml("/ex4.yaml") { yaml =>
+      yaml mustEqual YamlArray(
+        Vector(
+          YamlObject(
+            Map(
+              "name" -> YamlString("Mark McGwire"),
+              "hr" -> YamlNumber(65),
+              "avg" -> YamlNumber(0.278))),
+          YamlObject(
+            Map(
+              "name" -> YamlString("Sammy Sosa"),
+              "hr" -> YamlNumber(63),
+              "avg" -> YamlNumber(0.288)))))
+    }
+
+    "correctly parse sequences of sequences" !
+    withYaml("/ex5.yaml") { yaml =>
+      yaml mustEqual YamlArray(
+        Vector(
+          YamlArray(
+            Vector(
+              YamlString("name"),
+              YamlString("hr"),
+              YamlString("avg"))),
+          YamlArray(
+            Vector(
+              YamlString("Mark McGwire"),
+              YamlNumber(65),
+              YamlNumber(0.278))),
+          YamlArray(
+            Vector(
+              YamlString("Sammy Sosa"),
+              YamlNumber(63),
+              YamlNumber(0.288)))))
+    }
+
+    "correctly parse mappings of mappings" !
+    withYaml("/ex6.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          "Mark McGwire" -> YamlObject(
+            Map(
+              "hr" -> YamlNumber(65),
+              "avg" -> YamlNumber(0.278))),
+          "Sammy Sosa" -> YamlObject(
+            Map(
+              "hr" -> YamlNumber(63),
+              "avg" -> YamlNumber(0.288)))))
+    }
   }
 }
