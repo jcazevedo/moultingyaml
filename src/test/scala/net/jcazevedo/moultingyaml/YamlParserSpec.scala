@@ -8,7 +8,7 @@ import org.specs2.mutable._
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-class YamlParseSpec extends Specification {
+class YamlParserSpec extends Specification {
   def getResourceURL(resource: String): String =
     URLDecoder.decode(getClass.getResource(resource).getFile, "UTF-8")
 
