@@ -216,5 +216,15 @@ What a year!
           YamlString("tie-fighter") ->
             YamlString("""|\-*-/|""")))
     }
+
+    "correctly parse multi-line flow scalars" !
+    withYaml("/ex15.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("plain") ->
+            YamlString("This unquoted scalar spans many lines."),
+          YamlString("quoted") ->
+            YamlString("So does this quoted scalar.\n")))
+    }
   }
 }
