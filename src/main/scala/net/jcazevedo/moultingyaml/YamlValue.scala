@@ -12,4 +12,4 @@ case class YamlString(value: String) extends YamlValue
 
 case class YamlNumber(value: BigDecimal) extends YamlValue
 
-case class YamlDate(date: DateTime) extends YamlValue
+case class YamlDate(date: LocalDate) extends YamlValue
