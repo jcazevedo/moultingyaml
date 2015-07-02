@@ -12,10 +12,12 @@ class YamlParserSpec extends Specification {
   def getResourceURL(resource: String): String =
     URLDecoder.decode(getClass.getResource(resource).getFile, "UTF-8")
 
-  def withYaml[T](filename: String)(f: YamlValue => MatchResult[T]): Result = {
+  def withYaml(filename: String)(f: YamlValue => Result): Result = {
     Try(Source.fromFile(getResourceURL(filename)).mkString.parseYaml) match {
       case Success(yaml) => f(yaml)
-      case Failure(error) => org.specs2.execute.Failure("Unable to parse YAML")
+      case Failure(error) =>
+        error.printStackTrace()
+        org.specs2.execute.Failure("Unable to parse YAML")
     }
   }
 
@@ -103,6 +105,22 @@ class YamlParserSpec extends Specification {
             Map(
               "hr" -> YamlNumber(63),
               "avg" -> YamlNumber(0.288)))))
+    }
+
+    "correctly parse aliased nodes" !
+    withYaml("/ex7.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          "hr" ->
+            YamlArray(
+              Vector(
+                YamlString("Mark McGwire"),
+                YamlString("Sammy Sosa"))),
+          "rbi" ->
+            YamlArray(
+              Vector(
+                YamlString("Sammy Sosa"),
+                YamlString("Ken Griffey")))))
     }
   }
 }
