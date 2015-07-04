@@ -226,5 +226,21 @@ What a year!
           YamlString("quoted") ->
             YamlString("So does this quoted scalar.\n")))
     }
+
+    "correctly parse integers" !
+    withYaml("/ex16.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("canonical") ->
+            YamlNumber(12345),
+          YamlString("decimal") ->
+            YamlNumber(12.345),
+          YamlString("sexagesimal") ->
+            YamlNumber(12345),
+          YamlString("octal") ->
+            YamlNumber(12),
+          YamlString("hexadecimal") ->
+            YamlNumber(12)))
+    }
   }
 }
