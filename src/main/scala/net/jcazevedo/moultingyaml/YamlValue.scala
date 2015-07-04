@@ -10,6 +10,6 @@ case class YamlArray(elements: Vector[YamlValue]) extends YamlValue
 
 case class YamlString(value: String) extends YamlValue
 
-case class YamlNumber(value: BigDecimal) extends YamlValue
+case class YamlNumber[A: Numeric](value: A) extends YamlValue
 
 case class YamlDate(date: LocalDate) extends YamlValue

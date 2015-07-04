@@ -14,9 +14,9 @@ package object moultingyaml {
       case l: java.util.List[Object @unchecked] =>
         YamlArray(l.asScala.map(convertToYamlValue).toVector)
       case i: java.lang.Integer =>
-        YamlNumber(BigDecimal(i))
+        YamlNumber(i.toInt)
       case d: java.lang.Double =>
-        YamlNumber(BigDecimal(d))
+        YamlNumber(d.toDouble)
       case s: java.lang.String =>
         YamlString(s)
       case d: java.util.Date =>
