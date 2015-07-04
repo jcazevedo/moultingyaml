@@ -234,7 +234,7 @@ What a year!
           YamlString("canonical") ->
             YamlNumber(12345),
           YamlString("decimal") ->
-            YamlNumber(12.345),
+            YamlNumber(12345),
           YamlString("sexagesimal") ->
             YamlNumber(12345),
           YamlString("octal") ->
