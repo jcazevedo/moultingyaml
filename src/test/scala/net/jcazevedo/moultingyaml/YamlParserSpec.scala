@@ -242,5 +242,19 @@ What a year!
           YamlString("hexadecimal") ->
             YamlNumber(12)))
     }
+
+    "correctly parse floating point numbers" !
+    withYaml("/ex17.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("canonical") ->
+            YamlNumber(1230.15),
+          YamlString("exponential") ->
+            YamlNumber(1230.15),
+          YamlString("sexagesimal") ->
+            YamlNumber(1230.15),
+          YamlString("fixed") ->
+            YamlNumber(1230.15)))
+    }
   }
 }
