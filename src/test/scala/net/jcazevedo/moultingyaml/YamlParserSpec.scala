@@ -256,5 +256,19 @@ What a year!
           YamlString("fixed") ->
             YamlNumber(1230.15)))
     }
+
+    "correctly parse miscellaneous scalars" !
+    withYaml("/ex18.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlNull ->
+            YamlNull,
+          YamlBoolean(true) ->
+            YamlString("y"),
+          YamlBoolean(false) ->
+            YamlString("n"),
+          YamlString("string") ->
+            YamlString("12345")))
+    }
   }
 }
