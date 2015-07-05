@@ -13,6 +13,8 @@ package object moultingyaml {
         }.toMap)
       case l: java.util.List[Object @unchecked] =>
         YamlArray(l.asScala.map(convertToYamlValue).toVector)
+      case s: java.util.Set[Object @unchecked] =>
+        YamlSet(s.asScala.map(convertToYamlValue).toSet)
       case i: java.lang.Integer =>
         YamlNumber(i.toInt)
       case d: java.lang.Double =>

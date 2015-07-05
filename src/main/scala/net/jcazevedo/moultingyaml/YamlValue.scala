@@ -8,6 +8,8 @@ case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue
 
 case class YamlArray(elements: Vector[YamlValue]) extends YamlValue
 
+case class YamlSet(set: Set[YamlValue]) extends YamlValue
+
 case class YamlString(value: String) extends YamlValue
 
 case class YamlNumber[A: Numeric](value: A) extends YamlValue

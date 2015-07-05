@@ -296,5 +296,14 @@ What a year!
               new DateTime("2002-12-14", DateTimeZone.UTC).getMillis(),
               DateTimeZone.getDefault()))))
     }
+
+    "correctly parse explicit sets" !
+    withYaml("/ex20.yaml") { yaml =>
+      yaml mustEqual YamlSet(
+        Set(
+          YamlString("Mark McGwire"),
+          YamlString("Sammy Sosa"),
+          YamlString("Ken Griff")))
+    }
   }
 }
