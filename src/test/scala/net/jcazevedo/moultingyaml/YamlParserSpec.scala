@@ -134,16 +134,24 @@ class YamlParserSpec extends Specification {
               YamlString("Chicago cubs"))) ->
             YamlArray(
               Vector(
-                YamlDate(new DateTime(new DateTime("2001-07-23", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())))),
+                YamlDate(new DateTime(
+                  new DateTime("2001-07-23", DateTimeZone.UTC).getMillis(),
+                  DateTimeZone.getDefault())))),
           YamlArray(
             Vector(
               YamlString("New York Yankees"),
               YamlString("Atlanta Braves"))) ->
               YamlArray(
                 Vector(
-                  YamlDate(new DateTime(new DateTime("2001-07-02", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())),
-                  YamlDate(new DateTime(new DateTime("2001-08-12", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())),
-                  YamlDate(new DateTime(new DateTime("2001-08-14", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault()))))))
+                  YamlDate(new DateTime(
+                    new DateTime("2001-07-02", DateTimeZone.UTC).getMillis(),
+                    DateTimeZone.getDefault())),
+                  YamlDate(new DateTime(
+                    new DateTime("2001-08-12", DateTimeZone.UTC).getMillis(),
+                    DateTimeZone.getDefault())),
+                  YamlDate(new DateTime(
+                    new DateTime("2001-08-14", DateTimeZone.UTC).getMillis(),
+                    DateTimeZone.getDefault()))))))
     }
 
     "correctly parse in-line nested mapping" !
@@ -173,12 +181,14 @@ class YamlParserSpec extends Specification {
 
     "correctly replace newlines by spaces in plain scalar" !
     withYaml("/ex11.yaml") { yaml =>
-      yaml mustEqual YamlString("Mark McGwire's year was crippled by a knee injury.")
+      yaml mustEqual YamlString(
+        "Mark McGwire's year was crippled by a knee injury.")
     }
 
     "correctly parse folded new lines" !
     withYaml("/ex12.yaml") { yaml =>
-      yaml mustEqual YamlString("""Sammy Sosa completed another fine season with great stats.
+      yaml mustEqual YamlString(
+        """Sammy Sosa completed another fine season with great stats.
 
   63 Home Runs
   0.288 Batting Average
