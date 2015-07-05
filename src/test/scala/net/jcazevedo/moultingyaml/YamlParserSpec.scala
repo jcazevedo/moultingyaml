@@ -305,5 +305,14 @@ What a year!
           YamlString("Sammy Sosa"),
           YamlString("Ken Griff")))
     }
+
+    "correctly parse explicit ordered mappings" !
+    withYaml("/ex21.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("Mark McGwire") -> YamlNumber(65),
+          YamlString("Sammy Sosa") -> YamlNumber(63),
+          YamlString("Ken Griffy") -> YamlNumber(58)))
+    }
   }
 }
