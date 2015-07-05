@@ -280,5 +280,21 @@ What a year!
           YamlString("string") ->
             YamlString("12345")))
     }
+
+    "correctly parse timestamps" !
+    withYaml("/ex19.yaml") { yaml =>
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("canonical") ->
+            YamlDate("2001-12-15T02:59:43.1Z".toDateTime),
+          YamlString("iso8601") ->
+            YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
+          YamlString("spaced") ->
+            YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
+          YamlString("date") ->
+            YamlDate(new DateTime(
+              new DateTime("2002-12-14", DateTimeZone.UTC).getMillis(),
+              DateTimeZone.getDefault()))))
+    }
   }
 }
