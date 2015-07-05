@@ -20,7 +20,7 @@ package object moultingyaml {
       case s: java.lang.String =>
         YamlString(s)
       case d: java.util.Date =>
-        YamlDate(new LocalDate(d))
+        YamlDate(new DateTime(d))
       case b: java.lang.Boolean =>
         YamlBoolean(b)
       case n if n == null =>

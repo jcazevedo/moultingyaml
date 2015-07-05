@@ -134,16 +134,16 @@ class YamlParserSpec extends Specification {
               YamlString("Chicago cubs"))) ->
             YamlArray(
               Vector(
-                YamlDate("2001-07-23".toLocalDate))),
+                YamlDate(new DateTime(new DateTime("2001-07-23", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())))),
           YamlArray(
             Vector(
               YamlString("New York Yankees"),
               YamlString("Atlanta Braves"))) ->
               YamlArray(
                 Vector(
-                  YamlDate("2001-07-02".toLocalDate),
-                  YamlDate("2001-08-12".toLocalDate),
-                  YamlDate("2001-08-14".toLocalDate)))))
+                  YamlDate(new DateTime(new DateTime("2001-07-02", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())),
+                  YamlDate(new DateTime(new DateTime("2001-08-12", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault())),
+                  YamlDate(new DateTime(new DateTime("2001-08-14", DateTimeZone.UTC).getMillis(), DateTimeZone.getDefault()))))))
     }
 
     "correctly parse in-line nested mapping" !

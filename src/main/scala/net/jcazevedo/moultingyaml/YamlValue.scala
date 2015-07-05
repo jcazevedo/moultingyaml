@@ -12,7 +12,7 @@ case class YamlString(value: String) extends YamlValue
 
 case class YamlNumber[A: Numeric](value: A) extends YamlValue
 
-case class YamlDate(date: LocalDate) extends YamlValue
+case class YamlDate(date: DateTime) extends YamlValue
 
 case class YamlBoolean(boolean: Boolean) extends YamlValue
 
