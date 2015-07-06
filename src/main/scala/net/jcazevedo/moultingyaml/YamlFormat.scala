@@ -5,13 +5,13 @@ import scala.annotation.implicitNotFound
 @implicitNotFound(msg =
   "Cannot find YamlReader or YamlFormat type class for ${A}")
 trait YamlReader[A] {
-  def read(json: YamlValue): A
+  def read(yaml: YamlValue): A
 }
 
 object YamlReader {
   implicit def func2Reader[A](f: YamlValue => A): YamlReader[A] =
     new YamlReader[A] {
-      def read(json: YamlValue) = f(json)
+      def read(yaml: YamlValue) = f(yaml)
     }
 }
 
