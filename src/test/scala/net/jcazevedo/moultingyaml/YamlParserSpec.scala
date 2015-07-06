@@ -253,6 +253,16 @@ What a year!
               YamlNumber(12)))
       }
 
+    "correctly parse large integers" !
+      withYaml("/ex16-2.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("long_canonical") ->
+              YamlNumber(21474836470L),
+            YamlString("bigint_canonical") ->
+              YamlNumber(BigInt("92233720368547758070"))))
+      }
+
     "correctly parse floating point numbers" !
       withYaml("/ex17.yaml") { yaml =>
         yaml mustEqual YamlObject(

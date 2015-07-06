@@ -32,6 +32,10 @@ package object moultingyaml {
         YamlSet(s.asScala.map(convertToYamlValue).toSet)
       case i: java.lang.Integer =>
         YamlNumber(i.toInt)
+      case i: java.lang.Long =>
+        YamlNumber(i.toLong)
+      case i: java.math.BigInteger =>
+        YamlNumber(BigInt(i))
       case d: java.lang.Double =>
         YamlNumber(d.toDouble)
       case s: java.lang.String =>
