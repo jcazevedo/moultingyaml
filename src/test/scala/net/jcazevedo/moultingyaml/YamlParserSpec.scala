@@ -22,7 +22,7 @@ class YamlParserSpec extends Specification {
     }
   }
 
-  "A YamlParser" should {
+  "The provided YAML parser" should {
     "correctly parse sequences of scalars" !
       withYaml("/examples/ex1.yaml") { yaml =>
         yaml mustEqual YamlArray(

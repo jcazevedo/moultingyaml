@@ -4,7 +4,7 @@ import net.jcazevedo.moultingyaml._
 import org.specs2.mutable._
 
 class YamlPrettyPrinterSpec extends Specification {
-  "A YamlPrettyPrinter" should {
+  "The provided YAML prettyprinter" should {
     "pretty print sequences of scalars" in {
       val yaml = YamlArray(
         Vector(
