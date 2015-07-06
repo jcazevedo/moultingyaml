@@ -30,6 +30,10 @@ package object moultingyaml {
     }
   }
 
+  implicit class PimpedAny[A](val any: A) extends AnyVal {
+    def toYaml(implicit writer: YamlWriter[A]): YamlValue = writer.write(any)
+  }
+
   implicit class PimpedString(val string: String) extends AnyVal {
     def parseYaml: YamlValue = {
       convertToYamlValue(new Yaml().load(string))

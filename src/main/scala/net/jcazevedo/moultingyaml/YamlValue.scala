@@ -2,7 +2,9 @@ package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
 
-sealed trait YamlValue
+sealed abstract class YamlValue {
+  def convertTo[A](implicit reader: YamlReader[A]): A = reader.read(this)
+}
 
 case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue
 
