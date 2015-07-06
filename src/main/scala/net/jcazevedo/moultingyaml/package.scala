@@ -58,8 +58,6 @@ package object moultingyaml {
   }
 
   implicit class PimpedString(val string: String) extends AnyVal {
-    def parseYaml: YamlValue = {
-      convertToYamlValue(new Yaml().load(string))
-    }
+    def parseYaml: YamlValue = convertToYamlValue(new Yaml().load(string))
   }
 }
