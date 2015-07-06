@@ -24,7 +24,7 @@ class YamlParserSpec extends Specification {
 
   "A YamlParser" should {
     "correctly parse sequences of scalars" !
-      withYaml("/ex1.yaml") { yaml =>
+      withYaml("/examples/ex1.yaml") { yaml =>
         yaml mustEqual YamlArray(
           Vector(
             YamlString("Mark McGwire"),
@@ -33,7 +33,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse mappings of scalars to scalars" !
-      withYaml("/ex2.yaml") { yaml =>
+      withYaml("/examples/ex2.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("hr") -> YamlNumber(65),
@@ -42,7 +42,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse mappings of scalars to sequences" !
-      withYaml("/ex3.yaml") { yaml =>
+      withYaml("/examples/ex3.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("american") -> YamlArray(
@@ -58,7 +58,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse sequences of mappings" !
-      withYaml("/ex4.yaml") { yaml =>
+      withYaml("/examples/ex4.yaml") { yaml =>
         yaml mustEqual YamlArray(
           Vector(
             YamlObject(
@@ -74,7 +74,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse sequences of sequences" !
-      withYaml("/ex5.yaml") { yaml =>
+      withYaml("/examples/ex5.yaml") { yaml =>
         yaml mustEqual YamlArray(
           Vector(
             YamlArray(
@@ -95,7 +95,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse mappings of mappings" !
-      withYaml("/ex6.yaml") { yaml =>
+      withYaml("/examples/ex6.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("Mark McGwire") -> YamlObject(
@@ -109,7 +109,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse aliased nodes" !
-      withYaml("/ex7.yaml") { yaml =>
+      withYaml("/examples/ex7.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("hr") ->
@@ -125,7 +125,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse mappings between sequences" !
-      withYaml("/ex8.yaml") { yaml =>
+      withYaml("/examples/ex8.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlArray(
@@ -155,7 +155,7 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly parse in-line nested mapping" !
-      withYaml("/ex9.yaml") { yaml =>
+      withYaml("/examples/ex9.yaml") { yaml =>
         yaml mustEqual YamlArray(
           Vector(
             YamlObject(
@@ -173,20 +173,20 @@ class YamlParserSpec extends Specification {
       }
 
     "correctly preserve new lines in literals" !
-      withYaml("/ex10.yaml") { yaml =>
+      withYaml("/examples/ex10.yaml") { yaml =>
         yaml mustEqual YamlString("""\//||\/||
 // ||  ||__
 """)
       }
 
     "correctly replace newlines by spaces in plain scalar" !
-      withYaml("/ex11.yaml") { yaml =>
+      withYaml("/examples/ex11.yaml") { yaml =>
         yaml mustEqual YamlString(
           "Mark McGwire's year was crippled by a knee injury.")
       }
 
     "correctly parse folded new lines" !
-      withYaml("/ex12.yaml") { yaml =>
+      withYaml("/examples/ex12.yaml") { yaml =>
         yaml mustEqual YamlString(
           """Sammy Sosa completed another fine season with great stats.
 
@@ -198,7 +198,7 @@ What a year!
       }
 
     "correctly determine scope by indentation" !
-      withYaml("/ex13.yaml") { yaml =>
+      withYaml("/examples/ex13.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("name") ->
@@ -210,7 +210,7 @@ What a year!
       }
 
     "correctly parse quoted scalars" !
-      withYaml("/ex14.yaml") { yaml =>
+      withYaml("/examples/ex14.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("unicode") ->
@@ -228,7 +228,7 @@ What a year!
       }
 
     "correctly parse multi-line flow scalars" !
-      withYaml("/ex15.yaml") { yaml =>
+      withYaml("/examples/ex15.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("plain") ->
@@ -238,7 +238,7 @@ What a year!
       }
 
     "correctly parse integers" !
-      withYaml("/ex16.yaml") { yaml =>
+      withYaml("/examples/ex16.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("canonical") ->
@@ -254,7 +254,7 @@ What a year!
       }
 
     "correctly parse large integers" !
-      withYaml("/ex16-2.yaml") { yaml =>
+      withYaml("/examples/ex16-2.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("long_canonical") ->
@@ -264,7 +264,7 @@ What a year!
       }
 
     "correctly parse floating point numbers" !
-      withYaml("/ex17.yaml") { yaml =>
+      withYaml("/examples/ex17.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("canonical") ->
@@ -278,7 +278,7 @@ What a year!
       }
 
     "correctly parse miscellaneous scalars" !
-      withYaml("/ex18.yaml") { yaml =>
+      withYaml("/examples/ex18.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlNull ->
@@ -292,7 +292,7 @@ What a year!
       }
 
     "correctly parse timestamps" !
-      withYaml("/ex19.yaml") { yaml =>
+      withYaml("/examples/ex19.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("canonical") ->
@@ -308,7 +308,7 @@ What a year!
       }
 
     "correctly parse explicit sets" !
-      withYaml("/ex20.yaml") { yaml =>
+      withYaml("/examples/ex20.yaml") { yaml =>
         yaml mustEqual YamlSet(
           Set(
             YamlString("Mark McGwire"),
@@ -317,7 +317,7 @@ What a year!
       }
 
     "correctly parse explicit ordered mappings" !
-      withYaml("/ex21.yaml") { yaml =>
+      withYaml("/examples/ex21.yaml") { yaml =>
         yaml mustEqual YamlObject(
           Map(
             YamlString("Mark McGwire") -> YamlNumber(65),
