@@ -55,6 +55,7 @@ case class YamlNumber[A](value: A)(
     case d: Double => d.asInstanceOf[java.lang.Double]
     case b: Byte => b.asInstanceOf[java.lang.Byte]
     case s: Short => s.asInstanceOf[java.lang.Short]
+    case bi: BigInt => new java.math.BigInteger(bi.toString())
     case other => other.asInstanceOf[Object]
   }
 }
