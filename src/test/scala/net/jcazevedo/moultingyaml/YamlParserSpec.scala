@@ -14,8 +14,12 @@ class YamlParserSpec extends Specification {
     URLDecoder.decode(getClass.getResource(resource).getFile, "UTF-8")
 
   def withYaml(filename: String)(f: YamlValue => Result): Result = {
-    Try(Source.fromFile(getResourceURL(filename)).mkString.parseYaml) match {
-      case Success(yaml) => f(yaml)
+    withYamls(filename) { s => f(s(0)) }
+  }
+
+  def withYamls(filename: String)(f: Seq[YamlValue] => Result): Result = {
+    Try(Source.fromFile(getResourceURL(filename)).mkString.parseYamls) match {
+      case Success(yamls) => f(yamls)
       case Failure(error) =>
         error.printStackTrace()
         org.specs2.execute.Failure("Unable to parse YAML")
@@ -323,6 +327,20 @@ What a year!
             YamlString("Mark McGwire") -> YamlNumber(65),
             YamlString("Sammy Sosa") -> YamlNumber(63),
             YamlString("Ken Griffy") -> YamlNumber(58)))
+      }
+
+    "correctly parse multiple documents in a stream" !
+      withYamls("/examples/ex22.yaml") { yamls =>
+        yamls mustEqual Seq(
+          YamlArray(
+            Vector(
+              YamlString("Mark McGwire"),
+              YamlString("Sammy Sosa"),
+              YamlString("Ken Griffey"))),
+          YamlArray(
+            Vector(
+              YamlString("Chicago Cubs"),
+              YamlString("St Louis Cardinals"))))
       }
   }
 }
