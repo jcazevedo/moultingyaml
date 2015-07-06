@@ -1,5 +1,7 @@
 package net.jcazevedo.moultingyaml
 
+import com.github.nscala_time.time.Imports._
+
 trait BasicFormats {
 
   implicit object IntYamlFormat extends YamlFormat[Int] {
@@ -124,6 +126,15 @@ trait BasicFormats {
       case YamlString(x) => Symbol(x)
       case x =>
         deserializationError("Expected Symbol as YamlString, but got " + x)
+    }
+  }
+
+  implicit object DateTimeYamlFormat extends YamlFormat[DateTime] {
+    def write(x: DateTime) = YamlDate(x)
+    def read(value: YamlValue) = value match {
+      case YamlDate(x) => x
+      case x =>
+        deserializationError("Expected Date as YamlDate, but got " + x)
     }
   }
 }

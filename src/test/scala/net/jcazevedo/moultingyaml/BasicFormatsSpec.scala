@@ -1,5 +1,6 @@
 package net.jcazevedo.moultingyaml
 
+import com.github.nscala_time.time.Imports._
 import org.specs2.mutable._
 
 class BasicFormatsSpec extends Specification with BasicFormats {
@@ -191,6 +192,18 @@ class BasicFormatsSpec extends Specification with BasicFormats {
 
     "convert a YamlString to a Symbol" in {
       YamlString("Hello").convertTo[Symbol] mustEqual 'Hello
+    }
+  }
+
+  "The DateTimeYamlFormat" should {
+
+    "convert a DateTime to a YamlDate" in {
+      "2015-07-01".toDateTime.toYaml mustEqual YamlDate("2015-07-01".toDateTime)
+    }
+
+    "convert a YamlDate to a DateTime" in {
+      YamlDate("2015-07-01".toDateTime).convertTo[DateTime] mustEqual
+        "2015-07-01".toDateTime
     }
   }
 }
