@@ -9,7 +9,7 @@ package object moultingyaml {
   case class DeserializationException(msg: String,
                                       cause: Throwable = null,
                                       fieldNames: List[String] = Nil)
-    extends RuntimeException(msg, cause)
+      extends RuntimeException(msg, cause)
 
   case class SerializationException(msg: String) extends RuntimeException(msg)
 
@@ -23,8 +23,8 @@ package object moultingyaml {
   private[moultingyaml] def convertToYamlValue(obj: Object): YamlValue = {
     obj match {
       case m: java.util.Map[Object @unchecked, Object @unchecked] =>
-        YamlObject(m.asScala.map { case (k, v) =>
-          convertToYamlValue(k) -> convertToYamlValue(v)
+        YamlObject(m.asScala.map {
+          case (k, v) => convertToYamlValue(k) -> convertToYamlValue(v)
         }.toMap)
       case l: java.util.List[Object @unchecked] =>
         YamlArray(l.asScala.map(convertToYamlValue).toVector)

@@ -1,13 +1,4 @@
-import com.typesafe.sbt.SbtScalariform
 import scalariform.formatter.preferences._
-
-lazy val formattingPreferences = FormattingPreferences().
-  setPreference(AlignParameters, true).
-  setPreference(DoubleIndentClassDeclaration, true)
-
-lazy val formattingSettings = SbtScalariform.scalariformSettings ++ Seq(
-  ScalariformKeys.preferences in Compile := formattingPreferences,
-  ScalariformKeys.preferences in Test := formattingPreferences)
 
 name := "moultingyaml"
 
@@ -28,4 +19,8 @@ scalacOptions ++= Seq(
   "-feature",
   "-language:implicitConversions")
 
-formattingSettings
+scalariformSettings
+
+ScalariformKeys.preferences := ScalariformKeys.preferences.value
+  .setPreference(AlignParameters, true)
+  .setPreference(DoubleIndentClassDeclaration, true)

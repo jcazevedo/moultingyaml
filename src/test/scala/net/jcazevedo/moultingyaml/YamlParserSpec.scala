@@ -7,7 +7,7 @@ import org.specs2.execute.Result
 import org.specs2.matcher.MatchResult
 import org.specs2.mutable._
 import scala.io.Source
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 class YamlParserSpec extends Specification {
   def getResourceURL(resource: String): String =
@@ -24,123 +24,123 @@ class YamlParserSpec extends Specification {
 
   "A YamlParser" should {
     "correctly parse sequences of scalars" !
-    withYaml("/ex1.yaml") { yaml =>
-      yaml mustEqual YamlArray(
-        Vector(
-          YamlString("Mark McGwire"),
-          YamlString("Sammy Sosa"),
-          YamlString("Ken Griffey")))
-    }
+      withYaml("/ex1.yaml") { yaml =>
+        yaml mustEqual YamlArray(
+          Vector(
+            YamlString("Mark McGwire"),
+            YamlString("Sammy Sosa"),
+            YamlString("Ken Griffey")))
+      }
 
     "correctly parse mappings of scalars to scalars" !
-    withYaml("/ex2.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("hr") -> YamlNumber(65),
-          YamlString("avg") -> YamlNumber(0.278),
-          YamlString("rbi") -> YamlNumber(147)))
-    }
+      withYaml("/ex2.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("hr") -> YamlNumber(65),
+            YamlString("avg") -> YamlNumber(0.278),
+            YamlString("rbi") -> YamlNumber(147)))
+      }
 
     "correctly parse mappings of scalars to sequences" !
-    withYaml("/ex3.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("american") -> YamlArray(
-            Vector(
-              YamlString("Boston Red Sox"),
-              YamlString("Detroit Tigers"),
-              YamlString("New York Yankees"))),
-          YamlString("national") -> YamlArray(
-            Vector(
-              YamlString("New York Mets"),
-              YamlString("Chicago Cubs"),
-              YamlString("Atlanta Braves")))))
-    }
+      withYaml("/ex3.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("american") -> YamlArray(
+              Vector(
+                YamlString("Boston Red Sox"),
+                YamlString("Detroit Tigers"),
+                YamlString("New York Yankees"))),
+            YamlString("national") -> YamlArray(
+              Vector(
+                YamlString("New York Mets"),
+                YamlString("Chicago Cubs"),
+                YamlString("Atlanta Braves")))))
+      }
 
     "correctly parse sequences of mappings" !
-    withYaml("/ex4.yaml") { yaml =>
-      yaml mustEqual YamlArray(
-        Vector(
-          YamlObject(
-            Map(
-              YamlString("name") -> YamlString("Mark McGwire"),
-              YamlString("hr") -> YamlNumber(65),
-              YamlString("avg") -> YamlNumber(0.278))),
-          YamlObject(
-            Map(
-              YamlString("name") -> YamlString("Sammy Sosa"),
-              YamlString("hr") -> YamlNumber(63),
-              YamlString("avg") -> YamlNumber(0.288)))))
-    }
+      withYaml("/ex4.yaml") { yaml =>
+        yaml mustEqual YamlArray(
+          Vector(
+            YamlObject(
+              Map(
+                YamlString("name") -> YamlString("Mark McGwire"),
+                YamlString("hr") -> YamlNumber(65),
+                YamlString("avg") -> YamlNumber(0.278))),
+            YamlObject(
+              Map(
+                YamlString("name") -> YamlString("Sammy Sosa"),
+                YamlString("hr") -> YamlNumber(63),
+                YamlString("avg") -> YamlNumber(0.288)))))
+      }
 
     "correctly parse sequences of sequences" !
-    withYaml("/ex5.yaml") { yaml =>
-      yaml mustEqual YamlArray(
-        Vector(
-          YamlArray(
-            Vector(
-              YamlString("name"),
-              YamlString("hr"),
-              YamlString("avg"))),
-          YamlArray(
-            Vector(
-              YamlString("Mark McGwire"),
-              YamlNumber(65),
-              YamlNumber(0.278))),
-          YamlArray(
-            Vector(
-              YamlString("Sammy Sosa"),
-              YamlNumber(63),
-              YamlNumber(0.288)))))
-    }
-
-    "correctly parse mappings of mappings" !
-    withYaml("/ex6.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("Mark McGwire") -> YamlObject(
-            Map(
-              YamlString("hr") -> YamlNumber(65),
-              YamlString("avg") -> YamlNumber(0.278))),
-          YamlString("Sammy Sosa") -> YamlObject(
-            Map(
-              YamlString("hr") -> YamlNumber(63),
-              YamlString("avg") -> YamlNumber(0.288)))))
-    }
-
-    "correctly parse aliased nodes" !
-    withYaml("/ex7.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("hr") ->
+      withYaml("/ex5.yaml") { yaml =>
+        yaml mustEqual YamlArray(
+          Vector(
+            YamlArray(
+              Vector(
+                YamlString("name"),
+                YamlString("hr"),
+                YamlString("avg"))),
             YamlArray(
               Vector(
                 YamlString("Mark McGwire"),
-                YamlString("Sammy Sosa"))),
-          YamlString("rbi") ->
+                YamlNumber(65),
+                YamlNumber(0.278))),
             YamlArray(
               Vector(
                 YamlString("Sammy Sosa"),
-                YamlString("Ken Griffey")))))
-    }
+                YamlNumber(63),
+                YamlNumber(0.288)))))
+      }
+
+    "correctly parse mappings of mappings" !
+      withYaml("/ex6.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("Mark McGwire") -> YamlObject(
+              Map(
+                YamlString("hr") -> YamlNumber(65),
+                YamlString("avg") -> YamlNumber(0.278))),
+            YamlString("Sammy Sosa") -> YamlObject(
+              Map(
+                YamlString("hr") -> YamlNumber(63),
+                YamlString("avg") -> YamlNumber(0.288)))))
+      }
+
+    "correctly parse aliased nodes" !
+      withYaml("/ex7.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("hr") ->
+              YamlArray(
+                Vector(
+                  YamlString("Mark McGwire"),
+                  YamlString("Sammy Sosa"))),
+            YamlString("rbi") ->
+              YamlArray(
+                Vector(
+                  YamlString("Sammy Sosa"),
+                  YamlString("Ken Griffey")))))
+      }
 
     "correctly parse mappings between sequences" !
-    withYaml("/ex8.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlArray(
-            Vector(
-              YamlString("Detroit Tigers"),
-              YamlString("Chicago cubs"))) ->
+      withYaml("/ex8.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
             YamlArray(
               Vector(
-                YamlDate(new DateTime(
-                  new DateTime("2001-07-23", DateTimeZone.UTC).getMillis(),
-                  DateTimeZone.getDefault())))),
-          YamlArray(
-            Vector(
-              YamlString("New York Yankees"),
-              YamlString("Atlanta Braves"))) ->
+                YamlString("Detroit Tigers"),
+                YamlString("Chicago cubs"))) ->
+              YamlArray(
+                Vector(
+                  YamlDate(new DateTime(
+                    new DateTime("2001-07-23", DateTimeZone.UTC).getMillis(),
+                    DateTimeZone.getDefault())))),
+            YamlArray(
+              Vector(
+                YamlString("New York Yankees"),
+                YamlString("Atlanta Braves"))) ->
               YamlArray(
                 Vector(
                   YamlDate(new DateTime(
@@ -152,167 +152,167 @@ class YamlParserSpec extends Specification {
                   YamlDate(new DateTime(
                     new DateTime("2001-08-14", DateTimeZone.UTC).getMillis(),
                     DateTimeZone.getDefault()))))))
-    }
+      }
 
     "correctly parse in-line nested mapping" !
-    withYaml("/ex9.yaml") { yaml =>
-      yaml mustEqual YamlArray(
-        Vector(
-          YamlObject(
-            Map(
-              YamlString("item") -> YamlString("Super Hoop"),
-              YamlString("quantity") -> YamlNumber(1))),
-          YamlObject(
-            Map(
-              YamlString("item") -> YamlString("Basketball"),
-              YamlString("quantity") -> YamlNumber(4))),
-          YamlObject(
-            Map(
-              YamlString("item") -> YamlString("Big Shoes"),
-              YamlString("quantity") -> YamlNumber(1)))))
-    }
+      withYaml("/ex9.yaml") { yaml =>
+        yaml mustEqual YamlArray(
+          Vector(
+            YamlObject(
+              Map(
+                YamlString("item") -> YamlString("Super Hoop"),
+                YamlString("quantity") -> YamlNumber(1))),
+            YamlObject(
+              Map(
+                YamlString("item") -> YamlString("Basketball"),
+                YamlString("quantity") -> YamlNumber(4))),
+            YamlObject(
+              Map(
+                YamlString("item") -> YamlString("Big Shoes"),
+                YamlString("quantity") -> YamlNumber(1)))))
+      }
 
     "correctly preserve new lines in literals" !
-    withYaml("/ex10.yaml") { yaml =>
-      yaml mustEqual YamlString("""\//||\/||
+      withYaml("/ex10.yaml") { yaml =>
+        yaml mustEqual YamlString("""\//||\/||
 // ||  ||__
 """)
-    }
+      }
 
     "correctly replace newlines by spaces in plain scalar" !
-    withYaml("/ex11.yaml") { yaml =>
-      yaml mustEqual YamlString(
-        "Mark McGwire's year was crippled by a knee injury.")
-    }
+      withYaml("/ex11.yaml") { yaml =>
+        yaml mustEqual YamlString(
+          "Mark McGwire's year was crippled by a knee injury.")
+      }
 
     "correctly parse folded new lines" !
-    withYaml("/ex12.yaml") { yaml =>
-      yaml mustEqual YamlString(
-        """Sammy Sosa completed another fine season with great stats.
+      withYaml("/ex12.yaml") { yaml =>
+        yaml mustEqual YamlString(
+          """Sammy Sosa completed another fine season with great stats.
 
   63 Home Runs
   0.288 Batting Average
 
 What a year!
 """)
-    }
+      }
 
     "correctly determine scope by indentation" !
-    withYaml("/ex13.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("name") ->
-            YamlString("Mark McGwire"),
-          YamlString("accomplishment") ->
-            YamlString("Mark set a major league home run record in 1998.\n"),
-          YamlString("stats") ->
-            YamlString("65 Home Runs\n0.278 Batting Average\n")))
-    }
+      withYaml("/ex13.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("name") ->
+              YamlString("Mark McGwire"),
+            YamlString("accomplishment") ->
+              YamlString("Mark set a major league home run record in 1998.\n"),
+            YamlString("stats") ->
+              YamlString("65 Home Runs\n0.278 Batting Average\n")))
+      }
 
     "correctly parse quoted scalars" !
-    withYaml("/ex14.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("unicode") ->
-            YamlString("Sosa did fine.\u263A"),
-          YamlString("control") ->
-            YamlString("\b1998\t1999\t2000\n"),
-          YamlString("hexesc") ->
-            YamlString("\u0013\u0010 is \r\n"),
-          YamlString("single") ->
-            YamlString(""""Howdy!" he cried."""),
-          YamlString("quoted") ->
-            YamlString(" # not a 'comment'."),
-          YamlString("tie-fighter") ->
-            YamlString("""|\-*-/|""")))
-    }
+      withYaml("/ex14.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("unicode") ->
+              YamlString("Sosa did fine.\u263A"),
+            YamlString("control") ->
+              YamlString("\b1998\t1999\t2000\n"),
+            YamlString("hexesc") ->
+              YamlString("\u0013\u0010 is \r\n"),
+            YamlString("single") ->
+              YamlString(""""Howdy!" he cried."""),
+            YamlString("quoted") ->
+              YamlString(" # not a 'comment'."),
+            YamlString("tie-fighter") ->
+              YamlString("""|\-*-/|""")))
+      }
 
     "correctly parse multi-line flow scalars" !
-    withYaml("/ex15.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("plain") ->
-            YamlString("This unquoted scalar spans many lines."),
-          YamlString("quoted") ->
-            YamlString("So does this quoted scalar.\n")))
-    }
+      withYaml("/ex15.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("plain") ->
+              YamlString("This unquoted scalar spans many lines."),
+            YamlString("quoted") ->
+              YamlString("So does this quoted scalar.\n")))
+      }
 
     "correctly parse integers" !
-    withYaml("/ex16.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("canonical") ->
-            YamlNumber(12345),
-          YamlString("decimal") ->
-            YamlNumber(12345),
-          YamlString("sexagesimal") ->
-            YamlNumber(12345),
-          YamlString("octal") ->
-            YamlNumber(12),
-          YamlString("hexadecimal") ->
-            YamlNumber(12)))
-    }
+      withYaml("/ex16.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("canonical") ->
+              YamlNumber(12345),
+            YamlString("decimal") ->
+              YamlNumber(12345),
+            YamlString("sexagesimal") ->
+              YamlNumber(12345),
+            YamlString("octal") ->
+              YamlNumber(12),
+            YamlString("hexadecimal") ->
+              YamlNumber(12)))
+      }
 
     "correctly parse floating point numbers" !
-    withYaml("/ex17.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("canonical") ->
-            YamlNumber(1230.15),
-          YamlString("exponential") ->
-            YamlNumber(1230.15),
-          YamlString("sexagesimal") ->
-            YamlNumber(1230.15),
-          YamlString("fixed") ->
-            YamlNumber(1230.15)))
-    }
+      withYaml("/ex17.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("canonical") ->
+              YamlNumber(1230.15),
+            YamlString("exponential") ->
+              YamlNumber(1230.15),
+            YamlString("sexagesimal") ->
+              YamlNumber(1230.15),
+            YamlString("fixed") ->
+              YamlNumber(1230.15)))
+      }
 
     "correctly parse miscellaneous scalars" !
-    withYaml("/ex18.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlNull ->
-            YamlNull,
-          YamlBoolean(true) ->
-            YamlString("y"),
-          YamlBoolean(false) ->
-            YamlString("n"),
-          YamlString("string") ->
-            YamlString("12345")))
-    }
+      withYaml("/ex18.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlNull ->
+              YamlNull,
+            YamlBoolean(true) ->
+              YamlString("y"),
+            YamlBoolean(false) ->
+              YamlString("n"),
+            YamlString("string") ->
+              YamlString("12345")))
+      }
 
     "correctly parse timestamps" !
-    withYaml("/ex19.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("canonical") ->
-            YamlDate("2001-12-15T02:59:43.1Z".toDateTime),
-          YamlString("iso8601") ->
-            YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
-          YamlString("spaced") ->
-            YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
-          YamlString("date") ->
-            YamlDate(new DateTime(
-              new DateTime("2002-12-14", DateTimeZone.UTC).getMillis(),
-              DateTimeZone.getDefault()))))
-    }
+      withYaml("/ex19.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("canonical") ->
+              YamlDate("2001-12-15T02:59:43.1Z".toDateTime),
+            YamlString("iso8601") ->
+              YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
+            YamlString("spaced") ->
+              YamlDate("2001-12-14T21:59:43.10-05:00".toDateTime),
+            YamlString("date") ->
+              YamlDate(new DateTime(
+                new DateTime("2002-12-14", DateTimeZone.UTC).getMillis(),
+                DateTimeZone.getDefault()))))
+      }
 
     "correctly parse explicit sets" !
-    withYaml("/ex20.yaml") { yaml =>
-      yaml mustEqual YamlSet(
-        Set(
-          YamlString("Mark McGwire"),
-          YamlString("Sammy Sosa"),
-          YamlString("Ken Griff")))
-    }
+      withYaml("/ex20.yaml") { yaml =>
+        yaml mustEqual YamlSet(
+          Set(
+            YamlString("Mark McGwire"),
+            YamlString("Sammy Sosa"),
+            YamlString("Ken Griff")))
+      }
 
     "correctly parse explicit ordered mappings" !
-    withYaml("/ex21.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        Map(
-          YamlString("Mark McGwire") -> YamlNumber(65),
-          YamlString("Sammy Sosa") -> YamlNumber(63),
-          YamlString("Ken Griffy") -> YamlNumber(58)))
-    }
+      withYaml("/ex21.yaml") { yaml =>
+        yaml mustEqual YamlObject(
+          Map(
+            YamlString("Mark McGwire") -> YamlNumber(65),
+            YamlString("Sammy Sosa") -> YamlNumber(63),
+            YamlString("Ken Griffy") -> YamlNumber(58)))
+      }
   }
 }
