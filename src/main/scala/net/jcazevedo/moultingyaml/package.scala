@@ -6,6 +6,10 @@ import scala.collection.JavaConverters._
 
 package object moultingyaml {
 
+  // format: OFF
+  private[moultingyaml] type YF[A] = YamlFormat[A]
+  // format: ON
+
   case class DeserializationException(msg: String,
                                       cause: Throwable = null,
                                       fieldNames: List[String] = Nil)
