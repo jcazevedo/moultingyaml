@@ -1,0 +1,5 @@
+package net.jcazevedo.moultingyaml
+
+trait DefaultYamlProtocol extends BasicFormats
+
+object DefaultYamlProtocol extends DefaultYamlProtocol

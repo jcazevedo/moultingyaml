@@ -14,7 +14,8 @@ case class YamlSet(set: Set[YamlValue]) extends YamlValue
 
 case class YamlString(value: String) extends YamlValue
 
-case class YamlNumber[A: Numeric](value: A) extends YamlValue
+case class YamlNumber[A](value: A)(
+  implicit private[moultingyaml] val num: Numeric[A]) extends YamlValue
 
 case class YamlDate(date: DateTime) extends YamlValue
 
