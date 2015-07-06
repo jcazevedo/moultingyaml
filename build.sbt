@@ -10,3 +10,9 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "2.0.0",
   "org.yaml"                %  "snakeyaml"  % "1.15",
   "org.specs2"             %% "specs2-core" % "2.4.17" % "test")
+
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-feature",
+  "-language:implicitConversions")
