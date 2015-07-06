@@ -48,6 +48,8 @@ package object moultingyaml {
         YamlDate(new DateTime(d))
       case b: java.lang.Boolean =>
         YamlBoolean(b)
+      case ba: Array[Byte] =>
+        YamlString(new String(ba))
       case n if n == null =>
         YamlNull
     }
