@@ -5,6 +5,21 @@ import org.yaml.snakeyaml.Yaml
 import scala.collection.JavaConverters._
 
 package object moultingyaml {
+
+  case class DeserializationException(msg: String,
+                                      cause: Throwable = null,
+                                      fieldNames: List[String] = Nil)
+    extends RuntimeException(msg, cause)
+
+  case class SerializationException(msg: String) extends RuntimeException(msg)
+
+  def deserializationError(msg: String,
+                           cause: Throwable = null,
+                           fieldNames: List[String] = Nil) =
+    throw new DeserializationException(msg, cause, fieldNames)
+
+  def serializationError(msg: String) = throw new SerializationException(msg)
+
   private[moultingyaml] def convertToYamlValue(obj: Object): YamlValue = {
     obj match {
       case m: java.util.Map[Object @unchecked, Object @unchecked] =>
