@@ -5,5 +5,6 @@ trait DefaultYamlProtocol
   with StandardFormats
   with CollectionFormats
   with ProductFormats
+  with AdditionalFormats
 
 object DefaultYamlProtocol extends DefaultYamlProtocol
