@@ -1,5 +1,7 @@
 # MoultingYAML
 
+![Build Status](https://travis-ci.org/jcazevedo/moultingyaml.svg?branch=master)
+
 MoultingYAML is a Scala wrapper for [SnakeYAML][snakeyaml] based on
 [spray-json][spray-json].
 
