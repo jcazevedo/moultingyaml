@@ -26,6 +26,10 @@ case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
   }
 }
 
+object YamlObject {
+  def apply(fields: (YamlValue, YamlValue)*) = new YamlObject(Map(fields: _*))
+}
+
 case class YamlArray(elements: Vector[YamlValue]) extends YamlValue {
   private[moultingyaml] lazy val snakeYamlObject: Object = {
     seqAsJavaList(elements.map(_.snakeYamlObject))
@@ -40,6 +44,10 @@ case class YamlSet(set: Set[YamlValue]) extends YamlValue {
   private[moultingyaml] lazy val snakeYamlObject: Object = {
     setAsJavaSet(set.map(_.snakeYamlObject))
   }
+}
+
+object YamlSet {
+  def apply(elements: YamlValue*) = new YamlSet(elements.toSet)
 }
 
 case class YamlString(value: String) extends YamlValue {

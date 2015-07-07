@@ -1,16 +1,14 @@
 package net.jcazevedo.moultingyaml
 
-import net.jcazevedo.moultingyaml._
 import org.specs2.mutable._
 
 class YamlPrettyPrinterSpec extends Specification {
   "The provided YAML prettyprinter" should {
     "pretty print sequences of scalars" in {
       val yaml = YamlArray(
-        Vector(
-          YamlString("Mark McGwire"),
-          YamlString("Sammy Sosa"),
-          YamlString("Ken Griffey")))
+        YamlString("Mark McGwire"),
+        YamlString("Sammy Sosa"),
+        YamlString("Ken Griffey"))
 
       yaml.prettyPrint mustEqual """- Mark McGwire
 - Sammy Sosa
@@ -20,10 +18,9 @@ class YamlPrettyPrinterSpec extends Specification {
 
     "pretty print yaml objects" in {
       val yaml = YamlObject(
-        Map(
-          YamlString("hr") -> YamlNumber(65),
-          YamlString("avg") -> YamlNumber(0.278),
-          YamlString("rbi") -> YamlNumber(147)))
+        YamlString("hr") -> YamlNumber(65),
+        YamlString("avg") -> YamlNumber(0.278),
+        YamlString("rbi") -> YamlNumber(147))
 
       yaml.prettyPrint mustEqual """hr: 65
 avg: 0.278
@@ -33,17 +30,14 @@ rbi: 147
 
     "pretty print yaml objects with sequences on it" in {
       val yaml = YamlObject(
-        Map(
-          YamlString("american") -> YamlArray(
-            Vector(
-              YamlString("Boston Red Sox"),
-              YamlString("Detroit Tigers"),
-              YamlString("New York Yankees"))),
-          YamlString("national") -> YamlArray(
-            Vector(
-              YamlString("New York Mets"),
-              YamlString("Chicago Cubs"),
-              YamlString("Atlanta Braves")))))
+        YamlString("american") -> YamlArray(
+          YamlString("Boston Red Sox"),
+          YamlString("Detroit Tigers"),
+          YamlString("New York Yankees")),
+        YamlString("national") -> YamlArray(
+          YamlString("New York Mets"),
+          YamlString("Chicago Cubs"),
+          YamlString("Atlanta Braves")))
 
       yaml.prettyPrint mustEqual """american:
 - Boston Red Sox
@@ -58,17 +52,14 @@ national:
 
     "pretty print sequences of mappings" in {
       val yaml = YamlArray(
-        Vector(
-          YamlObject(
-            Map(
-              YamlString("name") -> YamlString("Mark McGwire"),
-              YamlString("hr") -> YamlNumber(65),
-              YamlString("avg") -> YamlNumber(0.278))),
-          YamlObject(
-            Map(
-              YamlString("name") -> YamlString("Sammy Sosa"),
-              YamlString("hr") -> YamlNumber(63),
-              YamlString("avg") -> YamlNumber(0.288)))))
+        YamlObject(
+          YamlString("name") -> YamlString("Mark McGwire"),
+          YamlString("hr") -> YamlNumber(65),
+          YamlString("avg") -> YamlNumber(0.278)),
+        YamlObject(
+          YamlString("name") -> YamlString("Sammy Sosa"),
+          YamlString("hr") -> YamlNumber(63),
+          YamlString("avg") -> YamlNumber(0.288)))
 
       yaml.prettyPrint mustEqual """- name: Mark McGwire
   hr: 65
@@ -81,22 +72,18 @@ national:
 
     "pretty print sequences of sequences" in {
       val yaml = YamlArray(
-        Vector(
-          YamlArray(
-            Vector(
-              YamlString("name"),
-              YamlString("hr"),
-              YamlString("avg"))),
-          YamlArray(
-            Vector(
-              YamlString("Mark McGwire"),
-              YamlNumber(65),
-              YamlNumber(0.278))),
-          YamlArray(
-            Vector(
-              YamlString("Sammy Sosa"),
-              YamlNumber(63),
-              YamlNumber(0.288)))))
+        YamlArray(
+          YamlString("name"),
+          YamlString("hr"),
+          YamlString("avg")),
+        YamlArray(
+          YamlString("Mark McGwire"),
+          YamlNumber(65),
+          YamlNumber(0.278)),
+        YamlArray(
+          YamlString("Sammy Sosa"),
+          YamlNumber(63),
+          YamlNumber(0.288)))
 
       yaml.prettyPrint mustEqual """- - name
   - hr
@@ -112,15 +99,12 @@ national:
 
     "pretty print mappings of mappings" in {
       val yaml = YamlObject(
-        Map(
-          YamlString("Mark McGwire") -> YamlObject(
-            Map(
-              YamlString("hr") -> YamlNumber(65),
-              YamlString("avg") -> YamlNumber(0.278))),
-          YamlString("Sammy Sosa") -> YamlObject(
-            Map(
-              YamlString("hr") -> YamlNumber(63),
-              YamlString("avg") -> YamlNumber(0.288)))))
+        YamlString("Mark McGwire") -> YamlObject(
+          YamlString("hr") -> YamlNumber(65),
+          YamlString("avg") -> YamlNumber(0.278)),
+        YamlString("Sammy Sosa") -> YamlObject(
+          YamlString("hr") -> YamlNumber(63),
+          YamlString("avg") -> YamlNumber(0.288)))
 
       yaml.prettyPrint mustEqual """Mark McGwire:
   hr: 65
@@ -133,23 +117,18 @@ Sammy Sosa:
 
     "pretty print mappings between sequences" in {
       val yaml = YamlObject(
-        Map(
+        YamlArray(
+          YamlString("Detroit Tigers"),
+          YamlString("Chicago cubs")) ->
           YamlArray(
-            Vector(
-              YamlString("Detroit Tigers"),
-              YamlString("Chicago cubs"))) ->
-            YamlArray(
-              Vector(
-                YamlString("2001-07-23"))),
+            YamlString("2001-07-23")),
+        YamlArray(
+          YamlString("New York Yankees"),
+          YamlString("Atlanta Braves")) ->
           YamlArray(
-            Vector(
-              YamlString("New York Yankees"),
-              YamlString("Atlanta Braves"))) ->
-            YamlArray(
-              Vector(
-                YamlString("2001-07-02"),
-                YamlString("2001-08-12"),
-                YamlString("2001-08-14")))))
+            YamlString("2001-07-02"),
+            YamlString("2001-08-12"),
+            YamlString("2001-08-14")))
 
       yaml.prettyPrint mustEqual """? - Detroit Tigers
   - Chicago cubs
@@ -192,7 +171,7 @@ What a year!
     }
 
     "pretty print numbers" in {
-      val yaml = YamlObject(Map(
+      val yaml = YamlObject(
         YamlString("int") ->
           YamlNumber(42),
         YamlString("float") ->
@@ -200,7 +179,7 @@ What a year!
         YamlString("long_canonical") ->
           YamlNumber(21474836470L),
         YamlString("bigint_canonical") ->
-          YamlNumber(BigInt("92233720368547758070"))))
+          YamlNumber(BigInt("92233720368547758070")))
 
       yaml.prettyPrint mustEqual """int: 42
 float: 0.4555
@@ -211,15 +190,14 @@ bigint_canonical: 92233720368547758070
 
     "pretty print miscellaneous scalars" in {
       val yaml = YamlObject(
-        Map(
-          YamlNull ->
-            YamlNull,
-          YamlBoolean(true) ->
-            YamlString("y"),
-          YamlBoolean(false) ->
-            YamlString("n"),
-          YamlString("string") ->
-            YamlString("12345")))
+        YamlNull ->
+          YamlNull,
+        YamlBoolean(true) ->
+          YamlString("y"),
+        YamlBoolean(false) ->
+          YamlString("n"),
+        YamlString("string") ->
+          YamlString("12345"))
 
       yaml.prettyPrint mustEqual """null: null
 true: y
@@ -230,10 +208,9 @@ string: '12345'
 
     "pretty print explicit sets" in {
       val yaml = YamlSet(
-        Set(
-          YamlString("Mark McGwire"),
-          YamlString("Sammy Sosa"),
-          YamlString("Ken Griff")))
+        YamlString("Mark McGwire"),
+        YamlString("Sammy Sosa"),
+        YamlString("Ken Griff"))
 
       yaml.prettyPrint mustEqual """!!set
 Mark McGwire: null
