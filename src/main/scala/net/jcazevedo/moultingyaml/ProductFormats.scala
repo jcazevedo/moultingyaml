@@ -240,8 +240,13 @@ trait ProductFormats {
           deserializationError(msg, cause, fieldName :: fieldNames)
       }
 
-    case _ => deserializationError("YamlObject expected in field '" + fieldName
-      + "'", fieldNames = fieldName :: Nil)
+    case YamlNull if isOption =>
+      None.asInstanceOf[A]
+
+    case _ =>
+      deserializationError((if (isOption) "Either YamlNull or " else "") +
+        "YamlObject with '" + fieldName + "' expected",
+        fieldNames = fieldName :: Nil)
   }
 }
 
