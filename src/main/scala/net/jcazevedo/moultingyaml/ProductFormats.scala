@@ -240,8 +240,9 @@ trait ProductFormats {
           deserializationError(msg, cause, fieldName :: fieldNames)
       }
 
-    case _ => deserializationError("YamlObject expected in field '" + fieldName
-      + "'", fieldNames = fieldName :: Nil)
+    case other =>
+      deserializationError("YamlObject expected, but got " + other,
+        fieldNames = fieldName :: Nil)
   }
 }
 
