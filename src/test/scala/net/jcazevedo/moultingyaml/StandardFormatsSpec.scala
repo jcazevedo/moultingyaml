@@ -38,7 +38,7 @@ class StandardFormatsSpec extends Specification with StandardFormats
     }
 
     "convert the left side of an Either value from a YamlValue" in {
-      YamlNumber(42).convertTo[Either[Int, String]] mustEqual Left(42)
+      YamlNumber(42).convertTo[Either[Int, Boolean]] mustEqual Left(42)
     }
 
     "convert the right side of an Either value from a YamlValue" in {

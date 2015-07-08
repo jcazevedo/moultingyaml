@@ -115,6 +115,8 @@ trait BasicFormats {
     }
     def read(value: YamlValue) = value match {
       case YamlString(x) => x
+      case YamlBoolean(x) => x.toString
+      case YamlNumber(x) => x.toString()
       case x =>
         deserializationError("Expected String as YamlString, but got " + x)
     }
