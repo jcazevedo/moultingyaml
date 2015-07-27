@@ -8,6 +8,9 @@ class ProductFormatsSpec extends Specification {
   case class Test2(a: Int, b: Option[Double])
   case class Test3[A, B](as: List[A], bs: List[B])
   case class Test4(t2: Test2)
+  case class Test5(a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int, a7: Int, a8: Int, a9: Int,
+                   a10: Int, a11: Int, a12: Int, a13: Int, a14: Int, a15: Int, a16: Int, a17: Int,
+                   a18: Int, a19: Int, a20: Int, a21: Int, a22: Int)
   case class TestTransient(a: Int, b: Option[Double]) {
     @transient var c = false
   }
@@ -24,6 +27,7 @@ class ProductFormatsSpec extends Specification {
     implicit def test3Format[A: YamlFormat, B: YamlFormat] =
       yamlFormat2(Test3.apply[A, B])
     implicit val test4Format = yamlFormat1(Test4)
+    implicit val test5Format = yamlFormat22(Test5)
     implicit val testTransientFormat = yamlFormat2(TestTransient)
     implicit val testStaticFormat = yamlFormat2(TestStatic)
     implicit val testMangledFormat = yamlFormat5(TestMangled)
@@ -198,6 +202,40 @@ class ProductFormatsSpec extends Specification {
     "convert a YamlObject to the respective case class instance" in {
       yaml.parseYaml.convertTo[TestMangled] mustEqual
         TestMangled(42, "Karl", true, 26, 1.0f)
+    }
+  }
+
+  "A YamlFormat created with `yamlFormat`, for a case class with 22 elements," should {
+    val obj = Test5(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
+    val yaml = YamlObject(YamlString("a1") -> YamlNumber(1),
+      YamlString("a2") -> YamlNumber(2),
+      YamlString("a3") -> YamlNumber(3),
+      YamlString("a4") -> YamlNumber(4),
+      YamlString("a5") -> YamlNumber(5),
+      YamlString("a6") -> YamlNumber(6),
+      YamlString("a7") -> YamlNumber(7),
+      YamlString("a8") -> YamlNumber(8),
+      YamlString("a9") -> YamlNumber(9),
+      YamlString("a10") -> YamlNumber(10),
+      YamlString("a11") -> YamlNumber(11),
+      YamlString("a12") -> YamlNumber(12),
+      YamlString("a13") -> YamlNumber(13),
+      YamlString("a14") -> YamlNumber(14),
+      YamlString("a15") -> YamlNumber(15),
+      YamlString("a16") -> YamlNumber(16),
+      YamlString("a17") -> YamlNumber(17),
+      YamlString("a18") -> YamlNumber(18),
+      YamlString("a19") -> YamlNumber(19),
+      YamlString("a20") -> YamlNumber(20),
+      YamlString("a21") -> YamlNumber(21),
+      YamlString("a22") -> YamlNumber(22))
+
+    "convert to a respective YamlObject" in {
+      obj.toYaml mustEqual yaml
+    }
+
+    "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[Test5] mustEqual obj
     }
   }
 }
