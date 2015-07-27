@@ -10,10 +10,11 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("Sammy Sosa"),
         YamlString("Ken Griffey"))
 
-      yaml.prettyPrint mustEqual """- Mark McGwire
-- Sammy Sosa
-- Ken Griffey
-"""
+      yaml.prettyPrint mustEqual
+        """- Mark McGwire
+          |- Sammy Sosa
+          |- Ken Griffey
+          |""".stripMargin
     }
 
     "pretty print yaml objects" in {
@@ -22,10 +23,11 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("avg") -> YamlNumber(0.278),
         YamlString("rbi") -> YamlNumber(147))
 
-      yaml.prettyPrint mustEqual """hr: 65
-avg: 0.278
-rbi: 147
-"""
+      yaml.prettyPrint mustEqual
+        """hr: 65
+          |avg: 0.278
+          |rbi: 147
+          |""".stripMargin
     }
 
     "pretty print yaml objects with sequences on it" in {
@@ -39,15 +41,16 @@ rbi: 147
           YamlString("Chicago Cubs"),
           YamlString("Atlanta Braves")))
 
-      yaml.prettyPrint mustEqual """american:
-- Boston Red Sox
-- Detroit Tigers
-- New York Yankees
-national:
-- New York Mets
-- Chicago Cubs
-- Atlanta Braves
-"""
+      yaml.prettyPrint mustEqual
+        """american:
+          |- Boston Red Sox
+          |- Detroit Tigers
+          |- New York Yankees
+          |national:
+          |- New York Mets
+          |- Chicago Cubs
+          |- Atlanta Braves
+          |""".stripMargin
     }
 
     "pretty print sequences of mappings" in {
@@ -61,13 +64,14 @@ national:
           YamlString("hr") -> YamlNumber(63),
           YamlString("avg") -> YamlNumber(0.288)))
 
-      yaml.prettyPrint mustEqual """- name: Mark McGwire
-  hr: 65
-  avg: 0.278
-- name: Sammy Sosa
-  hr: 63
-  avg: 0.288
-"""
+      yaml.prettyPrint mustEqual
+        """- name: Mark McGwire
+          |  hr: 65
+          |  avg: 0.278
+          |- name: Sammy Sosa
+          |  hr: 63
+          |  avg: 0.288
+          |""".stripMargin
     }
 
     "pretty print sequences of sequences" in {
@@ -85,16 +89,17 @@ national:
           YamlNumber(63),
           YamlNumber(0.288)))
 
-      yaml.prettyPrint mustEqual """- - name
-  - hr
-  - avg
-- - Mark McGwire
-  - 65
-  - 0.278
-- - Sammy Sosa
-  - 63
-  - 0.288
-"""
+      yaml.prettyPrint mustEqual
+        """- - name
+          |  - hr
+          |  - avg
+          |- - Mark McGwire
+          |  - 65
+          |  - 0.278
+          |- - Sammy Sosa
+          |  - 63
+          |  - 0.288
+          |""".stripMargin
     }
 
     "pretty print mappings of mappings" in {
@@ -106,13 +111,14 @@ national:
           YamlString("hr") -> YamlNumber(63),
           YamlString("avg") -> YamlNumber(0.288)))
 
-      yaml.prettyPrint mustEqual """Mark McGwire:
-  hr: 65
-  avg: 0.278
-Sammy Sosa:
-  hr: 63
-  avg: 0.288
-"""
+      yaml.prettyPrint mustEqual
+        """Mark McGwire:
+          |  hr: 65
+          |  avg: 0.278
+          |Sammy Sosa:
+          |  hr: 63
+          |  avg: 0.288
+          |""".stripMargin
     }
 
     "pretty print mappings between sequences" in {
@@ -130,44 +136,48 @@ Sammy Sosa:
             YamlString("2001-08-12"),
             YamlString("2001-08-14")))
 
-      yaml.prettyPrint mustEqual """? - Detroit Tigers
-  - Chicago cubs
-: - '2001-07-23'
-? - New York Yankees
-  - Atlanta Braves
-: - '2001-07-02'
-  - '2001-08-12'
-  - '2001-08-14'
-"""
+      yaml.prettyPrint mustEqual
+        """? - Detroit Tigers
+          |  - Chicago cubs
+          |: - '2001-07-23'
+          |? - New York Yankees
+          |  - Atlanta Braves
+          |: - '2001-07-02'
+          |  - '2001-08-12'
+          |  - '2001-08-14'
+          |""".stripMargin
     }
 
     "pretty print strings with newlines" in {
-      val yaml1 = YamlString("""\//||\/||
-// ||  ||__
-""")
+      val yaml1 = YamlString(
+        """\//||\/||
+          |// ||  ||__
+          |""".stripMargin)
 
-      yaml1.prettyPrint mustEqual """|
-  \//||\/||
-  // ||  ||__
-"""
+      yaml1.prettyPrint mustEqual
+        """||
+          |  \//||\/||
+          |  // ||  ||__
+          |""".stripMargin
 
       val yaml2 = YamlString(
         """Sammy Sosa completed another fine season with great stats.
+          |
+          |  63 Home Runs
+          |  0.288 Batting Average
+          |
+          |What a year!
+          |""".stripMargin)
 
-  63 Home Runs
-  0.288 Batting Average
-
-What a year!
-""")
-
-      yaml2.prettyPrint mustEqual """|
-  Sammy Sosa completed another fine season with great stats.
-
-    63 Home Runs
-    0.288 Batting Average
-
-  What a year!
-"""
+      yaml2.prettyPrint mustEqual
+        """||
+          |  Sammy Sosa completed another fine season with great stats.
+          |
+          |    63 Home Runs
+          |    0.288 Batting Average
+          |
+          |  What a year!
+          |""".stripMargin
     }
 
     "pretty print numbers" in {
@@ -181,11 +191,12 @@ What a year!
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.prettyPrint mustEqual """int: 42
-float: 0.4555
-long_canonical: 21474836470
-bigint_canonical: 92233720368547758070
-"""
+      yaml.prettyPrint mustEqual
+        """int: 42
+          |float: 0.4555
+          |long_canonical: 21474836470
+          |bigint_canonical: 92233720368547758070
+          |""".stripMargin
     }
 
     "pretty print miscellaneous scalars" in {
@@ -199,11 +210,12 @@ bigint_canonical: 92233720368547758070
         YamlString("string") ->
           YamlString("12345"))
 
-      yaml.prettyPrint mustEqual """null: null
-true: y
-false: n
-string: '12345'
-"""
+      yaml.prettyPrint mustEqual
+        """null: null
+          |true: y
+          |false: n
+          |string: '12345'
+          |""".stripMargin
     }
 
     "pretty print explicit sets" in {
@@ -212,11 +224,12 @@ string: '12345'
         YamlString("Sammy Sosa"),
         YamlString("Ken Griff"))
 
-      yaml.prettyPrint mustEqual """!!set
-Mark McGwire: null
-Sammy Sosa: null
-Ken Griff: null
-"""
+      yaml.prettyPrint mustEqual
+        """!!set
+          |Mark McGwire: null
+          |Sammy Sosa: null
+          |Ken Griff: null
+          |""".stripMargin
     }
   }
 }

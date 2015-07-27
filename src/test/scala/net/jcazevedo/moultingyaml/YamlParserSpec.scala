@@ -151,9 +151,10 @@ class YamlParserSpec extends Specification {
 
     "correctly preserve new lines in literals" !
       withYaml("/examples/ex10.yaml") { yaml =>
-        yaml mustEqual YamlString("""\//||\/||
-// ||  ||__
-""")
+        yaml mustEqual YamlString(
+          """\//||\/||
+            |// ||  ||__
+            |""".stripMargin)
       }
 
     "correctly replace newlines by spaces in plain scalar" !
@@ -166,12 +167,12 @@ class YamlParserSpec extends Specification {
       withYaml("/examples/ex12.yaml") { yaml =>
         yaml mustEqual YamlString(
           """Sammy Sosa completed another fine season with great stats.
-
-  63 Home Runs
-  0.288 Batting Average
-
-What a year!
-""")
+            |
+            |  63 Home Runs
+            |  0.288 Batting Average
+            |
+            |What a year!
+            |""".stripMargin)
       }
 
     "correctly determine scope by indentation" !
