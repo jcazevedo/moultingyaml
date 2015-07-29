@@ -24,6 +24,9 @@ sealed abstract class YamlValue {
 case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
   override def asYamlObject(errorMsg: String) = this
 
+  def getFields(fieldKeys: YamlValue*): Seq[YamlValue] =
+    fieldKeys.flatMap(fields.get)(collection.breakOut)
+
   private[moultingyaml] lazy val snakeYamlObject: Object = {
     mapAsJavaMap(fields.map {
       case (k, v) =>
