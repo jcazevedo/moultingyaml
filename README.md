@@ -59,7 +59,7 @@ Convert a YAML AST to a Scala object with the `convertTo` method:
 val myList = yamlAst.convertTo[List[Int]]
 ```
 
-In order to support calling the `toYaml` and `converTo` methods for an object of
+In order to support calling the `toYaml` and `convertTo` methods for an object of
 type `T`, you need to have implicit values in scope that provide `YamlFormat[T]`
 instances for `T` and all types used by `T` (directly or indirectly). You
 normally do that through a YamlProtocol.
@@ -67,7 +67,7 @@ normally do that through a YamlProtocol.
 ### YamlProtocol
 
 YamlProtocols follow the same design as [spray-json][spray-json]'s
-JsonProtocols, which in turn are based on [SJSON][sjson]. It's a type-class
+JsonProtocols, which in turn are based on [SJSON][sjson]'s. It's a type-class
 based approach that connects an existing type `T` with the logic of how to
 (de)serialize its instances to and from YAML.
 
@@ -89,12 +89,12 @@ types. The following are types already taken care of by the
 * `collection.{Iterable, Seq, IndexedSeq, LinearSeq, Set}`
 
 When you want to convert types not covered by the `DefaultYamlProtocol`, you
-need to provide `YamlFormat[T]` for your custom types.
+need to provide a `YamlFormat[T]` for your custom types.
 
 ### Prodiving YamlFormats for Case Classes
 
 If your custom type `T` is a case class then augmenting the
-`DefaultYamlProtocol` with a `YamlFormat[T]` can be dome using the `yamlFormatX`
+`DefaultYamlProtocol` with a `YamlFormat[T]` can be done using the `yamlFormatX`
 helpers, where `X` stands for the number of fields in the case class:
 
 ```scala
@@ -113,7 +113,7 @@ val color = yaml.convertTo[Color]
 
 If you explicitly declare the companion object for your case class the notation
 above will stop working. You'll have to explicitly refer to the companion
-objects `apply` method to fix this:
+object's `apply` method to fix this:
 
 ```scala
 case class Color(name: String, red: Int, green: Int, blue: Int)
@@ -124,10 +124,10 @@ object MyYamlProtocol extends DefaultYamlProtocol {
 }
 ```
 
-If your case class is generic in that it takes type parameters itself the
-`jsonFormat` methods can also help you. However, there is a little more
-boilerplate required as you need to add context bounds for all type parameters
-and explicitly refer to the case classes apply method as in this example:
+If your case class has a type parameter the `jsonFormat` methods can also help
+you. However, there is a little more boilerplate required as you need to add
+context bounds for all type parameters and explicitly refer to the case classes
+apply method as in this example:
 
 ```scala
 case class NamedList[A](name: String, items: List[A])
@@ -143,7 +143,7 @@ As in [spray-json][spray-json], the `NullOptions` trait supplies an alternative
 rendering mode for optional case class members. Normally optional members that
 are undefined (`None`) are not rendered at all. By mixing in this trait into
 your custom YamlProtocol you can enforce the rendering of undefined members as
-`null`. (Note that this only affect YAML writing, MoultingYAML will always read
+`null`. (Note that this only affects YAML writing, MoultingYAML will always read
 missing optional members as well as `null` optional members as `None`)
 
 ### Providing YamlFormats for other Types
