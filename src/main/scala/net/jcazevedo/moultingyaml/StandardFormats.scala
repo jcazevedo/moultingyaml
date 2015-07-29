@@ -2,6 +2,10 @@ package net.jcazevedo.moultingyaml
 
 import scala.util.{ Try, Success, Failure }
 
+/**
+ * Provides the YamlFormats for the non-collection standard Scala types
+ * (Options, Eithers and Tuples).
+ */
 trait StandardFormats {
 
   implicit def optionFormat[A: YF] = new YF[Option[A]] {

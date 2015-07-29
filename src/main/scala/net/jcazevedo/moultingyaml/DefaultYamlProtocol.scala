@@ -1,5 +1,8 @@
 package net.jcazevedo.moultingyaml
 
+/**
+ * Provides all the predefined YamlFormats.
+ */
 trait DefaultYamlProtocol
   extends BasicFormats
   with StandardFormats

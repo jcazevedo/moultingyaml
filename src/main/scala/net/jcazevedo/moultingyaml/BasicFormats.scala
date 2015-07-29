@@ -2,6 +2,9 @@ package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
 
+/**
+ * Provides the YamlFormats for the most important Scala types.
+ */
 trait BasicFormats {
 
   implicit object IntYamlFormat extends YamlFormat[Int] {

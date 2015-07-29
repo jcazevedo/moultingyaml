@@ -2,6 +2,10 @@ package net.jcazevedo.moultingyaml
 
 import scala.reflect.runtime.universe._
 
+/**
+ * Provides the helpers for constructing custom YamlFormat implementations for
+ * types implementing the Product trait (especially case classes).
+ */
 trait ProductFormats {
 
   def yamlFormat0[T <: Product: WeakTypeTag](construct: () => T) = new YF[T] {
@@ -1075,6 +1079,12 @@ trait ProductFormats {
   }
 }
 
+/**
+ * Supplies an alternative rendering mode for optional case class
+ * members. Normally optional members that are undefined (`None`) are not
+ * rendered at all. By mixing in this trait into your custom YamlProtocol, you
+ * enforce the rendering of undefined members as `null`.
+ */
 trait NullOptions extends ProductFormats {
   override protected[this] def writeField[A: YamlWriter](
     value: Any, fieldName: String, isOption: Boolean) =

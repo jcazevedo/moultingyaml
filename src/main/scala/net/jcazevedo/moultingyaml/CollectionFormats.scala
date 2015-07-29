@@ -2,8 +2,14 @@ package net.jcazevedo.moultingyaml
 
 import scala.reflect.ClassTag
 
+/**
+ * Provides the YamlFormats for the most important Scala collections.
+ */
 trait CollectionFormats {
 
+  /**
+   * Supplies the YamlFormat for Lists.
+   */
   implicit def listFormat[A: YF] = new YF[List[A]] {
     def write(list: List[A]) = YamlArray(list.map(_.toYaml).toVector)
     def read(value: YamlValue): List[A] = value match {
@@ -14,6 +20,9 @@ trait CollectionFormats {
     }
   }
 
+  /**
+   * Supplies the YamlFormat for Arrays.
+   */
   implicit def arrayFormat[A: YF: ClassTag] = new YF[Array[A]] {
     def write(array: Array[A]) = YamlArray(array.map(_.toYaml).toVector)
     def read(value: YamlValue) = value match {
@@ -23,6 +32,9 @@ trait CollectionFormats {
     }
   }
 
+  /**
+   * Supplies the YamlFormat for Sets.
+   */
   implicit def setFormat[A: YF] = new YF[Set[A]] {
     def write(set: Set[A]) = YamlSet(set.map(_.toYaml))
     def read(value: YamlValue): Set[A] = value match {
@@ -32,6 +44,9 @@ trait CollectionFormats {
     }
   }
 
+  /**
+   * Supplies the YamlFormat for Maps.
+   */
   implicit def mapFormat[K: YF, V: YF] = new YF[Map[K, V]] {
     def write(m: Map[K, V]) =
       YamlObject(m.map { case (k, v) => k.toYaml -> v.toYaml })
@@ -75,6 +90,10 @@ trait CollectionFormats {
   implicit def linearSeqFormat[T: YF] =
     viaSeq[LinearSeq[T], T](seq => LinearSeq(seq: _*))
 
+  /**
+   * A YamlFormat construction helper that creates a YamlFormat for an Iterable
+   * type I from a builder function List => I
+   */
   def viaSeq[I <: Iterable[T], T: YF](f: imm.Seq[T] => I): YF[I] = new YF[I] {
     def write(iterable: I) = YamlArray(iterable.map(_.toYaml).toVector)
     def read(value: YamlValue) = value match {

@@ -2,6 +2,9 @@ package net.jcazevedo.moultingyaml
 
 import scala.annotation.implicitNotFound
 
+/**
+ * Provides the YAML deserialization for type A.
+ */
 @implicitNotFound(msg =
   "Cannot find YamlReader or YamlFormat type class for ${A}")
 trait YamlReader[A] {
@@ -15,6 +18,9 @@ object YamlReader {
     }
 }
 
+/**
+ * Provides the YAML serialization for type A.
+ */
 @implicitNotFound(msg =
   "Cannot find YamlWriter or YamlFormat type class for ${A}")
 trait YamlWriter[A] {
@@ -28,4 +34,7 @@ object YamlWriter {
     }
 }
 
+/**
+ * Provides the YAML deserialization and serialization for type A.
+ */
 trait YamlFormat[A] extends YamlReader[A] with YamlWriter[A]
