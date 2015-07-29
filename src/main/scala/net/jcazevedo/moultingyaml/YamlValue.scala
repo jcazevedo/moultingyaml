@@ -7,6 +7,10 @@ import scala.collection.JavaConversions._
 sealed abstract class YamlValue {
   def convertTo[A](implicit reader: YamlReader[A]): A = reader.read(this)
 
+  def asYamlObject(errorMsg: String = "YAML object expected"): YamlObject =
+    deserializationError(errorMsg)
+  def asYamlObject: YamlObject = asYamlObject()
+
   private[moultingyaml] def snakeYamlObject: Object
 
   def prettyPrint: String = {
@@ -18,6 +22,8 @@ sealed abstract class YamlValue {
 }
 
 case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
+  override def asYamlObject(errorMsg: String) = this
+
   private[moultingyaml] lazy val snakeYamlObject: Object = {
     mapAsJavaMap(fields.map {
       case (k, v) =>
