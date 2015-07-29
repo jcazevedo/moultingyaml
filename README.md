@@ -124,7 +124,7 @@ object MyYamlProtocol extends DefaultYamlProtocol {
 }
 ```
 
-If your case class has a type parameter the `jsonFormat` methods can also help
+If your case class has a type parameter the `yamlFormat` methods can also help
 you. However, there is a little more boilerplate required as you need to add
 context bounds for all type parameters and explicitly refer to the case classes
 apply method as in this example:
