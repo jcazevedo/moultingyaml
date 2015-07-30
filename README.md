@@ -11,8 +11,7 @@ serialization and deserialization of custom objects.
 
 ## Installation
 
-MoultingYAML is available on the Sonatype OSS repository. The latest release is
-`0.1` and is built against Scala 2.11.7.
+MoultingYAML's latest release is `0.1` and is built against Scala 2.11.7.
 
 To use it in an existing SBT project, add the following dependency to your
 `build.sbt`:
