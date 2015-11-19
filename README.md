@@ -223,7 +223,7 @@ deserve credits here.
 ## License
 
 MoultingYAML is licensed under the [MIT](http://opensource.org/licenses/MIT)
-license. See `LICENSE` for details.
+license. See `LICENSE.md` for details.
 
 ## Contributions
 
