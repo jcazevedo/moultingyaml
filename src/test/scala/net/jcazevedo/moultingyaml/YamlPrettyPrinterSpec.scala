@@ -244,17 +244,27 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      val dp = new DumperOptions
-      dp.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED)
-
-      println(yaml.prettyPrint(Some(dp)))
-
-      yaml.prettyPrint(Some(dp)) mustEqual
+      yaml.prettyPrint(scalarStyle = DoubleQuoted()) mustEqual
         """"int": !!int "42"
           |"float": !!float "0.4555"
           |"long_canonical": !!int "21474836470"
           |"bigint_canonical": !!int "92233720368547758070"
           |""".stripMargin
+    }
+
+    "pretty print with custom scalar style" in {
+      val yaml = YamlObject(
+        YamlString("int") ->
+          YamlNumber(42),
+        YamlString("float") ->
+          YamlNumber(0.4555),
+        YamlString("long_canonical") ->
+          YamlNumber(21474836470L),
+        YamlString("bigint_canonical") ->
+          YamlNumber(BigInt("92233720368547758070")))
+
+      yaml.prettyPrint(scalarStyle = DoubleQuoted()) mustEqual
+      yaml.prettyPrint(scalarStyle = ScalarStyle.createStyle('"'))
     }
   }
 }
