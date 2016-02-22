@@ -16,10 +16,15 @@ sealed abstract class YamlValue {
 
   private[moultingyaml] def snakeYamlObject: Object
 
-  def prettyPrint: String = {
-    val options = new DumperOptions()
-    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
-    val yaml = new Yaml(options)
+  def prettyPrint(options: Option[DumperOptions] = None): String = {
+    val opts = options match {
+      case None =>
+        val default = new DumperOptions
+        default.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
+        default
+      case Some(provided) => provided
+    }
+    val yaml = new Yaml(opts)
     yaml.dump(snakeYamlObject)
   }
 }

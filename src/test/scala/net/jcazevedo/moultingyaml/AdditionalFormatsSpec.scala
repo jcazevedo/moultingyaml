@@ -62,7 +62,7 @@ class AdditionalFormatsSpec extends Specification {
     import WriterProtocol._
 
     "properly write a Container[Container[List[Int]]] to YAML" in {
-      obj.toYaml.prettyPrint mustEqual yaml
+      obj.toYaml.prettyPrint() mustEqual yaml
     }
 
     "throw a DeserializationException if trying to read with it" in {
@@ -99,7 +99,7 @@ class AdditionalFormatsSpec extends Specification {
                    |""".stripMargin
 
       import FooProtocol._
-      obj.toYaml.prettyPrint mustEqual yaml
+      obj.toYaml.prettyPrint() mustEqual yaml
     }
   }
 }
