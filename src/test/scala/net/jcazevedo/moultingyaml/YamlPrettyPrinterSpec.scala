@@ -1,7 +1,6 @@
 package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
-import org.yaml.snakeyaml.DumperOptions
 
 class YamlPrettyPrinterSpec extends Specification {
   "The provided YAML prettyprinter" should {
