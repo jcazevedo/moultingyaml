@@ -15,10 +15,13 @@ sealed abstract class YamlValue {
 
   private[moultingyaml] def snakeYamlObject: Object
 
-  def prettyPrint(flowStyle: FlowStyle = Block(), scalarStyle: ScalarStyle = Plain()): String = {
+  def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
+            scalarStyle: ScalarStyle = ScalarStyle.DEFAULT) = {
     val printer = new SnakeYAMLPrinter(flowStyle, scalarStyle)
     printer(this)
   }
+
+  def prettyPrint: String = print()
 }
 
 /**

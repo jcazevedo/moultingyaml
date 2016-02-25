@@ -10,7 +10,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("Sammy Sosa"),
         YamlString("Ken Griffey"))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """- Mark McGwire
           |- Sammy Sosa
           |- Ken Griffey
@@ -23,7 +23,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("avg") -> YamlNumber(0.278),
         YamlString("rbi") -> YamlNumber(147))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """hr: 65
           |avg: 0.278
           |rbi: 147
@@ -41,7 +41,7 @@ class YamlPrettyPrinterSpec extends Specification {
           YamlString("Chicago Cubs"),
           YamlString("Atlanta Braves")))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """american:
           |- Boston Red Sox
           |- Detroit Tigers
@@ -64,7 +64,7 @@ class YamlPrettyPrinterSpec extends Specification {
           YamlString("hr") -> YamlNumber(63),
           YamlString("avg") -> YamlNumber(0.288)))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """- name: Mark McGwire
           |  hr: 65
           |  avg: 0.278
@@ -89,7 +89,7 @@ class YamlPrettyPrinterSpec extends Specification {
           YamlNumber(63),
           YamlNumber(0.288)))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """- - name
           |  - hr
           |  - avg
@@ -111,7 +111,7 @@ class YamlPrettyPrinterSpec extends Specification {
           YamlString("hr") -> YamlNumber(63),
           YamlString("avg") -> YamlNumber(0.288)))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """Mark McGwire:
           |  hr: 65
           |  avg: 0.278
@@ -136,7 +136,7 @@ class YamlPrettyPrinterSpec extends Specification {
             YamlString("2001-08-12"),
             YamlString("2001-08-14")))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """? - Detroit Tigers
           |  - Chicago cubs
           |: - '2001-07-23'
@@ -154,7 +154,7 @@ class YamlPrettyPrinterSpec extends Specification {
           |// ||  ||__
           |""".stripMargin)
 
-      yaml1.prettyPrint() mustEqual
+      yaml1.prettyPrint mustEqual
         """||
           |  \//||\/||
           |  // ||  ||__
@@ -169,7 +169,7 @@ class YamlPrettyPrinterSpec extends Specification {
           |What a year!
           |""".stripMargin)
 
-      yaml2.prettyPrint() mustEqual
+      yaml2.prettyPrint mustEqual
         """||
           |  Sammy Sosa completed another fine season with great stats.
           |
@@ -191,7 +191,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """int: 42
           |float: 0.4555
           |long_canonical: 21474836470
@@ -210,7 +210,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("string") ->
           YamlString("12345"))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """null: null
           |true: y
           |false: n
@@ -224,7 +224,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("Sammy Sosa"),
         YamlString("Ken Griff"))
 
-      yaml.prettyPrint() mustEqual
+      yaml.prettyPrint mustEqual
         """!!set
           |Mark McGwire: null
           |Sammy Sosa: null
@@ -243,7 +243,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.prettyPrint(scalarStyle = DoubleQuoted()) mustEqual
+      yaml.print(scalarStyle = DoubleQuoted) mustEqual
         """"int": !!int "42"
           |"float": !!float "0.4555"
           |"long_canonical": !!int "21474836470"
@@ -262,8 +262,22 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.prettyPrint(scalarStyle = DoubleQuoted()) mustEqual
-      yaml.prettyPrint(scalarStyle = ScalarStyle.createStyle('"'))
+      yaml.print(scalarStyle = DoubleQuoted) mustEqual
+      yaml.print(scalarStyle = ScalarStyle.createStyle('"'))
+    }
+
+    "pretty print with default configuration" in {
+      val yaml = YamlObject(
+        YamlString("int") ->
+          YamlNumber(42),
+        YamlString("float") ->
+          YamlNumber(0.4555),
+        YamlString("long_canonical") ->
+          YamlNumber(21474836470L),
+        YamlString("bigint_canonical") ->
+          YamlNumber(BigInt("92233720368547758070")))
+
+      yaml.print() mustEqual yaml.prettyPrint
     }
   }
 }

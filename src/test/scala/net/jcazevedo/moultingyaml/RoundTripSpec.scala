@@ -15,7 +15,7 @@ class RoundTripSpec extends Specification {
       forall(files) { file =>
         val yamls = Source.fromFile(file).mkString.parseYamls
         forall(yamls) { innerYaml =>
-          innerYaml.prettyPrint().parseYaml mustEqual innerYaml
+          innerYaml.prettyPrint.parseYaml mustEqual innerYaml
         }
       }
     }
