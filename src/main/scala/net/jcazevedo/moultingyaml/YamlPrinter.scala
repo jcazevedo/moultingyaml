@@ -1,12 +1,12 @@
 package net.jcazevedo.moultingyaml
 
-import org.yaml.snakeyaml.{DumperOptions, Yaml}
+import org.yaml.snakeyaml.{ DumperOptions, Yaml }
 
 /**
-  * @author Simone D'Avico (simonedavico@gmail.com)
-  *
-  * Created on 22/02/16.
-  */
+ * @author Simone D'Avico (simonedavico@gmail.com)
+ *
+ * Created on 22/02/16.
+ */
 
 sealed trait FlowStyle { def toDumperOption: DumperOptions.FlowStyle }
 object FlowStyle {
@@ -24,7 +24,6 @@ case object Block extends FlowStyle {
 case object Flow extends FlowStyle {
   override def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.FLOW
 }
-
 
 sealed trait ScalarStyle {
   def toDumperOption: DumperOptions.ScalarStyle
@@ -74,7 +73,4 @@ class SnakeYamlPrinter(flowStyle: FlowStyle, scalarStyle: ScalarStyle) extends Y
   }
 
 }
-
-
-
 
