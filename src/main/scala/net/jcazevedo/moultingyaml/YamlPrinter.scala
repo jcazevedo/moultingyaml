@@ -53,7 +53,7 @@ abstract class YamlPrinter(flowStyle: FlowStyle,
   def apply(value: YamlValue): String
 }
 
-class SnakeYAMLPrinter(flowStyle: FlowStyle, scalarStyle: ScalarStyle) extends YamlPrinter(flowStyle, scalarStyle) {
+class SnakeYamlPrinter(flowStyle: FlowStyle, scalarStyle: ScalarStyle) extends YamlPrinter(flowStyle, scalarStyle) {
   override def apply(value: YamlValue): String = {
     val dp = new DumperOptions
     dp.setDefaultFlowStyle(flowStyle.toDumperOption)

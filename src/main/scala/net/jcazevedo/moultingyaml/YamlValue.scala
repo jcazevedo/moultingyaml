@@ -17,7 +17,7 @@ sealed abstract class YamlValue {
 
   def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
             scalarStyle: ScalarStyle = ScalarStyle.DEFAULT) = {
-    val printer = new SnakeYAMLPrinter(flowStyle, scalarStyle)
+    val printer = new SnakeYamlPrinter(flowStyle, scalarStyle)
     printer(this)
   }
 
