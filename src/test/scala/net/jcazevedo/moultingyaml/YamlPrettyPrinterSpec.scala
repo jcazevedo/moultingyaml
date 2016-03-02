@@ -232,7 +232,7 @@ class YamlPrettyPrinterSpec extends Specification {
           |""".stripMargin
     }
 
-    "pretty print according to a provided configuration" in {
+    "print according to a provided configuration" in {
       val yaml = YamlObject(
         YamlString("int") ->
           YamlNumber(42),
@@ -251,7 +251,7 @@ class YamlPrettyPrinterSpec extends Specification {
           |""".stripMargin
     }
 
-    "pretty print with custom scalar style" in {
+    "print with custom scalar style" in {
       val yaml = YamlObject(
         YamlString("int") ->
           YamlNumber(42),
@@ -266,7 +266,7 @@ class YamlPrettyPrinterSpec extends Specification {
       yaml.print(scalarStyle = ScalarStyle.createStyle('"'))
     }
 
-    "pretty print with default configuration" in {
+    "print with default configuration" in {
       val yaml = YamlObject(
         YamlString("int") ->
           YamlNumber(42),
