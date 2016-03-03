@@ -2,12 +2,6 @@ package net.jcazevedo.moultingyaml
 
 import org.yaml.snakeyaml.{ DumperOptions, Yaml }
 
-/**
- * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 22/02/16.
- */
-
 sealed trait FlowStyle { def toDumperOption: DumperOptions.FlowStyle }
 object FlowStyle {
   val DEFAULT = Block
