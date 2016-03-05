@@ -48,6 +48,17 @@ method:
 val yaml = yamlAst.prettyPrint
 ```
 
+If more fine-grained control over the printed yaml is needed, it is possible to use the configurable method `print`.
+For example, to enclose everything in double quotes:
+
+```scala
+val yaml = yamlAst.print(scalarStyle = DoubleQuoted)
+```
+The possible values for `scalarStyle` are `DoubleQuoted`, `SingleQuoted`, `Literal`, `Plain` and `Folded`.
+
+In addition, the `flowStyle` can also be specified, with possible values `Flow`, `Block` and `Auto`.
+
+
 Scala objects can be converted to a YAML AST using the pimped `toYaml` method:
 
 ```scala

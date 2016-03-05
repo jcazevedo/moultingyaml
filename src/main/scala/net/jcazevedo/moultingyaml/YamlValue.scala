@@ -1,7 +1,6 @@
 package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
-import org.yaml.snakeyaml.{ DumperOptions, Yaml }
 import scala.collection.JavaConversions._
 
 /**
@@ -16,12 +15,13 @@ sealed abstract class YamlValue {
 
   private[moultingyaml] def snakeYamlObject: Object
 
-  def prettyPrint: String = {
-    val options = new DumperOptions()
-    options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
-    val yaml = new Yaml(options)
-    yaml.dump(snakeYamlObject)
+  def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
+            scalarStyle: ScalarStyle = ScalarStyle.DEFAULT) = {
+    val printer = new SnakeYamlPrinter(flowStyle, scalarStyle)
+    printer(this)
   }
+
+  def prettyPrint: String = print()
 }
 
 /**
