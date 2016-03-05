@@ -4,7 +4,7 @@ name := "moultingyaml"
 
 organization := "net.jcazevedo"
 
-version := "0.2"
+version := "0.3-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
