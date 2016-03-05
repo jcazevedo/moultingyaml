@@ -48,16 +48,27 @@ method:
 val yaml = yamlAst.prettyPrint
 ```
 
-If more fine-grained control over the printed yaml is needed, it is possible to use the configurable method `print`.
-For example, to enclose everything in double quotes:
+If more fine-grained control over the printed yaml is needed, it is possible to
+use the configurable `print` method.  For example, to enclose everything in
+double quotes:
 
 ```scala
 val yaml = yamlAst.print(scalarStyle = DoubleQuoted)
 ```
-The possible values for `scalarStyle` are `DoubleQuoted`, `SingleQuoted`, `Literal`, `Plain` and `Folded`.
 
-In addition, the `flowStyle` can also be specified, with possible values `Flow`, `Block` and `Auto`.
+YAML provide different scalar styles to choose from, controlled by the argument
+`scalarStyle` of the `print` method. The possible values for `scalarStyle` are
+`Plain`, `SingleQuoted`, `DoubleQuoted`, `Literal` and `Folded`. Refer to the
+[YAML specification](http://yaml.org/spec/current.html#id2532386) for details on
+each representation.
 
+In addition, YAML also has flow styles, in order to be able to use explicit
+indicators instead of indentation to denote scope. The flow style is controlled
+by the `flowStyle` argument of the `print` method. The possible values for
+`flowStyle` are `Flow`, `Block` and `Auto`. `Block` style uses indentation,
+whereas `Flow` style relies on explicit indicators to denote scope. The `Auto`
+flow style attempts to combine both the `Block` and `Flow` style within the same
+document.
 
 Scala objects can be converted to a YAML AST using the pimped `toYaml` method:
 
