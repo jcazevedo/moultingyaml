@@ -6,13 +6,13 @@ organization := "net.jcazevedo"
 
 version := "0.3-SNAPSHOT"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time"   % "2.2.0",
-  "org.scala-lang"          % "scala-reflect" % "2.11.7",
-  "org.yaml"                % "snakeyaml"     % "1.16",
-  "org.specs2"             %% "specs2-core"   % "3.6.5"  % "test")
+  "com.github.nscala-time" %% "nscala-time"   % "2.12.0",
+  "org.scala-lang"          % "scala-reflect" % "2.11.8",
+  "org.yaml"                % "snakeyaml"     % "1.17",
+  "org.specs2"             %% "specs2-core"   % "3.8.4"  % "test")
 
 scalacOptions ++= Seq(
   "-deprecation",
