@@ -2,21 +2,24 @@ package net.jcazevedo.moultingyaml
 
 import org.yaml.snakeyaml.{ DumperOptions, Yaml }
 
-sealed trait FlowStyle { def toDumperOption: DumperOptions.FlowStyle }
+sealed trait FlowStyle {
+  def toDumperOption: DumperOptions.FlowStyle
+}
+
 object FlowStyle {
   val DEFAULT = Block
 }
 
 case object Auto extends FlowStyle {
-  override def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.AUTO
+  def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.AUTO
 }
 
 case object Block extends FlowStyle {
-  override def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.BLOCK
+  def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.BLOCK
 }
 
 case object Flow extends FlowStyle {
-  override def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.FLOW
+  def toDumperOption: DumperOptions.FlowStyle = DumperOptions.FlowStyle.FLOW
 }
 
 sealed trait ScalarStyle {
@@ -29,39 +32,64 @@ object ScalarStyle {
 }
 
 private[moultingyaml] case class CustomScalarStyle(val char: Char) extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.createStyle(char)
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.createStyle(char)
 }
 
 case object DoubleQuoted extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.DOUBLE_QUOTED
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.DOUBLE_QUOTED
 }
 
 case object SingleQuoted extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.SINGLE_QUOTED
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.SINGLE_QUOTED
 }
 
 case object Literal extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.LITERAL
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.LITERAL
 }
 
 case object Plain extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.PLAIN
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.PLAIN
 }
 
 case object Folded extends ScalarStyle {
-  override def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.LITERAL
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.LITERAL
 }
 
-abstract class YamlPrinter(flowStyle: FlowStyle,
-                           scalarStyle: ScalarStyle) extends (YamlValue => String) {
+sealed trait LineBreak {
+  def toDumperOption: DumperOptions.LineBreak
+}
+
+object LineBreak {
+  val DEFAULT = Unix
+}
+
+case object Win extends LineBreak {
+  def toDumperOption: DumperOptions.LineBreak = DumperOptions.LineBreak.WIN
+}
+
+case object Mac extends LineBreak {
+  def toDumperOption: DumperOptions.LineBreak = DumperOptions.LineBreak.MAC
+}
+
+case object Unix extends LineBreak {
+  def toDumperOption: DumperOptions.LineBreak = DumperOptions.LineBreak.UNIX
+}
+
+abstract class YamlPrinter(
+  flowStyle: FlowStyle, scalarStyle: ScalarStyle, lineBreak: LineBreak)
+    extends (YamlValue => String) {
   def apply(value: YamlValue): String
 }
 
-class SnakeYamlPrinter(flowStyle: FlowStyle, scalarStyle: ScalarStyle) extends YamlPrinter(flowStyle, scalarStyle) {
+class SnakeYamlPrinter(flowStyle: FlowStyle,
+                       scalarStyle: ScalarStyle,
+                       lineBreak: LineBreak)
+    extends YamlPrinter(flowStyle, scalarStyle, lineBreak) {
   override def apply(value: YamlValue): String = {
     val dp = new DumperOptions
-    dp.setDefaultFlowStyle(flowStyle.toDumperOption)
     dp.setDefaultScalarStyle(scalarStyle.toDumperOption)
+    dp.setDefaultFlowStyle(flowStyle.toDumperOption)
+    dp.setLineBreak(lineBreak.toDumperOption)
     new Yaml(dp).dump(value.snakeYamlObject)
   }
 }

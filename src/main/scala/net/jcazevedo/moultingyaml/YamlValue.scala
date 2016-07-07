@@ -16,8 +16,9 @@ sealed abstract class YamlValue {
   private[moultingyaml] def snakeYamlObject: Object
 
   def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
-            scalarStyle: ScalarStyle = ScalarStyle.DEFAULT) = {
-    val printer = new SnakeYamlPrinter(flowStyle, scalarStyle)
+            scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
+            lineBreak: LineBreak = LineBreak.DEFAULT) = {
+    val printer = new SnakeYamlPrinter(flowStyle, scalarStyle, lineBreak)
     printer(this)
   }
 

@@ -263,7 +263,7 @@ class YamlPrettyPrinterSpec extends Specification {
           YamlNumber(BigInt("92233720368547758070")))
 
       yaml.print(scalarStyle = DoubleQuoted) mustEqual
-      yaml.print(scalarStyle = ScalarStyle.createStyle('"'))
+        yaml.print(scalarStyle = ScalarStyle.createStyle('"'))
     }
 
     "print with default configuration" in {
