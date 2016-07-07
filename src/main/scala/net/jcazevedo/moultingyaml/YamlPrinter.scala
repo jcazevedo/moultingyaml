@@ -58,13 +58,10 @@ abstract class YamlPrinter(flowStyle: FlowStyle,
 }
 
 class SnakeYamlPrinter(flowStyle: FlowStyle, scalarStyle: ScalarStyle) extends YamlPrinter(flowStyle, scalarStyle) {
-
   override def apply(value: YamlValue): String = {
     val dp = new DumperOptions
     dp.setDefaultFlowStyle(flowStyle.toDumperOption)
     dp.setDefaultScalarStyle(scalarStyle.toDumperOption)
     new Yaml(dp).dump(value.snakeYamlObject)
   }
-
 }
-
