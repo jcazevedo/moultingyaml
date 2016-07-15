@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "org.specs2"             %% "specs2-core"   % "3.8.4"  % "test")
 
 scalacOptions ++= Seq(
+  "-Ywarn-unused-import",
   "-deprecation",
   "-unchecked",
   "-feature",
