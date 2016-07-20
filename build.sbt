@@ -48,7 +48,7 @@ homepage := Some(url("https://github.com/jcazevedo/moultingyaml"))
 
 pomExtra := (
   <scm>
-    <url>git@github.com:jcazevedo/moultingyaml.git</url>
+    <url>https://github.com/jcazevedo/moultingyaml.git</url>
     <connection>scm:git:git@github.com:jcazevedo/moultingyaml.git</connection>
   </scm>
   <developers>
