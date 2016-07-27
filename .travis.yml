@@ -1,11 +1,13 @@
 language: scala
 scala:
   - 2.11.8
+jdk:
+  - oraclejdk8
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
+after_success:
+  - sbt ++$TRAVIS_SCALA_VERSION coverageReport coverageAggregate coveralls
 cache:
   directories:
     - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
-script:
-  - sbt clean coverage test
-after_success:
-  - sbt coveralls
+    - $HOME/.sbt/boot
