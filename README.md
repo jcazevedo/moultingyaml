@@ -135,6 +135,34 @@ val yaml = Color("CadetBlue", 95, 158, 160).toYaml
 val color = yaml.convertTo[Color]
 ```
 
+Example combining custom YamlFormats:
+
+```scala
+case class Color(name: String, red: Int, green: Int, blue: Int)
+case class Pallete(name: String, colors: Option[List[Color]] = None)
+
+object PalleteYamlProtocol extends DefaultYamlProtocol {
+  implicit val colorFormat = yamlFormat4(Color)
+  implicit val palleteFormat = yamlFormat2(Pallete)
+}
+
+import PalleteYamlProtocol._
+import net.jcazevedo.moultingyaml._
+
+val yaml = """name: My Pallete
+             |colors:
+             |- name: color 1
+             |  red: 1
+             |  green: 1
+             |  blue: 1
+             |- name: color 2
+             |  red: 2
+             |  green: 2
+             |  blue: 2
+             |""".stripMargin.parseYaml
+val pallete = yaml.convertTo[Pallete]
+```
+
 If you explicitly declare the companion object for your case class the notation
 above will stop working. You'll have to explicitly refer to the companion
 object's `apply` method to fix this:
