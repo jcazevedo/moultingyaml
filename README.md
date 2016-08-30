@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/jcazevedo/moultingyaml.svg?branch=master)](https://travis-ci.org/jcazevedo/moultingyaml)
 [![Coverage Status](https://coveralls.io/repos/github/jcazevedo/moultingyaml/badge.svg?branch=master)](https://coveralls.io/github/jcazevedo/moultingyaml?branch=master)
 [![License](https://img.shields.io/dub/l/vibe-d.svg)](https://raw.githubusercontent.com/jcazevedo/moultingyaml/master/LICENSE.md)
-[![Maven Central](https://img.shields.io/maven-central/v/net.jcazevedo/moultingyaml_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/net.jcazevedo/moultingyaml_2.11)
+[![Maven Central](https://img.shields.io/maven-central/v/net.jcazevedo/moultingyaml_2.10.svg?label=latest%20release%20for%202.10)](https://maven-badges.herokuapp.com/maven-central/net.jcazevedo/moultingyaml_2.10)
+[![Maven Central](https://img.shields.io/maven-central/v/net.jcazevedo/moultingyaml_2.11.svg?label=latest%20release%20for%202.11)](https://maven-badges.herokuapp.com/maven-central/net.jcazevedo/moultingyaml_2.11)
 
 MoultingYAML is a Scala wrapper for [SnakeYAML][snakeyaml] based on
 [spray-json][spray-json].
