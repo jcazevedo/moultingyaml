@@ -4,22 +4,27 @@ name := "moultingyaml"
 
 organization := "net.jcazevedo"
 
-version := "0.3-SNAPSHOT"
+version := "0.3.0-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
+crossScalaVersions := Seq("2.11.8", "2.10.6")
+
 libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time"   % "2.12.0",
-  "org.scala-lang"          % "scala-reflect" % "2.11.8",
+  "org.scala-lang"          % "scala-reflect" % scalaVersion.value,
   "org.yaml"                % "snakeyaml"     % "1.17",
   "org.specs2"             %% "specs2-core"   % "3.8.4"  % "test")
 
 scalacOptions ++= Seq(
-  "-Ywarn-unused-import",
   "-deprecation",
   "-unchecked",
   "-feature",
-  "-language:implicitConversions")
+  "-language:implicitConversions") ++
+  (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, major)) if major >= 11 => Seq("-Ywarn-unused-import")
+    case _ => Seq()
+  })
 
 scalariformSettings
 
