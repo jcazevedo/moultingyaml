@@ -1,5 +1,7 @@
 # MoultingYAML
 
+[![Join the chat at https://gitter.im/jcazevedo/moultingyaml](https://badges.gitter.im/jcazevedo/moultingyaml.svg)](https://gitter.im/jcazevedo/moultingyaml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/jcazevedo/moultingyaml.svg?branch=master)](https://travis-ci.org/jcazevedo/moultingyaml)
 [![Coverage Status](https://coveralls.io/repos/github/jcazevedo/moultingyaml/badge.svg?branch=master)](https://coveralls.io/github/jcazevedo/moultingyaml?branch=master)
 [![License](https://img.shields.io/dub/l/vibe-d.svg)](https://raw.githubusercontent.com/jcazevedo/moultingyaml/master/LICENSE.md)
