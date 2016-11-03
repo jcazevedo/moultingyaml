@@ -1,3 +1,4 @@
+*.swp
 .ensime
 .ensime_cache
 target/

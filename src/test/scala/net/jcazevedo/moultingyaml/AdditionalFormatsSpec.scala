@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class AdditionalFormatsSpec extends Specification {
 
   case class Container[A](inner: Option[A])

@@ -1,11 +1,15 @@
 package net.jcazevedo.moultingyaml
 
-import com.github.nscala_time.time.Imports._
 import java.net.URLDecoder
-import org.specs2.execute.Result
-import org.specs2.mutable._
+
 import scala.io.Source
 import scala.util.{ Failure, Success, Try }
+
+import com.github.nscala_time.time.Imports._
+import org.specs2.execute.Result
+import org.specs2.mutable._
+
+import net.jcazevedo.moultingyaml.defaultParser._
 
 class YamlParserSpec extends Specification {
   def getResourceURL(resource: String): String =
