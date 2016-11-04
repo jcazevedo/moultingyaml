@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class ProductFormatsSpec extends Specification {
 
   case class Test0()
@@ -201,7 +203,7 @@ class ProductFormatsSpec extends Specification {
     }
 
     "convert a YamlObject to the respective case class instance" in {
-      yaml.parseYaml().convertTo[TestMangled] mustEqual
+      yaml.parseYaml.convertTo[TestMangled] mustEqual
         TestMangled(42, "Karl", true, 26, 1.0f)
     }
   }

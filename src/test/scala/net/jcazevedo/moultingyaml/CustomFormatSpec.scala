@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable.Specification
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class CustomFormatSpec extends Specification with DefaultYamlProtocol {
   case class MyType(name: String, value: Int)
 
@@ -25,7 +27,7 @@ class CustomFormatSpec extends Specification with DefaultYamlProtocol {
 
     "correctly deserialize valid YAML content" in {
       """name: bob
-        |value: 42""".stripMargin.parseYaml().convertTo[MyType] mustEqual value
+        |value: 42""".stripMargin.parseYaml.convertTo[MyType] mustEqual value
     }
 
     "support full round-trip (de)serialization" in {

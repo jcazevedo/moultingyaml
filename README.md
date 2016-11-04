@@ -31,6 +31,7 @@ In order to use MoultingYAML, bring all relevant elements into scope with:
 
 ```scala
 import net.jcazevedo.moultingyaml._
+import net.jcazevedo.moultingyaml.defaultParser._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._ // if you don't supply your own protocol
 ```
 
@@ -150,6 +151,7 @@ object PalleteYamlProtocol extends DefaultYamlProtocol {
 
 import PalleteYamlProtocol._
 import net.jcazevedo.moultingyaml._
+import net.jcazevedo.moultingyaml.defaultParser._
 
 val yaml = """name: My Pallete
              |colors:

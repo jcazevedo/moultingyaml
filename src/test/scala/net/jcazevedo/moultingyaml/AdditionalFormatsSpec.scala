@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class AdditionalFormatsSpec extends Specification {
 
   case class Container[A](inner: Option[A])
@@ -41,7 +43,7 @@ class AdditionalFormatsSpec extends Specification {
     import ReaderProtocol._
 
     "properly read a Container[Container[List[Int]]] from YAML" in {
-      yaml.parseYaml().convertTo[Container[Container[List[Int]]]] mustEqual obj
+      yaml.parseYaml.convertTo[Container[Container[List[Int]]]] mustEqual obj
     }
 
     "throw a DeserializationException if trying to write with it" in {
@@ -66,7 +68,7 @@ class AdditionalFormatsSpec extends Specification {
     }
 
     "throw a DeserializationException if trying to read with it" in {
-      yaml.parseYaml().convertTo[Container[Container[List[Int]]]] must
+      yaml.parseYaml.convertTo[Container[Container[List[Int]]]] must
         throwAn[UnsupportedOperationException]
     }
   }
