@@ -6,15 +6,15 @@ organization := "net.jcazevedo"
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.0"
 
-crossScalaVersions := Seq("2.11.8", "2.10.6")
+crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6")
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time"   % "2.12.0",
+  "com.github.nscala-time" %% "nscala-time"   % "2.14.0",
   "org.scala-lang"          % "scala-reflect" % scalaVersion.value,
   "org.yaml"                % "snakeyaml"     % "1.17",
-  "org.specs2"             %% "specs2-core"   % "3.8.4"  % "test")
+  "org.specs2"             %% "specs2-core"   % "3.8.6"  % "test")
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -34,13 +34,11 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
 
 publishMavenStyle := true
 
-publishTo <<= version { v =>
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
+publishTo := Some(
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    "snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
+    "releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
 
 publishArtifact in Test := false
 
