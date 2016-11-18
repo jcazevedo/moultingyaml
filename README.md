@@ -143,17 +143,17 @@ Example combining custom YamlFormats:
 
 ```scala
 case class Color(name: String, red: Int, green: Int, blue: Int)
-case class Pallete(name: String, colors: Option[List[Color]] = None)
+case class Palette(name: String, colors: Option[List[Color]] = None)
 
-object PalleteYamlProtocol extends DefaultYamlProtocol {
+object PaletteYamlProtocol extends DefaultYamlProtocol {
   implicit val colorFormat = yamlFormat4(Color)
-  implicit val palleteFormat = yamlFormat2(Pallete)
+  implicit val paletteFormat = yamlFormat2(Palette)
 }
 
-import PalleteYamlProtocol._
+import PaletteYamlProtocol._
 import net.jcazevedo.moultingyaml._
 
-val yaml = """name: My Pallete
+val yaml = """name: My Palette
              |colors:
              |- name: color 1
              |  red: 1
@@ -164,7 +164,7 @@ val yaml = """name: My Pallete
              |  green: 2
              |  blue: 2
              |""".stripMargin.parseYaml
-val pallete = yaml.convertTo[Pallete]
+val palette = yaml.convertTo[Palette]
 ```
 
 If you explicitly declare the companion object for your case class the notation
