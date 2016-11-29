@@ -85,13 +85,7 @@ case class YamlString(value: String) extends YamlValue {
 case class YamlNumber(value: BigDecimal) extends YamlValue {
   private[moultingyaml] lazy val snakeYamlObject: Object = {
     value match {
-      case v if v.ulp.isWhole && v.isValidByte => v.byteValue.asInstanceOf[java.lang.Byte]
-      case v if v.ulp.isWhole && v.isValidShort => v.shortValue.asInstanceOf[java.lang.Short]
-      case v if v.ulp.isWhole && v.isValidInt => v.intValue.asInstanceOf[java.lang.Integer]
-      case v if v.ulp.isWhole && v.isValidLong => v.longValue.asInstanceOf[java.lang.Long]
-      case v if v.isExactFloat => v.floatValue.asInstanceOf[java.lang.Float]
-      case v if v.isExactDouble => v.doubleValue.asInstanceOf[java.lang.Double]
-      case v if v.isWhole => new java.math.BigInteger(value.toString)
+      case v if v.ulp.isWhole => value.underlying.toBigInteger
       case _ => value
     }
   }
