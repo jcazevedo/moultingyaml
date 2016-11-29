@@ -9,8 +9,8 @@ class CustomFormatSpec extends Specification with DefaultYamlProtocol {
     def read(yaml: YamlValue) =
       yaml.asYamlObject.getFields(
         YamlString("name"), YamlString("value")) match {
-          case Seq(YamlString(name), YamlNumber(value: Int)) =>
-            MyType(name, value)
+          case Seq(YamlString(name), YamlNumber(value)) =>
+            MyType(name, value.intValue)
           case _ => deserializationError("Expected fields: 'name' (YAML string) and 'value' (YAML number)")
         }
 

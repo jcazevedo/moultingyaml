@@ -35,9 +35,7 @@ class BasicFormatsSpec extends Specification with BasicFormats {
     }
 
     "convert a Float.NaN to a YamlNumber" in {
-      Float.NaN.toYaml must beLike {
-        case YamlNumber(x: Float) => x.isNaN must beTrue
-      }
+      Float.NaN.toYaml mustEqual YamlNaN
     }
 
     "convert a Float.PositiveInfinity to a YamlNumber" in {
@@ -64,9 +62,7 @@ class BasicFormatsSpec extends Specification with BasicFormats {
     }
 
     "convert a Double.NaN to a YamlNumber" in {
-      Double.NaN.toYaml must beLike {
-        case YamlNumber(x: Double) => x.isNaN must beTrue
-      }
+      Double.NaN.toYaml mustEqual YamlNaN
     }
 
     "convert a Double.PositiveInfinity to a YamlNumber" in {
