@@ -105,6 +105,9 @@ class BasicFormatsSpec extends Specification with BasicFormats {
 
         // "scala.MatchError: YamlNumber(42)"
         //case YamlNumber(d: Double) => Try(d.toInt).getOrElse(d)
+
+        // No access
+        //case v @ YamlNumber(x) => v.num.toInt(x)
       }
 
       outA.getClass.getSimpleName mustEqual "int"
