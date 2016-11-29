@@ -1,6 +1,7 @@
 package net.jcazevedo.moultingyaml
 
-import scala.reflect.runtime.universe._
+import java.lang.reflect.Modifier
+import scala.reflect.{ ClassTag, NameTransformer }
 
 /**
  * Provides the helpers for constructing custom YamlFormat implementations for
@@ -8,7 +9,7 @@ import scala.reflect.runtime.universe._
  */
 trait ProductFormats {
 
-  def yamlFormat0[T <: Product: WeakTypeTag](construct: () => T) = new YF[T] {
+  def yamlFormat0[T <: Product: ClassTag](construct: () => T) = new YF[T] {
     def write(p: T) = YamlObject()
     def read(value: YamlValue) = value match {
       case _: YamlObject => construct()
@@ -16,154 +17,154 @@ trait ProductFormats {
     }
   }
 
-  def yamlFormat1[A: YF, T <: Product: WeakTypeTag](
+  def yamlFormat1[A: YF, T <: Product: ClassTag](
     construct: A => T): YF[T] = {
 
     val List(a1) = fieldInfo[T]
     yamlFormat(construct, a1)
   }
 
-  def yamlFormat2[A: YF, B: YF, T <: Product: WeakTypeTag](
+  def yamlFormat2[A: YF, B: YF, T <: Product: ClassTag](
     construct: (A, B) => T): YF[T] = {
 
     val List(a1, a2) = fieldInfo[T]
     yamlFormat(construct, a1, a2)
   }
 
-  def yamlFormat3[A: YF, B: YF, C: YF, T <: Product: WeakTypeTag](
+  def yamlFormat3[A: YF, B: YF, C: YF, T <: Product: ClassTag](
     construct: (A, B, C) => T): YF[T] = {
 
     val List(a1, a2, a3) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3)
   }
 
-  def yamlFormat4[A: YF, B: YF, C: YF, D: YF, T <: Product: WeakTypeTag](
+  def yamlFormat4[A: YF, B: YF, C: YF, D: YF, T <: Product: ClassTag](
     construct: (A, B, C, D) => T): YF[T] = {
 
     val List(a1, a2, a3, a4) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4)
   }
 
-  def yamlFormat5[A: YF, B: YF, C: YF, D: YF, E: YF, T <: Product: WeakTypeTag](
+  def yamlFormat5[A: YF, B: YF, C: YF, D: YF, E: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5)
   }
 
-  def yamlFormat6[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, T <: Product: WeakTypeTag](
+  def yamlFormat6[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6)
   }
 
-  def yamlFormat7[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, T <: Product: WeakTypeTag](
+  def yamlFormat7[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7)
   }
 
-  def yamlFormat8[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, T <: Product: WeakTypeTag](
+  def yamlFormat8[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8)
   }
 
-  def yamlFormat9[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, T <: Product: WeakTypeTag](
+  def yamlFormat9[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9)
   }
 
-  def yamlFormat10[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, T <: Product: WeakTypeTag](
+  def yamlFormat10[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
   }
 
-  def yamlFormat11[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, T <: Product: WeakTypeTag](
+  def yamlFormat11[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)
   }
 
-  def yamlFormat12[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, T <: Product: WeakTypeTag](
+  def yamlFormat12[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
   }
 
-  def yamlFormat13[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, T <: Product: WeakTypeTag](
+  def yamlFormat13[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13)
   }
 
-  def yamlFormat14[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, T <: Product: WeakTypeTag](
+  def yamlFormat14[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14)
   }
 
-  def yamlFormat15[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, T <: Product: WeakTypeTag](
+  def yamlFormat15[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15)
   }
 
-  def yamlFormat16[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, T <: Product: WeakTypeTag](
+  def yamlFormat16[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16)
   }
 
-  def yamlFormat17[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, T <: Product: WeakTypeTag](
+  def yamlFormat17[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17)
   }
 
-  def yamlFormat18[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, T <: Product: WeakTypeTag](
+  def yamlFormat18[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18)
   }
 
-  def yamlFormat19[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, T <: Product: WeakTypeTag](
+  def yamlFormat19[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19)
   }
 
-  def yamlFormat20[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, T <: Product: WeakTypeTag](
+  def yamlFormat20[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, U) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)
   }
 
-  def yamlFormat21[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, V: YF, T <: Product: WeakTypeTag](
+  def yamlFormat21[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, V: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, U, V) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21) = fieldInfo[T]
     yamlFormat(construct, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21)
   }
 
-  def yamlFormat22[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, V: YF, X: YF, T <: Product: WeakTypeTag](
+  def yamlFormat22[A: YF, B: YF, C: YF, D: YF, E: YF, F: YF, G: YF, H: YF, I: YF, J: YF, K: YF, L: YF, M: YF, N: YF, O: YF, P: YF, Q: YF, R: YF, S: YF, U: YF, V: YF, X: YF, T <: Product: ClassTag](
     construct: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, U, V, X) => T): YF[T] = {
 
     val List(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22) = fieldInfo[T]
@@ -1039,11 +1040,20 @@ trait ProductFormats {
       readField[X](value, field22._1, field22._2))
   }
 
-  private[this] def fieldInfo[T: WeakTypeTag]: List[(String, Boolean)] =
-    implicitly[WeakTypeTag[T]].tpe.members.sorted.collect {
-      case m: MethodSymbol if m.isCaseAccessor =>
-        (m.name.decodedName.toString, m.returnType <:< typeOf[Option[Any]])
+  private[this] def fieldInfo[T: ClassTag]: List[(String, Boolean)] = {
+    val clazz = implicitly[ClassTag[T]].runtimeClass
+    val copyDefaultMethods = clazz.getMethods.filter(_.getName.startsWith("copy$default$")).sortBy(
+      _.getName.drop("copy$default$".length).takeWhile(_ != '(').toInt)
+    val fields = clazz.getDeclaredFields.filterNot { f =>
+      import Modifier._
+        (f.getModifiers & (TRANSIENT | STATIC | 0x1000)) > 0
     }
+    if (copyDefaultMethods.length != fields.length)
+      sys.error("Case class " + clazz.getName + " declares additional fields")
+    if (fields.zip(copyDefaultMethods).exists { case (f, m) => f.getType != m.getReturnType })
+      sys.error("Cannot determine field order of case class " + clazz.getName)
+    fields.map(v => (ProductFormats.decode(v.getName), classOf[Option[Any]].isAssignableFrom(v.getType))).toList
+  }
 
   protected[this] def writeField[A: YamlWriter](
     value: Any,
@@ -1076,6 +1086,17 @@ trait ProductFormats {
     case other =>
       deserializationError("YamlObject expected, but got " + other,
         fieldNames = fieldName :: Nil)
+  }
+}
+
+object ProductFormats {
+  private def decode(s: String) = {
+    if (s.indexOf('$') != -1) {
+      val res = NameTransformer.decode(s)
+      if (res == s) s
+      else res
+    }
+    else s
   }
 }
 
