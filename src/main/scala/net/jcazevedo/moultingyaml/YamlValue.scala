@@ -101,7 +101,6 @@ object YamlNumber {
     case _ => new YamlNumber(BigDecimal(n))
   }
   def apply(n: BigInt) = new YamlNumber(BigDecimal(n))
-  def apply(n: String) = new YamlNumber(BigDecimal(n))
 }
 
 case object YamlNaN extends YamlValue {
