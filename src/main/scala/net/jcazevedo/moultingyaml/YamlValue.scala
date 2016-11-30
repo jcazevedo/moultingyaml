@@ -82,18 +82,37 @@ case class YamlString(value: String) extends YamlValue {
 /**
  * A YAML number
  */
-case class YamlNumber[A](value: A)(
-    implicit private[moultingyaml] val num: Numeric[A]) extends YamlValue {
-  private[moultingyaml] lazy val snakeYamlObject: Object = value match {
-    case i: Int => i.asInstanceOf[java.lang.Integer]
-    case l: Long => l.asInstanceOf[java.lang.Long]
-    case f: Float => f.asInstanceOf[java.lang.Float]
-    case d: Double => d.asInstanceOf[java.lang.Double]
-    case b: Byte => b.asInstanceOf[java.lang.Byte]
-    case s: Short => s.asInstanceOf[java.lang.Short]
-    case bi: BigInt => new java.math.BigInteger(bi.toString())
-    case other => other.asInstanceOf[Object]
+case class YamlNumber(value: BigDecimal) extends YamlValue {
+  private[moultingyaml] lazy val snakeYamlObject: Object = {
+    value match {
+      case v if v.ulp.isWhole => value.underlying.toBigInteger
+      case _ => value
+    }
   }
+}
+
+object YamlNumber {
+  def apply(n: Int) = new YamlNumber(BigDecimal(n))
+  def apply(n: Long) = new YamlNumber(BigDecimal(n))
+  def apply(n: Double) = n match {
+    case n if n.isNaN => YamlNaN
+    case n if n.isPosInfinity => YamlPositiveInf
+    case n if n.isNegInfinity => YamlNegativeInf
+    case _ => new YamlNumber(BigDecimal(n))
+  }
+  def apply(n: BigInt) = new YamlNumber(BigDecimal(n))
+}
+
+case object YamlNaN extends YamlValue {
+  private[moultingyaml] lazy val snakeYamlObject: Object = Double.NaN.asInstanceOf[java.lang.Double]
+}
+
+case object YamlPositiveInf extends YamlValue {
+  private[moultingyaml] lazy val snakeYamlObject: Object = Double.PositiveInfinity.asInstanceOf[java.lang.Double]
+}
+
+case object YamlNegativeInf extends YamlValue {
+  private[moultingyaml] lazy val snakeYamlObject: Object = Double.NegativeInfinity.asInstanceOf[java.lang.Double]
 }
 
 /**

@@ -10,7 +10,7 @@ trait BasicFormats {
   implicit object IntYamlFormat extends YamlFormat[Int] {
     def write(x: Int) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toInt(x)
+      case YamlNumber(x) => x.intValue
       case x =>
         deserializationError("Expected Int as YamlNumber, but got " + x)
     }
@@ -19,7 +19,7 @@ trait BasicFormats {
   implicit object LongYamlFormat extends YamlFormat[Long] {
     def write(x: Long) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toLong(x)
+      case YamlNumber(x) => x.longValue
       case x =>
         deserializationError("Expected Long as YamlNumber, but got " + x)
     }
@@ -28,7 +28,7 @@ trait BasicFormats {
   implicit object FloatYamlFormat extends YamlFormat[Float] {
     def write(x: Float) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toFloat(x)
+      case YamlNumber(x) => x.floatValue
       case YamlNull => Float.NaN
       case x =>
         deserializationError("Expected Float as YamlNumber, but got " + x)
@@ -38,7 +38,7 @@ trait BasicFormats {
   implicit object DoubleYamlFormat extends YamlFormat[Double] {
     def write(x: Double) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toDouble(x)
+      case YamlNumber(x) => x.doubleValue
       case YamlNull => Double.NaN
       case x =>
         deserializationError("Expected Double as YamlNumber, but got " + x)
@@ -48,7 +48,7 @@ trait BasicFormats {
   implicit object ByteYamlFormat extends YamlFormat[Byte] {
     def write(x: Byte) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toInt(x).toByte
+      case YamlNumber(x) => x.byteValue
       case x =>
         deserializationError("Expected Byte as YamlNumber, but got " + x)
     }
@@ -57,7 +57,7 @@ trait BasicFormats {
   implicit object ShortYamlFormat extends YamlFormat[Short] {
     def write(x: Short) = YamlNumber(x)
     def read(value: YamlValue) = value match {
-      case v @ YamlNumber(x) => v.num.toInt(x).toShort
+      case YamlNumber(x) => x.shortValue
       case x =>
         deserializationError("Expected Short as YamlNumber, but got " + x)
     }
@@ -69,7 +69,7 @@ trait BasicFormats {
       YamlNumber(x)
     }
     def read(value: YamlValue) = value match {
-      case YamlNumber(x) => BigDecimal(x.toString)
+      case YamlNumber(x) => x
       case x =>
         deserializationError("Expected BigDecimal as YamlNumber, but got " + x)
     }
@@ -78,10 +78,10 @@ trait BasicFormats {
   implicit object BigIntYamlFormat extends YamlFormat[BigInt] {
     def write(x: BigInt) = {
       require(x ne null)
-      YamlNumber(x)
+      YamlNumber(BigDecimal(x))
     }
     def read(value: YamlValue) = value match {
-      case YamlNumber(x) => BigInt(x.toString)
+      case YamlNumber(x) => x.toBigInt
       case x =>
         deserializationError("Expected BigInt as YamlNumber, but got " + x)
     }

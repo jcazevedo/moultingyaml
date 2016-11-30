@@ -24,7 +24,10 @@ scalacOptions ++= Seq(
   (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, major)) if major >= 11 => Seq("-Ywarn-unused-import")
     case _ => Seq()
-  })
+   })
+
+scalacOptions in (Compile, console) ~= (_ filterNot (_ == "-Ywarn-unused-import"))
+scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 
 scalariformSettings
 
