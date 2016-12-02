@@ -10,7 +10,7 @@ class AdditionalFormatsSpec extends Specification {
     implicit def containerReader[A: YamlFormat] = lift {
       new YamlReader[Container[A]] {
         def read(value: YamlValue) = value match {
-          case YamlObject(fields) if fields.contains(YamlString("content")) =>
+          case YamlObject(fields, YamlTag.MAP) if fields.contains(YamlString("content")) =>
             Container(Some(fields(YamlString("content")).convertTo[A]))
 
           case _ => deserializationError("Unexpected format: " + value.toString)

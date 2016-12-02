@@ -231,14 +231,14 @@ class YamlParserSpec extends Specification {
 
     "correctly parse miscellaneous scalars" in withYaml("/examples/ex18.yaml") { yaml =>
       yaml mustEqual YamlObject(
-        YamlNull ->
-          YamlNull,
+        YamlNull() ->
+          YamlNull(),
         YamlBoolean(true) ->
           YamlString("y"),
         YamlBoolean(false) ->
           YamlString("n"),
         YamlString("string") ->
-          YamlString("12345"))
+          YamlNumber(12345, YamlTag.STR))
     }
 
     "correctly parse timestamps" in withYaml("/examples/ex19.yaml") { yaml =>
@@ -256,17 +256,21 @@ class YamlParserSpec extends Specification {
     }
 
     "correctly parse explicit sets" in withYaml("/examples/ex20.yaml") { yaml =>
-      yaml mustEqual YamlSet(
-        YamlString("Mark McGwire"),
-        YamlString("Sammy Sosa"),
-        YamlString("Ken Griff"))
+      yaml mustEqual YamlObject(
+        Map(
+          YamlString("Mark McGwire") -> YamlNull(),
+          YamlString("Sammy Sosa") -> YamlNull(),
+          YamlString("Ken Griff") -> YamlNull()),
+        tag = YamlTag.SET)
     }
 
     "correctly parse explicit ordered mappings" in withYaml("/examples/ex21.yaml") { yaml =>
-      yaml mustEqual YamlObject(
-        YamlString("Mark McGwire") -> YamlNumber(65),
-        YamlString("Sammy Sosa") -> YamlNumber(63),
-        YamlString("Ken Griffy") -> YamlNumber(58))
+      yaml mustEqual YamlArray(
+        Vector(
+          YamlObject(YamlString("Mark McGwire") -> YamlNumber(65)),
+          YamlObject(YamlString("Sammy Sosa") -> YamlNumber(63)),
+          YamlObject(YamlString("Ken Griffy") -> YamlNumber(58))),
+        tag = YamlTag.OMAP)
     }
 
     "correctly parse multiple documents in a stream" in withYamls("/examples/ex22.yaml") { yamls =>

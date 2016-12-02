@@ -77,11 +77,11 @@ class ProductFormatsSpec extends Specification {
     }
 
     "throw a DeserializationException if the YamlValue is not a YamlObject" in {
-      YamlNull.convertTo[Test2] must throwA[DeserializationException]
+      YamlNull().convertTo[Test2] must throwA[DeserializationException]
     }
 
     "expose the fieldName in the DeserializationException when able" in {
-      YamlNull.convertTo[Test2] must throwA[DeserializationException].like {
+      YamlNull().convertTo[Test2] must throwA[DeserializationException].like {
         case DeserializationException(_, _, fieldNames) =>
           fieldNames mustEqual "a" :: Nil
       }
@@ -104,7 +104,7 @@ class ProductFormatsSpec extends Specification {
       import NullOptionsTestProtocol._
 
       Test2(42, None).toYaml mustEqual YamlObject(
-        YamlString("a") -> YamlNumber(42), YamlString("b") -> YamlNull)
+        YamlString("a") -> YamlNumber(42), YamlString("b") -> YamlNull())
     }
   }
 
@@ -183,7 +183,7 @@ class ProductFormatsSpec extends Specification {
     }
 
     "throw a DeserializationException if the YamlValue is not a YamlObject" in {
-      YamlNull.convertTo[Test0] must throwA[DeserializationException]
+      YamlNull().convertTo[Test0] must throwA[DeserializationException]
     }
   }
 

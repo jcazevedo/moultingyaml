@@ -1069,10 +1069,10 @@ trait ProductFormats {
     fieldName: String,
     isOption: Boolean) = value match {
 
-    case YamlObject(fields) if isOption &&
+    case YamlObject(fields, YamlTag.MAP) if isOption &&
       !fields.contains(YamlString(fieldName)) => None.asInstanceOf[A]
 
-    case YamlObject(fields) =>
+    case YamlObject(fields, YamlTag.MAP) =>
       try fields(YamlString(fieldName)).convertTo[A]
       catch {
         case e: NoSuchElementException =>

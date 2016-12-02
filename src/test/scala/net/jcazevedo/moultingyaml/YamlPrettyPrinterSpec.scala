@@ -201,8 +201,8 @@ class YamlPrettyPrinterSpec extends Specification {
 
     "pretty print miscellaneous scalars" in {
       val yaml = YamlObject(
-        YamlNull ->
-          YamlNull,
+        YamlNull() ->
+          YamlNull(),
         YamlBoolean(true) ->
           YamlString("y"),
         YamlBoolean(false) ->

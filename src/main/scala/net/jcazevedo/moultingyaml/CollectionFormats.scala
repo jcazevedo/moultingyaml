@@ -13,7 +13,7 @@ trait CollectionFormats {
   implicit def listFormat[A: YF] = new YF[List[A]] {
     def write(list: List[A]) = YamlArray(list.map(_.toYaml).toVector)
     def read(value: YamlValue): List[A] = value match {
-      case YamlArray(elements) =>
+      case YamlArray(elements, YamlTag.SEQ) =>
         elements.map(_.convertTo[A])(collection.breakOut)
       case x =>
         deserializationError("Expected List as YamlArray, but got " + x)
@@ -26,7 +26,7 @@ trait CollectionFormats {
   implicit def arrayFormat[A: YF: ClassTag] = new YF[Array[A]] {
     def write(array: Array[A]) = YamlArray(array.map(_.toYaml).toVector)
     def read(value: YamlValue) = value match {
-      case YamlArray(elements) => elements.map(_.convertTo[A]).toArray
+      case YamlArray(elements, YamlTag.SEQ) => elements.map(_.convertTo[A]).toArray
       case x =>
         deserializationError("Expected Array as YamlArray, but got " + x)
     }
@@ -38,7 +38,7 @@ trait CollectionFormats {
   implicit def setFormat[A: YF] = new YF[Set[A]] {
     def write(set: Set[A]) = YamlSet(set.map(_.toYaml))
     def read(value: YamlValue): Set[A] = value match {
-      case YamlSet(elements) => elements.map(_.convertTo[A])
+      case YamlSet(elements, YamlTag.SET) => elements.map(_.convertTo[A])
       case x =>
         deserializationError("Expected Set as YamlSet, but got " + x)
     }
@@ -97,7 +97,7 @@ trait CollectionFormats {
   def viaSeq[I <: Iterable[T], T: YF](f: imm.Seq[T] => I): YF[I] = new YF[I] {
     def write(iterable: I) = YamlArray(iterable.map(_.toYaml).toVector)
     def read(value: YamlValue) = value match {
-      case YamlArray(elements) => f(elements.map(_.convertTo[T]))
+      case YamlArray(elements, YamlTag.SEQ) => f(elements.map(_.convertTo[T]))
       case x =>
         deserializationError("Expected Collection as YamlArray, but got " + x)
     }

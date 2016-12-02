@@ -12,11 +12,11 @@ trait StandardFormats {
 
     def write(option: Option[A]) = option match {
       case Some(x) => x.toYaml
-      case None => YamlNull
+      case None => YamlNull()
     }
 
     def read(value: YamlValue) = value match {
-      case YamlNull => None
+      case YamlNull(YamlTag.NULL) => None
       case x => Some(x.convertTo[A])
     }
   }
@@ -48,7 +48,7 @@ trait StandardFormats {
         YamlArray(t._1.toYaml, t._2.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b)) =>
+        case YamlArray(Seq(a, b), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B])
         case x =>
           deserializationError("Expected Tuple2 as YamlArray, but got " + x)
@@ -62,7 +62,7 @@ trait StandardFormats {
         YamlArray(t._1.toYaml, t._2.toYaml, t._3.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b, c)) =>
+        case YamlArray(Seq(a, b, c), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B], c.convertTo[C])
         case x =>
           deserializationError("Expected Tuple3 as YamlArray, but got " + x)
@@ -76,7 +76,7 @@ trait StandardFormats {
         YamlArray(t._1.toYaml, t._2.toYaml, t._3.toYaml, t._4.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b, c, d)) =>
+        case YamlArray(Seq(a, b, c, d), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B], c.convertTo[C], d.convertTo[D])
         case x =>
           deserializationError("Expected Tuple4 as YamlArray, but got " + x)
@@ -91,7 +91,7 @@ trait StandardFormats {
           t._5.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b, c, d, e)) =>
+        case YamlArray(Seq(a, b, c, d, e), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B], c.convertTo[C], d.convertTo[D],
             e.convertTo[E])
         case x =>
@@ -108,7 +108,7 @@ trait StandardFormats {
           t._5.toYaml, t._6.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b, c, d, e, f)) =>
+        case YamlArray(Seq(a, b, c, d, e, f), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B], c.convertTo[C], d.convertTo[D],
             e.convertTo[E], f.convertTo[F])
         case x =>
@@ -125,7 +125,7 @@ trait StandardFormats {
           t._5.toYaml, t._6.toYaml, t._7.toYaml)
 
       def read(value: YamlValue) = value match {
-        case YamlArray(Seq(a, b, c, d, e, f, g)) =>
+        case YamlArray(Seq(a, b, c, d, e, f, g), YamlTag.SEQ) =>
           (a.convertTo[A], b.convertTo[B], c.convertTo[C], d.convertTo[D],
             e.convertTo[E], f.convertTo[F], g.convertTo[G])
         case x =>

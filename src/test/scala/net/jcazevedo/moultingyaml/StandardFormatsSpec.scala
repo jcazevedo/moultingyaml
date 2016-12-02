@@ -8,11 +8,11 @@ class StandardFormatsSpec extends Specification with StandardFormats
   "The optionFormat" should {
 
     "convert None to YamlNull" in {
-      None.asInstanceOf[Option[Int]].toYaml mustEqual YamlNull
+      None.asInstanceOf[Option[Int]].toYaml mustEqual YamlNull()
     }
 
     "convert YamlNull to None" in {
-      YamlNull.convertTo[Option[Int]] mustEqual None
+      YamlNull().convertTo[Option[Int]] mustEqual None
     }
 
     "convert Some(Hello) to YamlString(Hello)" in {
