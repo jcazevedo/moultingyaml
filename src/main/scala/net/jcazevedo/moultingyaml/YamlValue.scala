@@ -17,12 +17,13 @@ sealed abstract class YamlValue {
 
   def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
             scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
-            lineBreak: LineBreak = LineBreak.DEFAULT) = {
-    val printer = new SnakeYamlPrinter(flowStyle, scalarStyle, lineBreak)
-    printer(this)
+            lineBreak: LineBreak = LineBreak.DEFAULT) : String = {
+    print(new SnakeYamlPrinter(flowStyle, scalarStyle, lineBreak))
   }
 
   def prettyPrint: String = print()
+
+  def print(yamlPrinter: YamlPrinter) : String = yamlPrinter(this)
 }
 
 /**
