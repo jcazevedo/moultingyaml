@@ -23,7 +23,7 @@ sealed abstract class YamlValue {
 
   def prettyPrint: String = print()
 
-  def print(yamlPrinter: YamlPrinter) : String = yamlPrinter(this)
+  def print(implicit yamlPrinter: YamlPrinter): String = yamlPrinter(this)
 }
 
 /**
