@@ -81,9 +81,9 @@ abstract class YamlPrinter(
   def apply(value: YamlValue): String
 }
 
-class SnakeYamlPrinter(flowStyle: FlowStyle,
-                       scalarStyle: ScalarStyle,
-                       lineBreak: LineBreak)
+class SnakeYamlPrinter(flowStyle: FlowStyle = FlowStyle.DEFAULT,
+                       scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
+                       lineBreak: LineBreak = LineBreak.DEFAULT)
     extends YamlPrinter(flowStyle, scalarStyle, lineBreak) {
 
   def dumperOptions : DumperOptions = {

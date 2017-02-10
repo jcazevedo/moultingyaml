@@ -279,5 +279,21 @@ class YamlPrettyPrinterSpec extends Specification {
 
       yaml.print() mustEqual yaml.prettyPrint
     }
+
+    "print can use an implicit YamlPrinter" in {
+      val yaml = YamlObject(
+        YamlString("int") ->
+          YamlNumber(42),
+        YamlString("float") ->
+          YamlNumber(0.4555),
+        YamlString("long_canonical") ->
+          YamlNumber(21474836470L),
+        YamlString("bigint_canonical") ->
+          YamlNumber(BigInt("92233720368547758070")))
+
+      implicit val yamlPrinter = new SnakeYamlPrinter(scalarStyle = DoubleQuoted)
+
+      yaml.print mustEqual yaml.print(scalarStyle = DoubleQuoted)
+    }
   }
 }
