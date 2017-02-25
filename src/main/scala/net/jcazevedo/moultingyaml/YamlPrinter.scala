@@ -86,7 +86,7 @@ class SnakeYamlPrinter(flowStyle: FlowStyle = FlowStyle.DEFAULT,
                        lineBreak: LineBreak = LineBreak.DEFAULT)
     extends YamlPrinter(flowStyle, scalarStyle, lineBreak) {
 
-  def dumperOptions : DumperOptions = {
+  def dumperOptions: DumperOptions = {
     val dp = new DumperOptions
     dp.setDefaultScalarStyle(scalarStyle.toDumperOption)
     dp.setDefaultFlowStyle(flowStyle.toDumperOption)

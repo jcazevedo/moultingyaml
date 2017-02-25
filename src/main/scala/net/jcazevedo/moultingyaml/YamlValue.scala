@@ -1,7 +1,7 @@
 package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /**
  * The general type of a YAML AST node.
@@ -15,15 +15,13 @@ sealed abstract class YamlValue {
 
   private[moultingyaml] def snakeYamlObject: Object
 
-  def print(flowStyle: FlowStyle = FlowStyle.DEFAULT,
-            scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
-            lineBreak: LineBreak = LineBreak.DEFAULT) : String = {
-    print(new SnakeYamlPrinter(flowStyle, scalarStyle, lineBreak))
-  }
-
-  def prettyPrint: String = print()
+  def prettyPrint: String = print(YamlValue.implicitSnakeYamlPrinter)
 
   def print(implicit yamlPrinter: YamlPrinter): String = yamlPrinter(this)
+}
+
+object YamlValue {
+  implicit val implicitSnakeYamlPrinter = new SnakeYamlPrinter
 }
 
 /**
