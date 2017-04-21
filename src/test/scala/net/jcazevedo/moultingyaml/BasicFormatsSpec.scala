@@ -3,6 +3,8 @@ package net.jcazevedo.moultingyaml
 import com.github.nscala_time.time.Imports._
 import org.specs2.mutable._
 
+import scala.util.Try
+
 class BasicFormatsSpec extends Specification with BasicFormats {
 
   "The IntYamlFormat" should {
@@ -81,6 +83,31 @@ class BasicFormatsSpec extends Specification with BasicFormats {
 
     "convert a YamlNull to a Double" in {
       YamlNull.convertTo[Double].isNaN mustEqual Double.NaN.isNaN
+    }
+  }
+
+  "The YamlNumber" should {
+    val nums = Seq(YamlNumber(42), YamlNumber(4.2))
+
+    "be convertible to an Int as well as a Double" in {
+      val Seq(outA, outB) = nums.map {
+        // Causes 'double' instead of the 'int'
+        case YamlNumber(x: Int) => x.toInt
+        case YamlNumber(x: Double) => x
+
+        // "scala.MatchError: YamlNumber(42)"
+        //case YamlNumber(x: Double) if x.isValidInt => x.toInt
+        //case YamlNumber(x: Double) => x
+
+        // "scala.MatchError: YamlNumber(42)"
+        //case YamlNumber(d: Double) => Try(d.toInt).getOrElse(d)
+
+        // No access
+        //case v @ YamlNumber(x) => v.num.toInt(x)
+      }
+
+      outA.getClass.getSimpleName mustEqual "int"
+      outB.getClass.getSimpleName mustEqual "double"
     }
   }
 
