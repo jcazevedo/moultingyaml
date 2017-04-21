@@ -243,7 +243,7 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.print(scalarStyle = DoubleQuoted) mustEqual
+      yaml.print(new SnakeYamlPrinter(scalarStyle = DoubleQuoted)) mustEqual
         """"int": !!int "42"
           |"float": !!float "0.4555"
           |"long_canonical": !!int "21474836470"
@@ -262,8 +262,8 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.print(scalarStyle = DoubleQuoted) mustEqual
-        yaml.print(scalarStyle = ScalarStyle.createStyle('"'))
+      yaml.print(new SnakeYamlPrinter(scalarStyle = DoubleQuoted)) mustEqual
+        yaml.print(new SnakeYamlPrinter(scalarStyle = ScalarStyle.createStyle('"')))
     }
 
     "print with default configuration" in {
@@ -277,7 +277,23 @@ class YamlPrettyPrinterSpec extends Specification {
         YamlString("bigint_canonical") ->
           YamlNumber(BigInt("92233720368547758070")))
 
-      yaml.print() mustEqual yaml.prettyPrint
+      yaml.print mustEqual yaml.prettyPrint
+    }
+
+    "print can use an implicit YamlPrinter" in {
+      val yaml = YamlObject(
+        YamlString("int") ->
+          YamlNumber(42),
+        YamlString("float") ->
+          YamlNumber(0.4555),
+        YamlString("long_canonical") ->
+          YamlNumber(21474836470L),
+        YamlString("bigint_canonical") ->
+          YamlNumber(BigInt("92233720368547758070")))
+
+      implicit val yamlPrinter = new SnakeYamlPrinter(scalarStyle = DoubleQuoted)
+
+      yaml.print mustEqual yaml.print(new SnakeYamlPrinter(scalarStyle = DoubleQuoted))
     }
   }
 }
