@@ -178,6 +178,18 @@ class BasicFormatsSpec extends Specification with BasicFormats {
     "convert a YamlString to a String" in {
       YamlString("Hello").convertTo[String] mustEqual "Hello"
     }
+
+    "allow converting a YamlBoolean to a String" in {
+      StringYamlFormat.read(YamlBoolean(true)) mustEqual "true"
+      StringYamlFormat.read(YamlBoolean(false)) mustEqual "false"
+    }
+
+    "allow converting a YamlNumber to a String" in {
+      StringYamlFormat.read(YamlNumber(42)) mustEqual "42"
+      StringYamlFormat.read(YamlNumber(4.2)) mustEqual "4.2"
+      StringYamlFormat.read(YamlNumber(BigDecimal(4.2))) mustEqual "4.2"
+      StringYamlFormat.read(YamlNumber(BigInt(42))) mustEqual "42"
+    }
   }
 
   "The SymbolYamlFormat" should {
