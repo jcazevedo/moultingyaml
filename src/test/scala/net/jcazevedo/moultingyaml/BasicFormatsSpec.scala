@@ -53,6 +53,14 @@ class BasicFormatsSpec extends Specification with BasicFormats {
     "convert a YamlNull to a Float" in {
       YamlNull.convertTo[Float].isNaN mustEqual Float.NaN.isNaN
     }
+
+    "convert a YamlPositiveInf to a Float" in {
+      YamlPositiveInf.convertTo[Float] mustEqual Float.PositiveInfinity
+    }
+
+    "convert a YamlNegativeInf to a Float" in {
+      YamlNegativeInf.convertTo[Float] mustEqual Float.NegativeInfinity
+    }
   }
 
   "The DoubleYamlFormat" should {
@@ -81,6 +89,14 @@ class BasicFormatsSpec extends Specification with BasicFormats {
 
     "convert a YamlNull to a Double" in {
       YamlNull.convertTo[Double].isNaN mustEqual Double.NaN.isNaN
+    }
+
+    "convert a YamlPositiveInf to a Double" in {
+      YamlPositiveInf.convertTo[Double] mustEqual Double.PositiveInfinity
+    }
+
+    "convert a YamlNegativeInf to a Double" in {
+      YamlNegativeInf.convertTo[Double] mustEqual Double.NegativeInfinity
     }
   }
 
