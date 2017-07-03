@@ -30,6 +30,8 @@ trait BasicFormats {
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.floatValue
       case YamlNull => Float.NaN
+      case YamlPositiveInf => Float.PositiveInfinity
+      case YamlNegativeInf => Float.NegativeInfinity
       case x =>
         deserializationError("Expected Float as YamlNumber, but got " + x)
     }
@@ -40,6 +42,8 @@ trait BasicFormats {
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.doubleValue
       case YamlNull => Double.NaN
+      case YamlPositiveInf => Double.PositiveInfinity
+      case YamlNegativeInf => Double.NegativeInfinity
       case x =>
         deserializationError("Expected Double as YamlNumber, but got " + x)
     }
