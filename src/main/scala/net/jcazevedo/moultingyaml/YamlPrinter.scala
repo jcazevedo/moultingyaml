@@ -52,7 +52,7 @@ case object Plain extends ScalarStyle {
 }
 
 case object Folded extends ScalarStyle {
-  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.LITERAL
+  def toDumperOption: DumperOptions.ScalarStyle = DumperOptions.ScalarStyle.FOLDED
 }
 
 sealed trait LineBreak {
