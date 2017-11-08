@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable.Specification
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class CustomFormatSpec extends Specification with DefaultYamlProtocol {
   case class MyType(name: String, value: Int)
 

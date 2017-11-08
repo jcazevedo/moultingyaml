@@ -2,8 +2,12 @@ package net.jcazevedo.moultingyaml
 
 import java.io.File
 import java.net.URLDecoder
-import org.specs2.mutable.Specification
+
 import scala.io.Source
+
+import org.specs2.mutable.Specification
+
+import net.jcazevedo.moultingyaml.defaultParser._
 
 class RoundTripSpec extends Specification {
   def getResourceURL(resource: String): String =

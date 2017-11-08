@@ -2,6 +2,8 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
 
+import net.jcazevedo.moultingyaml.defaultParser._
+
 class ProductFormatsSpec extends Specification {
 
   case class Test0()
