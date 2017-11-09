@@ -2,7 +2,7 @@ package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
 
-class CollectionFormatsSpec extends Specification with CollectionFormats
+class CollectionFormatsSpec extends Specification with CollectionFormats with CollectionWriters
     with BasicFormats {
 
   "The listFormat" should {

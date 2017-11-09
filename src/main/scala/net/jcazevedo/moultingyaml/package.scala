@@ -10,6 +10,10 @@ package object moultingyaml {
   private[moultingyaml] type YF[A] = YamlFormat[A]
   // format: ON
 
+  private[moultingyaml]type YW[A] = YamlWriter[A]
+
+  private[moultingyaml]type YR[A] = YamlReader[A]
+
   case class DeserializationException(msg: String,
                                       cause: Throwable = null,
                                       fieldNames: List[String] = Nil)

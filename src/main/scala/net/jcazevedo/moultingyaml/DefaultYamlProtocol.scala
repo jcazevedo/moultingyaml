@@ -9,5 +9,7 @@ trait DefaultYamlProtocol
   with CollectionFormats
   with ProductFormats
   with AdditionalFormats
+  with CollectionReaders
+  with CollectionWriters
 
 object DefaultYamlProtocol extends DefaultYamlProtocol
