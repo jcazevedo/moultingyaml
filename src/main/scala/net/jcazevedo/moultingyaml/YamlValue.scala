@@ -1,7 +1,7 @@
 package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /**
  * The general type of a YAML AST node.

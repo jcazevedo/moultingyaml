@@ -1,6 +1,7 @@
 package net.jcazevedo.moultingyaml
 
 import org.specs2.mutable._
+import org.yaml.snakeyaml.constructor.DuplicateKeyException
 
 class CollectionFormatsSpec extends Specification with CollectionFormats
     with BasicFormats {
@@ -57,6 +58,14 @@ class CollectionFormatsSpec extends Specification with CollectionFormats
 
     "be able to convert a YamlObject to a Map[Double, Int]" in {
       yaml.convertTo[Map[Double, Int]] mustEqual map
+    }
+
+    "parsing a Yaml map with duplicate keys should throw a DuplicateKeyException" in {
+      val yaml = """hr:  65    # Home runs
+                   |avg: 0.278 # Batting average
+                   |hr:  99    # Duplicate
+                   |rbi: 147   # Runs Batted In""".stripMargin
+      yaml.parseYaml must throwAn[DuplicateKeyException]
     }
   }
 

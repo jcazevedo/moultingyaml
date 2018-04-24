@@ -13,7 +13,7 @@ crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6")
 libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time"   % "2.14.0",
   "org.scala-lang"          % "scala-reflect" % scalaVersion.value,
-  "org.yaml"                % "snakeyaml"     % "1.17",
+  "org.yaml"                % "snakeyaml"     % "1.21",
   "org.specs2"             %% "specs2-core"   % "3.8.6"  % "test")
 
 scalacOptions ++= Seq(
