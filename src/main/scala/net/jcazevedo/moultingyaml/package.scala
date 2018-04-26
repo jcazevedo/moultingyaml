@@ -61,13 +61,22 @@ package object moultingyaml {
   }
 
   implicit class PimpedString(val string: String) {
-    private val loaderOptions = new LoaderOptions
-    loaderOptions.setAllowDuplicateKeys(false)
+    private def loaderOptions(allowDuplicateKeys: Boolean) = {
+      val loader = new LoaderOptions
+      loader.setAllowDuplicateKeys(allowDuplicateKeys)
+      loader
+    }
 
     def parseYaml: YamlValue =
-      convertToYamlValue(new Yaml(loaderOptions).load(string))
+      convertToYamlValue(new Yaml().load(string))
 
     def parseYamls: Seq[YamlValue] =
-      new Yaml(loaderOptions).loadAll(string).asScala.map(convertToYamlValue).toSeq
+      new Yaml().loadAll(string).asScala.map(convertToYamlValue).toSeq
+
+    def parseYaml(allowDuplicateKeys: Boolean): YamlValue =
+      convertToYamlValue(new Yaml(loaderOptions(allowDuplicateKeys)).load(string))
+
+    def parseYamls(allowDuplicateKeys: Boolean): Seq[YamlValue] =
+      new Yaml(loaderOptions(allowDuplicateKeys)).loadAll(string).asScala.map(convertToYamlValue).toSeq
   }
 }

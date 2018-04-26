@@ -65,7 +65,7 @@ class CollectionFormatsSpec extends Specification with CollectionFormats
                    |avg: 0.278 # Batting average
                    |hr:  99    # Duplicate
                    |rbi: 147   # Runs Batted In""".stripMargin
-      yaml.parseYaml must throwAn[DuplicateKeyException]
+      yaml.parseYaml(allowDuplicateKeys = false) must throwAn[DuplicateKeyException]
     }
   }
 
