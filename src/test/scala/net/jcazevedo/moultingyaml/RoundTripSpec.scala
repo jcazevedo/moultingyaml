@@ -13,9 +13,12 @@ class RoundTripSpec extends Specification {
     "work in a round trip fashion" in {
       val files = new File(getResourceURL("/examples")).listFiles()
       forall(files) { file =>
-        val yamls = Source.fromFile(file).mkString.parseYamls
+        val yamlfiles = Source.fromFile(file).mkString
+        val yamls = yamlfiles.parseYamls
+        val yamlsDuplicateKeysDisallowed = yamlfiles.parseYamls(allowDuplicateKeys = false)
         forall(yamls) { innerYaml =>
           innerYaml.prettyPrint.parseYaml mustEqual innerYaml
+          innerYaml.prettyPrint.parseYaml(allowDuplicateKeys = false) mustEqual innerYaml
         }
       }
     }

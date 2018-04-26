@@ -1,6 +1,7 @@
 package net.jcazevedo
 
 import com.github.nscala_time.time.Imports._
+import org.yaml.snakeyaml.LoaderOptions
 import org.yaml.snakeyaml.Yaml
 import scala.collection.JavaConverters._
 
@@ -59,11 +60,23 @@ package object moultingyaml {
     def toYaml(implicit writer: YamlWriter[A]): YamlValue = writer.write(any)
   }
 
-  implicit class PimpedString(val string: String) extends AnyVal {
+  implicit class PimpedString(val string: String) {
+    private def loaderOptions(allowDuplicateKeys: Boolean) = {
+      val loader = new LoaderOptions
+      loader.setAllowDuplicateKeys(allowDuplicateKeys)
+      loader
+    }
+
     def parseYaml: YamlValue =
       convertToYamlValue(new Yaml().load(string))
 
     def parseYamls: Seq[YamlValue] =
       new Yaml().loadAll(string).asScala.map(convertToYamlValue).toSeq
+
+    def parseYaml(allowDuplicateKeys: Boolean): YamlValue =
+      convertToYamlValue(new Yaml(loaderOptions(allowDuplicateKeys)).load(string))
+
+    def parseYamls(allowDuplicateKeys: Boolean): Seq[YamlValue] =
+      new Yaml(loaderOptions(allowDuplicateKeys)).loadAll(string).asScala.map(convertToYamlValue).toSeq
   }
 }
