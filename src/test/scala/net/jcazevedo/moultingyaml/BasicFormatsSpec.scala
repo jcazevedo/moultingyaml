@@ -199,11 +199,11 @@ class BasicFormatsSpec extends Specification with BasicFormats {
   "The SymbolYamlFormat" should {
 
     "convert a Symbol to a YamlString" in {
-      'Hello.toYaml mustEqual YamlString("Hello")
+      Symbol("Hello").toYaml mustEqual YamlString("Hello")
     }
 
     "convert a YamlString to a Symbol" in {
-      YamlString("Hello").convertTo[Symbol] mustEqual 'Hello
+      YamlString("Hello").convertTo[Symbol] mustEqual Symbol("Hello")
     }
   }
 
