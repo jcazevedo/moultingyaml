@@ -8,7 +8,7 @@ version := "0.4.1"
 
 scalaVersion := "2.13.0"
 
-crossScalaVersions := Seq("2.13.0", "2.12.0", "2.11.8")
+crossScalaVersions := Seq("2.13.0", "2.12.8", "2.11.12")
 
 libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time"   % "2.22.0",
