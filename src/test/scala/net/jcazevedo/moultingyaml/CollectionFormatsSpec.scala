@@ -3,7 +3,7 @@ package net.jcazevedo.moultingyaml
 import org.specs2.mutable._
 
 class CollectionFormatsSpec extends Specification with CollectionFormats
-    with BasicFormats {
+  with BasicFormats {
 
   "The listFormat" should {
     val list = List(1, 2, 3)

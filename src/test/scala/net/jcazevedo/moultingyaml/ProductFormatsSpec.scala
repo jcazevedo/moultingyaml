@@ -66,13 +66,15 @@ class ProductFormatsSpec extends Specification {
     }
 
     "ignore additional members during deserialization" in {
-      YamlObject(YamlString("a") -> YamlNumber(42),
+      YamlObject(
+        YamlString("a") -> YamlNumber(42),
         YamlString("b") -> YamlNumber(4.2),
         YamlString("c") -> YamlString("no")).convertTo[Test2] mustEqual obj
     }
 
     "not depend on any specific member order for deserialization" in {
-      YamlObject(YamlString("b") -> YamlNumber(4.2),
+      YamlObject(
+        YamlString("b") -> YamlNumber(4.2),
         YamlString("a") -> YamlNumber(42)).convertTo[Test2] mustEqual obj
     }
 
@@ -139,7 +141,8 @@ class ProductFormatsSpec extends Specification {
 
   "A YamlFormat for a case class with transient fields and created with `yamlFormat`" should {
     val obj = TestTransient(42, Some(4.2))
-    val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
+    val yaml = YamlObject(
+      YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
     "convert to a respective YamlObject" in {
@@ -153,7 +156,8 @@ class ProductFormatsSpec extends Specification {
 
   "A YamlFormat for a case class with static fields and created with `yamlFormat`" should {
     val obj = TestStatic(42, Some(4.2))
-    val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
+    val yaml = YamlObject(
+      YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
     "convert to a respective YamlObject" in {
@@ -208,7 +212,8 @@ class ProductFormatsSpec extends Specification {
 
   "A YamlFormat created with `yamlFormat`, for a case class with 22 elements," should {
     val obj = Test5(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
-    val yaml = YamlObject(YamlString("a1") -> YamlNumber(1),
+    val yaml = YamlObject(
+      YamlString("a1") -> YamlNumber(1),
       YamlString("a2") -> YamlNumber(2),
       YamlString("a3") -> YamlNumber(3),
       YamlString("a4") -> YamlNumber(4),

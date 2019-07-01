@@ -3,7 +3,7 @@ package net.jcazevedo.moultingyaml
 import org.specs2.mutable._
 
 class StandardFormatsSpec extends Specification with StandardFormats
-    with BasicFormats {
+  with BasicFormats {
 
   "The optionFormat" should {
 

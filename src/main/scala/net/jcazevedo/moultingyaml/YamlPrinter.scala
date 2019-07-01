@@ -76,15 +76,16 @@ case object Unix extends LineBreak {
 }
 
 abstract class YamlPrinter(
-  flowStyle: FlowStyle, scalarStyle: ScalarStyle, lineBreak: LineBreak)
-    extends (YamlValue => String) {
+    flowStyle: FlowStyle, scalarStyle: ScalarStyle, lineBreak: LineBreak)
+  extends (YamlValue => String) {
   def apply(value: YamlValue): String
 }
 
-class SnakeYamlPrinter(flowStyle: FlowStyle = FlowStyle.DEFAULT,
-                       scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
-                       lineBreak: LineBreak = LineBreak.DEFAULT)
-    extends YamlPrinter(flowStyle, scalarStyle, lineBreak) {
+class SnakeYamlPrinter(
+    flowStyle:   FlowStyle   = FlowStyle.DEFAULT,
+    scalarStyle: ScalarStyle = ScalarStyle.DEFAULT,
+    lineBreak:   LineBreak   = LineBreak.DEFAULT)
+  extends YamlPrinter(flowStyle, scalarStyle, lineBreak) {
 
   def dumperOptions: DumperOptions = {
     val dp = new DumperOptions
