@@ -29,11 +29,9 @@ scalacOptions ++= Seq(
 scalacOptions in (Compile, console) ~= (_ filterNot (_ == "-Ywarn-unused-import"))
 scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 
-scalariformSettings
-
-ScalariformKeys.preferences := ScalariformKeys.preferences.value
+scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignParameters, true)
-  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(DoubleIndentConstructorArguments, true)
 
 publishMavenStyle := true
 
