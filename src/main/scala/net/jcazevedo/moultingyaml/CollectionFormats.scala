@@ -13,8 +13,7 @@ trait CollectionFormats {
   implicit def listFormat[A: YF] = new YF[List[A]] {
     def write(list: List[A]) = YamlArray(list.map(_.toYaml).toVector)
     def read(value: YamlValue): List[A] = value match {
-      case YamlArray(elements) =>
-        elements.map(_.convertTo[A])(collection.breakOut)
+      case YamlArray(elements) => elements.map(_.convertTo[A]).toList
       case x =>
         deserializationError("Expected List as YamlArray, but got " + x)
     }

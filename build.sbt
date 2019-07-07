@@ -6,15 +6,15 @@ organization := "net.jcazevedo"
 
 version := "0.4.1-SNAPSHOT"
 
-scalaVersion := "2.12.0"
+scalaVersion := "2.13.0"
 
-crossScalaVersions := Seq("2.12.0", "2.11.8", "2.10.6")
+crossScalaVersions := Seq("2.13.0", "2.12.8", "2.11.12", "2.10.7")
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time"   % "2.14.0",
+  "com.github.nscala-time" %% "nscala-time"   % "2.22.0",
   "org.scala-lang"          % "scala-reflect" % scalaVersion.value,
-  "org.yaml"                % "snakeyaml"     % "1.17",
-  "org.specs2"             %% "specs2-core"   % "3.8.6"  % "test")
+  "org.yaml"                % "snakeyaml"     % "1.24",
+  "org.scalatest"          %% "scalatest"     % "3.0.8"  % "test")
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -22,11 +22,12 @@ scalacOptions ++= Seq(
   "-feature",
   "-language:implicitConversions") ++
   (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, major)) if major >= 13 => Seq("-Ywarn-unused:imports")
     case Some((2, major)) if major >= 11 => Seq("-Ywarn-unused-import")
     case _ => Seq()
    })
 
-scalacOptions in (Compile, console) ~= (_ filterNot (_ == "-Ywarn-unused-import"))
+scalacOptions in (Compile, console) ~= (_ filterNot (Set("-Ywarn-unused:imports", "-Ywarn-unused-import").contains))
 scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 
 scalariformSettings

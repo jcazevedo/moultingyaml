@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.specs2.mutable._
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class AdditionalFormatsSpec extends Specification {
+class AdditionalFormatsSpec extends FlatSpec {
 
   case class Container[A](inner: Option[A])
 
@@ -28,7 +29,7 @@ class AdditionalFormatsSpec extends Specification {
     }
   }
 
-  "A lifted YamlReader" should {
+  {
     val obj = Container(Some(Container(Some(List(1, 2, 3)))))
     val yaml =
       """content:
@@ -40,16 +41,18 @@ class AdditionalFormatsSpec extends Specification {
 
     import ReaderProtocol._
 
-    "properly read a Container[Container[List[Int]]] from YAML" in {
-      yaml.parseYaml.convertTo[Container[Container[List[Int]]]] mustEqual obj
+    "A lifted YamlReader" should "properly read a Container[Container[List[Int]]] from YAML" in {
+      yaml.parseYaml.convertTo[Container[Container[List[Int]]]] should ===(obj)
     }
 
-    "throw a DeserializationException if trying to write with it" in {
-      obj.toYaml must throwAn[UnsupportedOperationException]
+    it should "throw a DeserializationException if trying to write with it" in {
+      a[UnsupportedOperationException] should be thrownBy {
+        obj.toYaml
+      }
     }
   }
 
-  "A lifted YamlWriter" should {
+  {
     val obj = Container(Some(Container(Some(List(1, 2, 3)))))
     val yaml =
       """content:
@@ -61,25 +64,25 @@ class AdditionalFormatsSpec extends Specification {
 
     import WriterProtocol._
 
-    "properly write a Container[Container[List[Int]]] to YAML" in {
-      obj.toYaml.prettyPrint mustEqual yaml
+    "A lifted YamlWriter" should "properly write a Container[Container[List[Int]]] to YAML" in {
+      obj.toYaml.prettyPrint should ===(yaml)
     }
 
-    "throw a DeserializationException if trying to read with it" in {
-      yaml.parseYaml.convertTo[Container[Container[List[Int]]]] must
-        throwAn[UnsupportedOperationException]
+    it should "throw a DeserializationException if trying to read with it" in {
+      a[UnsupportedOperationException] should be thrownBy {
+        yaml.parseYaml.convertTo[Container[Container[List[Int]]]]
+      }
     }
   }
 
-  case class Foo(id: Long, name: String, foos: Option[List[Foo]] = None)
+  {
+    case class Foo(id: Long, name: String, foos: Option[List[Foo]] = None)
 
-  object FooProtocol extends DefaultYamlProtocol {
-    implicit val fooProtocol: YamlFormat[Foo] = lazyFormat(yamlFormat3(Foo))
-  }
+    object FooProtocol extends DefaultYamlProtocol {
+      implicit val fooProtocol: YamlFormat[Foo] = lazyFormat(yamlFormat3(Foo))
+    }
 
-  "The lazyFormat wrapper" should {
-
-    "enable recursive format definitions" in {
+    "The lazyFormat wrapper" should "enable recursive format definitions" in {
       val obj =
         Foo(1, "a", Some(List(
           Foo(2, "b", Some(List(
@@ -87,19 +90,19 @@ class AdditionalFormatsSpec extends Specification {
           Foo(4, "d"))))
 
       val yaml = """id: 1
-                   |name: a
-                   |foos:
-                   |- id: 2
-                   |  name: b
-                   |  foos:
-                   |  - id: 3
-                   |    name: c
-                   |- id: 4
-                   |  name: d
-                   |""".stripMargin
+                     |name: a
+                     |foos:
+                     |- id: 2
+                     |  name: b
+                     |  foos:
+                     |  - id: 3
+                     |    name: c
+                     |- id: 4
+                     |  name: d
+                     |""".stripMargin
 
       import FooProtocol._
-      obj.toYaml.prettyPrint mustEqual yaml
+      obj.toYaml.prettyPrint should ===(yaml)
     }
   }
 }

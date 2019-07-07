@@ -1,7 +1,7 @@
 package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /**
  * The general type of a YAML AST node.
@@ -31,13 +31,13 @@ case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
   override def asYamlObject(errorMsg: String) = this
 
   def getFields(fieldKeys: YamlValue*): Seq[YamlValue] =
-    fieldKeys.flatMap(fields.get)(collection.breakOut)
+    fieldKeys.flatMap(fields.get).toSeq
 
   private[moultingyaml] lazy val snakeYamlObject: Object = {
-    mapAsJavaMap(fields.map {
+    fields.map {
       case (k, v) =>
         k.snakeYamlObject -> v.snakeYamlObject
-    })
+    }.asJava
   }
 }
 
@@ -50,7 +50,7 @@ object YamlObject {
  */
 case class YamlArray(elements: Vector[YamlValue]) extends YamlValue {
   private[moultingyaml] lazy val snakeYamlObject: Object = {
-    seqAsJavaList(elements.map(_.snakeYamlObject))
+    elements.map(_.snakeYamlObject).asJava
   }
 }
 
@@ -63,7 +63,7 @@ object YamlArray {
  */
 case class YamlSet(set: Set[YamlValue]) extends YamlValue {
   private[moultingyaml] lazy val snakeYamlObject: Object = {
-    setAsJavaSet(set.map(_.snakeYamlObject))
+    set.map(_.snakeYamlObject).asJava
   }
 }
 
