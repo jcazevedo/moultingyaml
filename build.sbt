@@ -31,7 +31,7 @@ scalacOptions in (Compile, console) ~= (_ filterNot (Set("-Ywarn-unused:imports"
 scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 
 scalariformPreferences := scalariformPreferences.value
-  .setPreference(AlignParameters, true)
+  .setPreference(DanglingCloseParenthesis, Prevent)
   .setPreference(DoubleIndentConstructorArguments, true)
 
 publishMavenStyle := true

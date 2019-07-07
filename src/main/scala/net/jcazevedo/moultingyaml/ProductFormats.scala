@@ -1056,18 +1056,18 @@ trait ProductFormats {
   }
 
   protected[this] def writeField[A: YamlWriter](
-    value:     Any,
+    value: Any,
     fieldName: String,
-    isOption:  Boolean): Option[(YamlString, YamlValue)] = value match {
+    isOption: Boolean): Option[(YamlString, YamlValue)] = value match {
 
     case None => None
     case _ => Some(YamlString(fieldName) -> value.asInstanceOf[A].toYaml)
   }
 
   protected[this] def readField[A: YamlReader](
-    value:     YamlValue,
+    value: YamlValue,
     fieldName: String,
-    isOption:  Boolean) = value match {
+    isOption: Boolean) = value match {
 
     case YamlObject(fields) if isOption &&
       !fields.contains(YamlString(fieldName)) => None.asInstanceOf[A]

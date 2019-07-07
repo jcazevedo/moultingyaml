@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 
 class StandardFormatsSpec extends FlatSpec with StandardFormats
-    with BasicFormats {
+  with BasicFormats {
 
   "The optionFormat" should "convert None to YamlNull" in {
     None.asInstanceOf[Option[Int]].toYaml should ===(YamlNull)
