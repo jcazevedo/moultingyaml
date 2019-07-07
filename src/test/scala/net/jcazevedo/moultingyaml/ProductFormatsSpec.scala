@@ -1,8 +1,11 @@
 package net.jcazevedo.moultingyaml
 
-import org.scalatest.{ FlatSpec, Inside, Inspectors, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
+import org.scalatest.Inside._
+import org.scalatest.Inspectors._
 
-class ProductFormatsSpec extends FlatSpec with Matchers with Inside with Inspectors {
+class ProductFormatsSpec extends FlatSpec {
 
   case class Test0()
   case class Test2(a: Int, b: Option[Double])

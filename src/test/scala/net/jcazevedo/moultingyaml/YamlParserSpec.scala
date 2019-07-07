@@ -1,15 +1,16 @@
 package net.jcazevedo.moultingyaml
 
-import com.github.nscala_time.time.Imports._
 import java.net.URLDecoder
 
 import scala.io.Source
 import scala.util.{ Failure, Success, Try }
 
+import com.github.nscala_time.time.Imports._
 import org.scalactic.source.Position
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class YamlParserSpec extends FlatSpec with Matchers {
+class YamlParserSpec extends FlatSpec {
   def getResourceURL(resource: String): String =
     URLDecoder.decode(getClass.getResource(resource).getFile, "UTF-8")
 

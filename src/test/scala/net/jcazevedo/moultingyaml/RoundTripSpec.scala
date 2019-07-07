@@ -3,10 +3,13 @@ package net.jcazevedo.moultingyaml
 import java.io.File
 import java.net.URLDecoder
 
-import org.scalatest.{ FlatSpec, Inspectors, Matchers }
 import scala.io.Source
 
-class RoundTripSpec extends FlatSpec with Matchers with Inspectors {
+import org.scalatest.FlatSpec
+import org.scalatest.Inspectors._
+import org.scalatest.Matchers._
+
+class RoundTripSpec extends FlatSpec {
   def getResourceURL(resource: String): String =
     URLDecoder.decode(getClass.getResource(resource).getFile, "UTF-8")
 

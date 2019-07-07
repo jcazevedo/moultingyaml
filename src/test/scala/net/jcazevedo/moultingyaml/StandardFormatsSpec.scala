@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class StandardFormatsSpec extends FlatSpec with Matchers with StandardFormats
+class StandardFormatsSpec extends FlatSpec with StandardFormats
     with BasicFormats {
 
   "The optionFormat" should "convert None to YamlNull" in {

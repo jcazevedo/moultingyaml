@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class CustomFormatSpec extends FlatSpec with Matchers with DefaultYamlProtocol {
+class CustomFormatSpec extends FlatSpec with DefaultYamlProtocol {
   case class MyType(name: String, value: Int)
 
   implicit val MyTypeProtocol = new YamlFormat[MyType] {

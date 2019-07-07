@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class AdditionalFormatsSpec extends FlatSpec with Matchers {
+class AdditionalFormatsSpec extends FlatSpec {
 
   case class Container[A](inner: Option[A])
 

@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class YamlPrettyPrinterSpec extends FlatSpec with Matchers {
+class YamlPrettyPrinterSpec extends FlatSpec {
   "The provided YAML prettyprinter" should "pretty print sequences of scalars" in {
     val yaml = YamlArray(
       YamlString("Mark McGwire"),
