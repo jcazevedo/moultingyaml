@@ -1,8 +1,9 @@
 package net.jcazevedo.moultingyaml
 
-import org.specs2.mutable.Specification
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class CustomFormatSpec extends Specification with DefaultYamlProtocol {
+class CustomFormatSpec extends FlatSpec with DefaultYamlProtocol {
   case class MyType(name: String, value: Int)
 
   implicit val MyTypeProtocol = new YamlFormat[MyType] {
@@ -20,16 +21,16 @@ class CustomFormatSpec extends Specification with DefaultYamlProtocol {
         YamlString("value") -> YamlNumber(obj.value))
   }
 
-  "A custom YamlFormat built with 'asYamlObject'" should {
+  {
     val value = MyType("bob", 42)
 
-    "correctly deserialize valid YAML content" in {
+    "A custom YamlFormat built with 'asYamlObject'" should "correctly deserialize valid YAML content" in {
       """name: bob
-        |value: 42""".stripMargin.parseYaml.convertTo[MyType] mustEqual value
+          |value: 42""".stripMargin.parseYaml.convertTo[MyType] should ===(value)
     }
 
-    "support full round-trip (de)serialization" in {
-      value.toYaml.convertTo[MyType] mustEqual value
+    it should "support full round-trip (de)serialization" in {
+      value.toYaml.convertTo[MyType] should ===(value)
     }
   }
 }

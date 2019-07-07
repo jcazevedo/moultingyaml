@@ -1,75 +1,76 @@
 package net.jcazevedo.moultingyaml
 
-import org.specs2.mutable._
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
 
-class CollectionFormatsSpec extends Specification with CollectionFormats
-  with BasicFormats {
+class CollectionFormatsSpec extends FlatSpec with CollectionFormats
+    with BasicFormats {
 
-  "The listFormat" should {
+  {
     val list = List(1, 2, 3)
     val yaml = YamlArray(YamlNumber(1), YamlNumber(2), YamlNumber(3))
 
-    "convert a List[Int] to a YamlArray of YamlNumbers" in {
-      list.toYaml mustEqual yaml
+    "The listFormat" should "convert a List[Int] to a YamlArray of YamlNumbers" in {
+      list.toYaml should ===(yaml)
     }
 
-    "convert a YamlArray of YamlNumbers to a List[Int]" in {
-      yaml.convertTo[List[Int]] mustEqual list
+    it should "convert a YamlArray of YamlNumbers to a List[Int]" in {
+      yaml.convertTo[List[Int]] should ===(list)
     }
   }
 
-  "The arrayFormat" should {
+  {
     val array = Array(1, 2, 3)
     val yaml = YamlArray(YamlNumber(1), YamlNumber(2), YamlNumber(3))
 
-    "convert an Array[Int] to a YamlArray of YamlNumbers" in {
-      array.toYaml mustEqual yaml
+    "The arrayFormat" should "convert an Array[Int] to a YamlArray of YamlNumbers" in {
+      array.toYaml should ===(yaml)
     }
 
-    "convert a YamlArray of YamlNumbers to an Array[Int]" in {
-      yaml.convertTo[Array[Int]] mustEqual array
+    it should "convert a YamlArray of YamlNumbers to an Array[Int]" in {
+      yaml.convertTo[Array[Int]] should ===(array)
     }
   }
 
-  "The setFormat" should {
+  {
     val set = Set(1, 2, 3)
     val yaml = YamlSet(YamlNumber(1), YamlNumber(2), YamlNumber(3))
 
-    "convert a Set[Int] to a YamlSet of YamlNumbers" in {
-      set.toYaml mustEqual yaml
+    "The setFormat" should "convert a Set[Int] to a YamlSet of YamlNumbers" in {
+      set.toYaml should ===(yaml)
     }
 
-    "convert a YamlSet of YamlNumbers to a Set[Int]" in {
-      yaml.convertTo[Set[Int]] mustEqual set
+    it should "convert a YamlSet of YamlNumbers to a Set[Int]" in {
+      yaml.convertTo[Set[Int]] should ===(set)
     }
   }
 
-  "The mapFormat" should {
+  {
     val map = Map(1.1 -> 1, 2.2 -> 2, 3.3 -> 3)
     val yaml = YamlObject(
       YamlNumber(1.1) -> YamlNumber(1),
       YamlNumber(2.2) -> YamlNumber(2),
       YamlNumber(3.3) -> YamlNumber(3))
 
-    "convert a Map[Double, Int] to a YamlObject" in {
-      map.toYaml mustEqual yaml
+    "The mapFormat" should "convert a Map[Double, Int] to a YamlObject" in {
+      map.toYaml should ===(yaml)
     }
 
-    "be able to convert a YamlObject to a Map[Double, Int]" in {
-      yaml.convertTo[Map[Double, Int]] mustEqual map
+    it should "be able to convert a YamlObject to a Map[Double, Int]" in {
+      yaml.convertTo[Map[Double, Int]] should ===(map)
     }
   }
 
-  "The indexedSeqFormat" should {
+  {
     val seq = collection.IndexedSeq(1, 2, 3)
     val yaml = YamlArray(YamlNumber(1), YamlNumber(2), YamlNumber(3))
 
-    "convert an IndexedSeq[Int] to a YamlArray of YamlNumbers" in {
-      seq.toYaml mustEqual yaml
+    "The indexedSeqFormat" should "convert an IndexedSeq[Int] to a YamlArray of YamlNumbers" in {
+      seq.toYaml should ===(yaml)
     }
 
-    "convert a YamlArray of YamlNumbers to an IndexedSeq[Int]" in {
-      yaml.convertTo[collection.IndexedSeq[Int]] mustEqual seq
+    it should "convert a YamlArray of YamlNumbers to an IndexedSeq[Int]" in {
+      yaml.convertTo[collection.IndexedSeq[Int]] should ===(seq)
     }
   }
 }
