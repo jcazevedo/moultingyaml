@@ -4,17 +4,17 @@ name := "moultingyaml"
 
 organization := "net.jcazevedo"
 
-version := "0.4.1"
+version := "0.4.1-SNAPSHOT"
 
 scalaVersion := "2.13.0"
 
-crossScalaVersions := Seq("2.13.0", "2.12.8", "2.11.12")
+crossScalaVersions := Seq("2.13.0", "2.12.8", "2.11.12", "2.10.7")
 
 libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time"   % "2.22.0",
   "org.scala-lang"          % "scala-reflect" % scalaVersion.value,
   "org.yaml"                % "snakeyaml"     % "1.24",
-  "org.specs2"             %% "specs2-core"   % "4.5.1"  % "test")
+  "org.scalatest"          %% "scalatest"     % "3.0.8"  % "test")
 
 scalacOptions ++= Seq(
   "-deprecation",

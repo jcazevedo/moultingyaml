@@ -1,8 +1,8 @@
 package net.jcazevedo.moultingyaml
 
-import org.specs2.mutable._
+import org.scalatest.{ FlatSpec, Inside, Inspectors, Matchers }
 
-class ProductFormatsSpec extends Specification {
+class ProductFormatsSpec extends FlatSpec with Matchers with Inside with Inspectors {
 
   case class Test0()
   case class Test2(a: Int, b: Option[Double])
@@ -37,157 +37,156 @@ class ProductFormatsSpec extends Specification {
   object TestProtocol extends TestProtocol
   import TestProtocol._
 
-  "A YamlFormat created with `yamlFormat`, for a case class with 2 elements," should {
+  {
     val obj = Test2(42, Some(4.2))
     val yaml = YamlObject(
       YamlString("a") -> YamlNumber(42), YamlString("b") -> YamlNumber(4.2))
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat created with `yamlFormat`, for a case class with 2 elements," should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[Test2] mustEqual obj
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[Test2] should ===(obj)
     }
 
-    "throw a DeserializationException if the YamlObject does not all required members" in {
-      YamlObject(YamlString("b") -> YamlNumber(4.2)).convertTo[Test2] must
-        throwA[DeserializationException]
-    }
-
-    "not require the presence of optional fields for deserialization" in {
-      YamlObject(YamlString("a") -> YamlNumber(42)).convertTo[Test2] mustEqual
-        Test2(42, None)
-    }
-
-    "not render `None` members during serialization" in {
-      Test2(42, None).toYaml mustEqual
-        YamlObject(YamlString("a") -> YamlNumber(42))
-    }
-
-    "ignore additional members during deserialization" in {
-      YamlObject(YamlString("a") -> YamlNumber(42),
-        YamlString("b") -> YamlNumber(4.2),
-        YamlString("c") -> YamlString("no")).convertTo[Test2] mustEqual obj
-    }
-
-    "not depend on any specific member order for deserialization" in {
-      YamlObject(YamlString("b") -> YamlNumber(4.2),
-        YamlString("a") -> YamlNumber(42)).convertTo[Test2] mustEqual obj
-    }
-
-    "throw a DeserializationException if the YamlValue is not a YamlObject" in {
-      YamlNull.convertTo[Test2] must throwA[DeserializationException]
-    }
-
-    "expose the fieldName in the DeserializationException when able" in {
-      YamlNull.convertTo[Test2] must throwA[DeserializationException].like {
-        case DeserializationException(_, _, fieldNames) =>
-          fieldNames mustEqual "a" :: Nil
+    it should "throw a DeserializationException if the YamlObject does not all required members" in {
+      a[DeserializationException] should be thrownBy {
+        YamlObject(YamlString("b") -> YamlNumber(4.2)).convertTo[Test2]
       }
     }
 
-    "expose all gathered fieldNames in the DeserializationException" in {
-      YamlObject(YamlString("t2") -> YamlObject(
-        YamlString("a") -> YamlString("foo"))).convertTo[Test4] must
-        throwA[DeserializationException].like {
-          case DeserializationException(_, _, fieldNames) =>
-            fieldNames mustEqual "t2" :: "a" :: Nil
-        }
+    it should "not require the presence of optional fields for deserialization" in {
+      YamlObject(YamlString("a") -> YamlNumber(42)).convertTo[Test2] should ===(Test2(42, None))
+    }
+
+    it should "not render `None` members during serialization" in {
+      Test2(42, None).toYaml should ===(YamlObject(YamlString("a") -> YamlNumber(42)))
+    }
+
+    it should "ignore additional members during deserialization" in {
+      YamlObject(YamlString("a") -> YamlNumber(42),
+        YamlString("b") -> YamlNumber(4.2),
+        YamlString("c") -> YamlString("no")).convertTo[Test2] should ===(obj)
+    }
+
+    it should "not depend on any specific member order for deserialization" in {
+      YamlObject(YamlString("b") -> YamlNumber(4.2),
+        YamlString("a") -> YamlNumber(42)).convertTo[Test2] should ===(obj)
+    }
+
+    it should "throw a DeserializationException if the YamlValue is not a YamlObject" in {
+      a[DeserializationException] should be thrownBy {
+        YamlNull.convertTo[Test2]
+      }
+    }
+
+    it should "expose the fieldName in the DeserializationException when able" in {
+      val thrown = the[DeserializationException] thrownBy { YamlNull.convertTo[Test2] }
+      inside(thrown) {
+        case DeserializationException(_, _, fieldNames) =>
+          fieldNames should ===("a" :: Nil)
+      }
+    }
+
+    it should "expose all gathered fieldNames in the DeserializationException" in {
+      val thrown = the[DeserializationException] thrownBy {
+        YamlObject(YamlString("t2") -> YamlObject(
+          YamlString("a") -> YamlString("foo"))).convertTo[Test4]
+      }
+      inside(thrown) {
+        case DeserializationException(_, _, fieldNames) =>
+          fieldNames should ===("t2" :: "a" :: Nil)
+      }
     }
   }
 
-  "A YamlProtocol mixing in NullOptions" should {
+  "A YamlProtocol mixing in NullOptions" should "render `None` members to `null`" in {
+    object NullOptionsTestProtocol extends TestProtocol with NullOptions
+    import NullOptionsTestProtocol._
 
-    "render `None` members to `null`" in {
-      object NullOptionsTestProtocol extends TestProtocol with NullOptions
-      import NullOptionsTestProtocol._
-
-      Test2(42, None).toYaml mustEqual YamlObject(
-        YamlString("a") -> YamlNumber(42), YamlString("b") -> YamlNull)
-    }
+    Test2(42, None).toYaml should ===(YamlObject(
+      YamlString("a") -> YamlNumber(42), YamlString("b") -> YamlNull))
   }
 
-  "A YamlFormat for a generic case class and created with `yamlFormat`" should {
+  {
     val obj = Test3(42 :: 43 :: Nil, "x" :: "y" :: "z" :: Nil)
     val yaml = YamlObject(
       YamlString("as") -> YamlArray(YamlNumber(42), YamlNumber(43)),
       YamlString("bs") ->
         YamlArray(YamlString("x"), YamlString("y"), YamlString("z")))
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat for a generic case class and created with `yamlFormat`" should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[Test3[Int, String]] mustEqual obj
-    }
-  }
-
-  "A YamlFormat for a generic case class with an explicitly provided type parameter" should {
-
-    "support the yamlFormat1 syntax" in {
-      case class Box[A](a: A)
-      object BoxProtocol extends DefaultYamlProtocol {
-        implicit val boxFormat = yamlFormat1(Box[Int])
-      }
-
-      import BoxProtocol._
-      Box(42).toYaml mustEqual YamlObject(YamlString("a") -> YamlNumber(42))
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[Test3[Int, String]] should ===(obj)
     }
   }
 
-  "A YamlFormat for a case class with transient fields and created with `yamlFormat`" should {
+  "A YamlFormat for a generic case class with an explicitly provided type parameter" should "support the yamlFormat1 syntax" in {
+    case class Box[A](a: A)
+    object BoxProtocol extends DefaultYamlProtocol {
+      implicit val boxFormat = yamlFormat1(Box[Int])
+    }
+
+    import BoxProtocol._
+    Box(42).toYaml should ===(YamlObject(YamlString("a") -> YamlNumber(42)))
+  }
+
+  {
     val obj = TestTransient(42, Some(4.2))
     val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat for a case class with transient fields and created with `yamlFormat`" should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[TestTransient] mustEqual obj
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[TestTransient] should ===(obj)
     }
   }
 
-  "A YamlFormat for a case class with static fields and created with `yamlFormat`" should {
+  {
     val obj = TestStatic(42, Some(4.2))
     val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat for a case class with static fields and created with `yamlFormat`" should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[TestStatic] mustEqual obj
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[TestStatic] should ===(obj)
     }
   }
 
-  "A YamlFormat created with `yamlFormat`, for a case class with 0 elements," should {
+  {
     val obj = Test0()
     val yaml = YamlObject()
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat created with `yamlFormat`, for a case class with 0 elements," should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[Test0] mustEqual obj
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[Test0] should ===(obj)
     }
 
-    "ignore additional members during deserialization" in {
-      YamlObject(YamlString("a") -> YamlNumber(42)).convertTo[Test0] mustEqual
-        obj
+    it should "ignore additional members during deserialization" in {
+      YamlObject(YamlString("a") -> YamlNumber(42)).convertTo[Test0] should ===(obj)
     }
 
-    "throw a DeserializationException if the YamlValue is not a YamlObject" in {
-      YamlNull.convertTo[Test0] must throwA[DeserializationException]
+    it should "throw a DeserializationException if the YamlValue is not a YamlObject" in {
+      a[DeserializationException] should be thrownBy {
+        YamlNull.convertTo[Test0]
+      }
     }
   }
 
-  "A YamlFormat created with `yamlFormat`, for a case class with mangled-name members," should {
+  {
     val yaml =
       """ü$bavf$u56ú$: true
         |=><+-*/!@#%^&~?|: 1.0
@@ -196,21 +195,20 @@ class ProductFormatsSpec extends Specification {
         |User ID: Karl
         |""".stripMargin
 
-    "produce the correct YAML" in {
+    "A YamlFormat created with `yamlFormat`, for a case class with mangled-name members," should "produce the correct YAML" in {
       val result = TestMangled(42, "Karl", true, 26, 1.0f).toYaml.prettyPrint
 
-      yaml.split("\n").forall { line =>
-        result must contain(line)
+      forAll(yaml.split("\n")) { line =>
+        result should include(line)
       }
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.parseYaml.convertTo[TestMangled] mustEqual
-        TestMangled(42, "Karl", true, 26, 1.0f)
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.parseYaml.convertTo[TestMangled] should ===(TestMangled(42, "Karl", true, 26, 1.0f))
     }
   }
 
-  "A YamlFormat created with `yamlFormat`, for a case class with 22 elements," should {
+  {
     val obj = Test5(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
     val yaml = YamlObject(YamlString("a1") -> YamlNumber(1),
       YamlString("a2") -> YamlNumber(2),
@@ -235,12 +233,12 @@ class ProductFormatsSpec extends Specification {
       YamlString("a21") -> YamlNumber(21),
       YamlString("a22") -> YamlNumber(22))
 
-    "convert to a respective YamlObject" in {
-      obj.toYaml mustEqual yaml
+    "A YamlFormat created with `yamlFormat`, for a case class with 22 elements," should "convert to a respective YamlObject" in {
+      obj.toYaml should ===(yaml)
     }
 
-    "convert a YamlObject to the respective case class instance" in {
-      yaml.convertTo[Test5] mustEqual obj
+    it should "convert a YamlObject to the respective case class instance" in {
+      yaml.convertTo[Test5] should ===(obj)
     }
   }
 }
