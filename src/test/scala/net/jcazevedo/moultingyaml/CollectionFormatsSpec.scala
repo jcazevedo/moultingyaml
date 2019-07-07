@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
 
 class CollectionFormatsSpec extends FlatSpec with CollectionFormats
-    with BasicFormats {
+  with BasicFormats {
 
   {
     val list = List(1, 2, 3)

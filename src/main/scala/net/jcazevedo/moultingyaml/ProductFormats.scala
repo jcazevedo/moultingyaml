@@ -1046,7 +1046,7 @@ trait ProductFormats {
       _.getName.drop("copy$default$".length).takeWhile(_ != '(').toInt)
     val fields = clazz.getDeclaredFields.filterNot { f =>
       import Modifier._
-        (f.getModifiers & (TRANSIENT | STATIC | 0x1000)) > 0
+      (f.getModifiers & (TRANSIENT | STATIC | 0x1000)) > 0
     }
     if (copyDefaultMethods.length != fields.length)
       sys.error("Case class " + clazz.getName + " declares additional fields")
@@ -1084,7 +1084,8 @@ trait ProductFormats {
       }
 
     case other =>
-      deserializationError("YamlObject expected, but got " + other,
+      deserializationError(
+        "YamlObject expected, but got " + other,
         fieldNames = fieldName :: Nil)
   }
 }
@@ -1095,8 +1096,7 @@ object ProductFormats {
       val res = NameTransformer.decode(s)
       if (res == s) s
       else res
-    }
-    else s
+    } else s
   }
 }
 

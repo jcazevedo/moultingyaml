@@ -12,9 +12,9 @@ class ProductFormatsSpec extends FlatSpec {
   case class Test3[A, B](as: List[A], bs: List[B])
   case class Test4(t2: Test2)
   case class Test5(a1: Int, a2: Int, a3: Int, a4: Int, a5: Int, a6: Int,
-                   a7: Int, a8: Int, a9: Int, a10: Int, a11: Int, a12: Int,
-                   a13: Int, a14: Int, a15: Int, a16: Int, a17: Int, a18: Int,
-                   a19: Int, a20: Int, a21: Int, a22: Int)
+      a7: Int, a8: Int, a9: Int, a10: Int, a11: Int, a12: Int,
+      a13: Int, a14: Int, a15: Int, a16: Int, a17: Int, a18: Int,
+      a19: Int, a20: Int, a21: Int, a22: Int)
   case class TestTransient(a: Int, b: Option[Double]) {
     @transient var c = false
   }
@@ -22,8 +22,8 @@ class ProductFormatsSpec extends FlatSpec {
   @SerialVersionUID(1L) // SerialVersionUID adds a static field to the case class
   case class TestStatic(a: Int, b: Option[Double])
   case class TestMangled(`foo-bar!`: Int, `User ID`: String,
-                         `ü$bavf$u56ú$`: Boolean, `-x-`: Int,
-                         `=><+-*/!@#%^&~?|`: Float)
+      `ü$bavf$u56ú$`: Boolean, `-x-`: Int,
+      `=><+-*/!@#%^&~?|`: Float)
 
   trait TestProtocol extends DefaultYamlProtocol {
     implicit val test0Format = yamlFormat0(Test0)
@@ -68,13 +68,15 @@ class ProductFormatsSpec extends FlatSpec {
     }
 
     it should "ignore additional members during deserialization" in {
-      YamlObject(YamlString("a") -> YamlNumber(42),
+      YamlObject(
+        YamlString("a") -> YamlNumber(42),
         YamlString("b") -> YamlNumber(4.2),
         YamlString("c") -> YamlString("no")).convertTo[Test2] should ===(obj)
     }
 
     it should "not depend on any specific member order for deserialization" in {
-      YamlObject(YamlString("b") -> YamlNumber(4.2),
+      YamlObject(
+        YamlString("b") -> YamlNumber(4.2),
         YamlString("a") -> YamlNumber(42)).convertTo[Test2] should ===(obj)
     }
 
@@ -140,7 +142,8 @@ class ProductFormatsSpec extends FlatSpec {
 
   {
     val obj = TestTransient(42, Some(4.2))
-    val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
+    val yaml = YamlObject(
+      YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
     "A YamlFormat for a case class with transient fields and created with `yamlFormat`" should "convert to a respective YamlObject" in {
@@ -154,7 +157,8 @@ class ProductFormatsSpec extends FlatSpec {
 
   {
     val obj = TestStatic(42, Some(4.2))
-    val yaml = YamlObject(YamlString("a") -> YamlNumber(42),
+    val yaml = YamlObject(
+      YamlString("a") -> YamlNumber(42),
       YamlString("b") -> YamlNumber(4.2))
 
     "A YamlFormat for a case class with static fields and created with `yamlFormat`" should "convert to a respective YamlObject" in {
@@ -213,7 +217,8 @@ class ProductFormatsSpec extends FlatSpec {
 
   {
     val obj = Test5(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
-    val yaml = YamlObject(YamlString("a1") -> YamlNumber(1),
+    val yaml = YamlObject(
+      YamlString("a1") -> YamlNumber(1),
       YamlString("a2") -> YamlNumber(2),
       YamlString("a3") -> YamlNumber(3),
       YamlString("a4") -> YamlNumber(4),
