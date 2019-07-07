@@ -27,7 +27,7 @@ scalacOptions ++= Seq(
     case _ => Seq()
    })
 
-scalacOptions in (Compile, console) ~= (_ filterNot (_ == "-Ywarn-unused:imports"))
+scalacOptions in (Compile, console) ~= (_ filterNot (Set("-Ywarn-unused:imports", "-Ywarn-unused-import").contains))
 scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 
 scalariformSettings
