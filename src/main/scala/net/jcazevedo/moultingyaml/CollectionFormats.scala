@@ -10,7 +10,7 @@ trait CollectionFormats {
   /**
    * Supplies the YamlFormat for Lists.
    */
-  implicit def listFormat[A: YF] = new YF[List[A]] {
+  implicit def listFormat[A: YF]: YF[List[A]] = new YF[List[A]] {
     def write(list: List[A]) = YamlArray(list.map(_.toYaml).toVector)
     def read(value: YamlValue): List[A] = value match {
       case YamlArray(elements) => elements.map(_.convertTo[A]).toList
@@ -22,7 +22,7 @@ trait CollectionFormats {
   /**
    * Supplies the YamlFormat for Arrays.
    */
-  implicit def arrayFormat[A: YF: ClassTag] = new YF[Array[A]] {
+  implicit def arrayFormat[A: YF: ClassTag]: YF[Array[A]] = new YF[Array[A]] {
     def write(array: Array[A]) = YamlArray(array.map(_.toYaml).toVector)
     def read(value: YamlValue) = value match {
       case YamlArray(elements) => elements.map(_.convertTo[A]).toArray
@@ -34,7 +34,7 @@ trait CollectionFormats {
   /**
    * Supplies the YamlFormat for Sets.
    */
-  implicit def setFormat[A: YF] = new YF[Set[A]] {
+  implicit def setFormat[A: YF]: YF[Set[A]] = new YF[Set[A]] {
     def write(set: Set[A]) = YamlSet(set.map(_.toYaml))
     def read(value: YamlValue): Set[A] = value match {
       case YamlSet(elements) => elements.map(_.convertTo[A])
@@ -46,7 +46,7 @@ trait CollectionFormats {
   /**
    * Supplies the YamlFormat for Maps.
    */
-  implicit def mapFormat[K: YF, V: YF] = new YF[Map[K, V]] {
+  implicit def mapFormat[K: YF, V: YF]: YF[Map[K, V]] = new YF[Map[K, V]] {
     def write(m: Map[K, V]) =
       YamlObject(m.map { case (k, v) => k.toYaml -> v.toYaml })
 
