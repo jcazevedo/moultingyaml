@@ -295,4 +295,29 @@ class YamlPrettyPrinterSpec extends FlatSpec {
 
     yaml.print should ===(yaml.print(new SnakeYamlPrinter(scalarStyle = DoubleQuoted)))
   }
+
+  it should "print object in order" in {
+    val yaml = YamlObject(
+      YamlString("k1") -> YamlString("v1"),
+      YamlString("k2") -> YamlString("v2"),
+      YamlString("k3") -> YamlString("v3"),
+      YamlString("k4") -> YamlString("v4"),
+      YamlString("k5") -> YamlString("v5"),
+      YamlString("k6") -> YamlString("v6"),
+      YamlString("k7") -> YamlString("v7"),
+      YamlString("k8") -> YamlString("v8"),
+      YamlString("k9") -> YamlString("v9"))
+
+    yaml.print should ===(
+      """k1: v1
+        |k2: v2
+        |k3: v3
+        |k4: v4
+        |k5: v5
+        |k6: v6
+        |k7: v7
+        |k8: v8
+        |k9: v9
+        |""".stripMargin)
+  }
 }

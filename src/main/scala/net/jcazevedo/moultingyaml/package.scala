@@ -31,7 +31,7 @@ package object moultingyaml {
       case m: java.util.Map[Object @unchecked, Object @unchecked] =>
         YamlObject(m.asScala.map {
           case (k, v) => convertToYamlValue(k) -> convertToYamlValue(v)
-        }.toMap)
+        }.toList: _*)
       case l: java.util.List[Object @unchecked] =>
         YamlArray(l.asScala.map(convertToYamlValue).toVector)
       case s: java.util.Set[Object @unchecked] =>
