@@ -1,7 +1,8 @@
 package net.jcazevedo
 
 import com.github.nscala_time.time.Imports._
-import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.{ LoaderOptions, Yaml }
+
 import scala.collection.JavaConverters._
 
 package object moultingyaml {
@@ -63,9 +64,15 @@ package object moultingyaml {
 
   implicit class PimpedString(val string: String) extends AnyVal {
     def parseYaml: YamlValue =
-      convertToYamlValue(new Yaml().load(string))
+      parseYaml(new LoaderOptions())
+
+    def parseYaml(loaderOptions: LoaderOptions) =
+      convertToYamlValue(new Yaml(loaderOptions).load(string))
 
     def parseYamls: Seq[YamlValue] =
-      new Yaml().loadAll(string).asScala.map(convertToYamlValue).toSeq
+      parseYamls(new LoaderOptions())
+
+    def parseYamls(loaderOptions: LoaderOptions) =
+      new Yaml(loaderOptions).loadAll(string).asScala.map(convertToYamlValue).toSeq
   }
 }
