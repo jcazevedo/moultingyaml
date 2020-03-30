@@ -64,15 +64,27 @@ package object moultingyaml {
 
   implicit class PimpedString(val string: String) extends AnyVal {
     def parseYaml: YamlValue =
-      parseYaml(new LoaderOptions())
+      parseYaml()
 
-    def parseYaml(loaderOptions: LoaderOptions) =
+    def parseYaml(allowDuplicateKeys: Boolean = true, allowRecursiveKeys: Boolean = false, wrappedToRootException: Boolean = false, maxAliasesForCollections: Int = 50) = {
+      val loaderOptions = new LoaderOptions()
+      loaderOptions.setAllowDuplicateKeys(allowDuplicateKeys)
+      loaderOptions.setAllowRecursiveKeys(allowRecursiveKeys)
+      loaderOptions.setWrappedToRootException(wrappedToRootException)
+      loaderOptions.setMaxAliasesForCollections(maxAliasesForCollections)
       convertToYamlValue(new Yaml(loaderOptions).load(string))
+    }
 
     def parseYamls: Seq[YamlValue] =
-      parseYamls(new LoaderOptions())
+      parseYamls()
 
-    def parseYamls(loaderOptions: LoaderOptions) =
+    def parseYamls(allowDuplicateKeys: Boolean = true, allowRecursiveKeys: Boolean = false, wrappedToRootException: Boolean = false, maxAliasesForCollections: Int = 50) = {
+      val loaderOptions = new LoaderOptions()
+      loaderOptions.setAllowDuplicateKeys(allowDuplicateKeys)
+      loaderOptions.setAllowRecursiveKeys(allowRecursiveKeys)
+      loaderOptions.setWrappedToRootException(wrappedToRootException)
+      loaderOptions.setMaxAliasesForCollections(maxAliasesForCollections)
       new Yaml(loaderOptions).loadAll(string).asScala.map(convertToYamlValue).toSeq
+    }
   }
 }
