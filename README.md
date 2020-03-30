@@ -19,14 +19,14 @@ serialization and deserialization of custom objects.
 
 ## Installation
 
-MoultingYAML's latest release is `0.4.1` and is built against Scala 2.13, 2.12,
+MoultingYAML's latest release is `0.4.2` and is built against Scala 2.13, 2.12,
 2.11 and 2.10.
 
 To use it in an existing SBT project, add the following dependency to your
 `build.sbt`:
 
 ```scala
-libraryDependencies += "net.jcazevedo" %% "moultingyaml" % "0.4.1"
+libraryDependencies += "net.jcazevedo" %% "moultingyaml" % "0.4.2"
 ```
 
 ## Usage
