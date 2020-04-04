@@ -2,6 +2,7 @@ package net.jcazevedo.moultingyaml
 
 import com.github.nscala_time.time.Imports._
 import scala.collection.JavaConverters._
+import scala.collection.immutable.ListMap
 
 /**
  * The general type of a YAML AST node.
@@ -27,7 +28,7 @@ object YamlValue {
 /**
  * A YAML mapping from scalars to scalars.
  */
-case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
+case class YamlObject(fields: ListMap[YamlValue, YamlValue]) extends YamlValue {
   override def asYamlObject(errorMsg: String) = this
 
   def getFields(fieldKeys: YamlValue*): Seq[YamlValue] =
@@ -42,7 +43,7 @@ case class YamlObject(fields: Map[YamlValue, YamlValue]) extends YamlValue {
 }
 
 object YamlObject {
-  def apply(fields: (YamlValue, YamlValue)*) = new YamlObject(Map(fields: _*))
+  def apply(fields: (YamlValue, YamlValue)*) = new YamlObject(ListMap(fields: _*))
 }
 
 /**

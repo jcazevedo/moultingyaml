@@ -48,7 +48,7 @@ trait CollectionFormats {
    */
   implicit def mapFormat[K: YF, V: YF]: YF[Map[K, V]] = new YF[Map[K, V]] {
     def write(m: Map[K, V]) =
-      YamlObject(m.map { case (k, v) => k.toYaml -> v.toYaml })
+      YamlObject(m.map { case (k, v) => k.toYaml -> v.toYaml }.toList: _*)
 
     def read(value: YamlValue) = value match {
       case x: YamlObject =>
