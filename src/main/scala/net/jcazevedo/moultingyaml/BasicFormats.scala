@@ -7,7 +7,7 @@ import com.github.nscala_time.time.Imports._
  */
 trait BasicFormats {
 
-  implicit object IntYamlFormat extends YamlFormat[Int] {
+  implicit def IntYamlFormat: YamlFormat[Int] = new YamlFormat[Int] {
     def write(x: Int) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.intValue
@@ -16,7 +16,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object LongYamlFormat extends YamlFormat[Long] {
+  implicit def LongYamlFormat: YamlFormat[Long] = new YamlFormat[Long] {
     def write(x: Long) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.longValue
@@ -25,7 +25,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object FloatYamlFormat extends YamlFormat[Float] {
+  implicit def FloatYamlFormat: YamlFormat[Float] = new YamlFormat[Float] {
     def write(x: Float) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.floatValue
@@ -37,7 +37,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object DoubleYamlFormat extends YamlFormat[Double] {
+  implicit def DoubleYamlFormat: YamlFormat[Double] = new YamlFormat[Double] {
     def write(x: Double) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.doubleValue
@@ -49,7 +49,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object ByteYamlFormat extends YamlFormat[Byte] {
+  implicit def ByteYamlFormat: YamlFormat[Byte] = new YamlFormat[Byte] {
     def write(x: Byte) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.byteValue
@@ -58,7 +58,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object ShortYamlFormat extends YamlFormat[Short] {
+  implicit def ShortYamlFormat: YamlFormat[Short] = new YamlFormat[Short] {
     def write(x: Short) = YamlNumber(x)
     def read(value: YamlValue) = value match {
       case YamlNumber(x) => x.shortValue
@@ -67,7 +67,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object BigDecimalYamlFormat extends YamlFormat[BigDecimal] {
+  implicit def BigDecimalYamlFormat: YamlFormat[BigDecimal] = new YamlFormat[BigDecimal] {
     def write(x: BigDecimal) = {
       require(x ne null)
       YamlNumber(x)
@@ -79,7 +79,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object BigIntYamlFormat extends YamlFormat[BigInt] {
+  implicit def BigIntYamlFormat: YamlFormat[BigInt] = new YamlFormat[BigInt] {
     def write(x: BigInt) = {
       require(x ne null)
       YamlNumber(BigDecimal(x))
@@ -91,12 +91,12 @@ trait BasicFormats {
     }
   }
 
-  implicit object UnitYamlFormat extends YamlFormat[Unit] {
+  implicit def UnitYamlFormat: YamlFormat[Unit] = new YamlFormat[Unit] {
     def write(x: Unit) = YamlNumber(1)
     def read(value: YamlValue) {}
   }
 
-  implicit object BooleanYamlFormat extends YamlFormat[Boolean] {
+  implicit def BooleanYamlFormat: YamlFormat[Boolean] = new YamlFormat[Boolean] {
     def write(x: Boolean) = YamlBoolean(x)
     def read(value: YamlValue) = value match {
       case YamlBoolean(x) => x
@@ -105,7 +105,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object CharYamlFormat extends YamlFormat[Char] {
+  implicit def CharYamlFormat: YamlFormat[Char] = new YamlFormat[Char] {
     def write(x: Char) = YamlString(String.valueOf(x))
     def read(value: YamlValue) = value match {
       case YamlString(x) if x.length == 1 => x.charAt(0)
@@ -115,7 +115,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object StringYamlFormat extends YamlFormat[String] {
+  implicit def StringYamlFormat: YamlFormat[String] = new YamlFormat[String] {
     def write(x: String) = {
       require(x ne null)
       YamlString(x)
@@ -127,7 +127,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object SymbolYamlFormat extends YamlFormat[Symbol] {
+  implicit def SymbolYamlFormat: YamlFormat[Symbol] = new YamlFormat[Symbol] {
     def write(x: Symbol) = YamlString(x.name)
     def read(value: YamlValue) = value match {
       case YamlString(x) => Symbol(x)
@@ -136,7 +136,7 @@ trait BasicFormats {
     }
   }
 
-  implicit object DateTimeYamlFormat extends YamlFormat[DateTime] {
+  implicit def DateTimeYamlFormat: YamlFormat[DateTime] = new YamlFormat[DateTime] {
     def write(x: DateTime) = YamlDate(x)
     def read(value: YamlValue) = value match {
       case YamlDate(x) => x
