@@ -293,6 +293,6 @@ contributions via
 [GitHub's pull requests](https://github.com/jcazevedo/moultingyaml/pulls).
 
 [sjson]: https://github.com/debasishg/sjson
-[snakeyaml]: https://bitbucket.org/asomov/snakeyaml
+[snakeyaml]: https://bitbucket.org/snakeyaml/snakeyaml
 [spray-json]: https://github.com/spray/spray-json
 [yaml]: http://yaml.org/
