@@ -8,7 +8,7 @@ import scala.collection.JavaConverters._
 package object moultingyaml {
 
   // format: OFF
-  private[moultingyaml] type YF[A] = YamlFormat[A]
+  type YF[A] = YamlFormat[A]
   // format: ON
 
   case class DeserializationException(
